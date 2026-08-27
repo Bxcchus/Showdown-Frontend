@@ -72,3 +72,11 @@ export const communityMessages = [
 ];
 
 export const roles = ['TOP', 'JUNGLE', 'MID', 'ADC', 'SUPPORT'] as const;
+
+export const favoriteChampions = [
+  { name: 'Aurelia', winRate: 73, games: 58, tone: 'rose' as const },
+  { name: 'Nyx', winRate: 69, games: 52, tone: 'violet' as const },
+  { name: 'Kael', winRate: 65, games: 40, tone: 'blue' as const },
+  { name: 'Syla', winRate: 62, games: 39, tone: 'amber' as const },
+  { name: 'Orien', winRate: 58, games: 31, tone: 'green' as const },
+];

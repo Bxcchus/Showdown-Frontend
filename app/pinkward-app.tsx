@@ -3,6 +3,7 @@
 import { FormEvent, ReactNode, useEffect, useMemo, useState } from 'react';
 import {
   communityMessages,
+  favoriteChampions,
   matches,
   notifications,
   party,
@@ -56,7 +57,7 @@ function PlayerRow({ player, status }: { player: Player; status?: string }) {
 }
 
 function Header({ page, onNavigate, onNotifications, unread }: { page: PageId; onNavigate: (page: PageId) => void; onNotifications: () => void; unread: number }) {
-  const primary: PageId[] = ['home', 'play', 'matches', 'community', 'events'];
+  const primary: PageId[] = ['home', 'play', 'matches', 'community', 'events', 'profile'];
   return (
     <header className="topbar">
       <button className="brand" onClick={() => onNavigate('home')} aria-label="Pinkward — Accueil"><Crest /><span>PINKWARD</span></button>
@@ -94,9 +95,6 @@ function PartyRail({ onPlay }: { onPlay: () => void }) {
         </div>
         <button className="secondary-button full">＋ INVITER UN JOUEUR</button>
       </Panel>
-      <Panel className="connection-panel">
-        <span><i /> SERVICES CONNECTÉS</span><small>Données de démonstration locales</small>
-      </Panel>
     </aside>
   );
 }
@@ -110,9 +108,12 @@ function RankRail({ onNavigate }: { onNavigate: (page: PageId) => void }) {
         <div className="rank-facts"><span><strong>68%</strong><small>TAUX DE VICTOIRE</small></span><span><strong>42</strong><small>V — 20 D</small></span></div>
         <button className="secondary-button full" onClick={() => onNavigate('profile')}>VOIR LE PROFIL</button>
       </Panel>
-      <Panel className="mission-panel">
-        <PanelHeading action={<b>2 / 3</b>}>OBJECTIF DU JOUR</PanelHeading>
-        <h3>Gagner 3 parties classées</h3><p>Une victoire avant la fin.</p><div className="mission-progress"><span /></div><small>Réinitialisation dans 6 h 12</small>
+      <Panel className="queue-panel home-queue-panel">
+        <PanelHeading action={<b className="status-idle">HORS FILE</b>}>EN COURS</PanelHeading>
+        <div className="queue-graphic" aria-hidden="true"><Crest /></div>
+        <h2>PRÊT À JOUER ?</h2><p>Solo / Duo · EUW</p>
+        <div className="roles"><span>MID</span><span>JUNGLE</span></div>
+        <button className="primary-button" onClick={() => onNavigate('play')}>VOIR LE MATCHMAKING</button>
       </Panel>
     </aside>
   );
@@ -140,10 +141,7 @@ function HomePage({ onNavigate }: { onNavigate: (page: PageId) => void }) {
           <div className="season-emblem" aria-hidden="true"><span>III</span></div>
           <div className="season-stats" aria-label="Progression de l'événement"><div><strong>05</strong><small>JOURS</small></div><div><strong>12</strong><small>HEURES</small></div><div><strong>47</strong><small>MIN</small></div></div>
         </Panel>
-        <div className="content-row">
-          <Panel className="recent-panel"><PanelHeading action={<button className="text-link" onClick={() => onNavigate('matches')}>TOUT VOIR →</button>}>ACTIVITÉ RÉCENTE</PanelHeading><div className="match-list">{matches.slice(0, 4).map((match) => <MatchRow match={match} key={match.id} onSelect={() => onNavigate('matches')} />)}</div></Panel>
-          <Panel className="queue-panel"><PanelHeading action={<b className="status-idle">HORS FILE</b>}>ACTIVITÉ</PanelHeading><div className="queue-graphic" aria-hidden="true"><Crest /></div><h2>PRÊT À JOUER ?</h2><p>Solo / Duo · EUW</p><div className="roles"><span>MID</span><span>JUNGLE</span></div><button className="primary-button" onClick={() => onNavigate('play')}>TROUVER UNE PARTIE</button></Panel>
-        </div>
+        <Panel className="recent-panel"><PanelHeading action={<button className="text-link" onClick={() => onNavigate('matches')}>TOUT VOIR →</button>}>ACTIVITÉ RÉCENTE</PanelHeading><div className="match-list">{matches.slice(0, 4).map((match) => <MatchRow match={match} key={match.id} onSelect={() => onNavigate('matches')} />)}</div></Panel>
       </section>
       <RankRail onNavigate={onNavigate} />
     </div>
@@ -182,7 +180,7 @@ function SearchingSurface({ mode, primary, secondary, onCancel, onFound }: { mod
 function MatchesPage() {
   const [filter, setFilter] = useState('TOUS'); const [selected, setSelected] = useState<Match | null>(null);
   const visible = useMemo(() => matches.filter((match) => filter === 'TOUS' || match.mode.toUpperCase().includes(filter)), [filter]);
-  return <div className="wide-page page-enter"><div className="page-title-row"><div><span className="page-index">03</span><h1>HISTORIQUE DES MATCHS</h1><p>Vos dernières parties et leur impact sur votre classement.</p></div><div className="segmented">{['TOUS', 'SOLO', 'FLEX', 'TOURNOI'].map((item) => <button key={item} className={filter === item ? 'active' : ''} onClick={() => setFilter(item)}>{item}</button>)}</div></div><Panel className="history-panel"><div className="history-head"><span>RÉSULTAT</span><span>MODE</span><span>RÔLE</span><span>KDA</span><span>DURÉE</span><span>GAIN / PERTE</span><span>DATE</span></div>{visible.map((match) => <div key={match.id}><MatchRow match={match} detailed onSelect={() => setSelected(selected?.id === match.id ? null : match)} />{selected?.id === match.id && <MatchDetail match={match} />}</div>)}</Panel></div>;
+  return <div className="wide-page page-enter"><div className="page-title-row"><div><span className="page-index">03</span><h1>HISTORIQUE DES MATCHS</h1><p>Vos dernières parties et leur impact sur votre classement.</p></div><div className="segmented">{['TOUS', 'SOLO', 'FLEX', 'TOURNOI'].map((item) => <button key={item} className={filter === item ? 'active' : ''} onClick={() => setFilter(item)}>{item}</button>)}</div></div><Panel className="history-panel"><div className="history-head"><span /><span>RÉSULTAT</span><span>MODE</span><span>RÔLE</span><span>KDA</span><span>DURÉE</span><span>GAIN / PERTE</span><span>DATE</span><span /></div>{visible.map((match) => <div key={match.id}><MatchRow match={match} detailed onSelect={() => setSelected(selected?.id === match.id ? null : match)} />{selected?.id === match.id && <MatchDetail match={match} />}</div>)}</Panel></div>;
 }
 
 function MatchDetail({ match }: { match: Match }) {
@@ -201,7 +199,7 @@ function EventsPage() {
 }
 
 function ProfilePage() {
-  return <div className="profile-page page-enter"><aside className="profile-sidebar"><Avatar tone="rose" label="PinkWard" size="large" /><h1>PinkWard</h1><p>@EUW</p><Status tone="success">EN LIGNE</Status><nav>{['APERÇU', 'HISTORIQUE DES MATCHS', 'CHAMPIONS', 'RANGS', 'HIGHLIGHTS', 'STATS'].map((item, index) => <button className={index === 0 ? 'active' : ''} key={item}>{item}</button>)}</nav></aside><div className="profile-content"><Panel className="identity-stats"><div><span className="page-kicker">RANG ACTUEL</span><strong>DIAMANT III</strong><small>75 LP</small></div><div><span className="page-kicker">MEILLEUR RANG</span><strong>DIAMANT II</strong><small>32 LP</small></div><div><span className="page-kicker">TAUX DE VICTOIRE</span><strong>68%</strong><small>42 V — 20 D</small></div><div><span className="page-kicker">ELO PERSONNEL</span><strong>1 842</strong><small>Top 7%</small></div></Panel><Panel className="preferred-roles"><PanelHeading>RÔLES PRÉFÉRÉS</PanelHeading><div>{roles.map((role, index) => <span key={role}><b>{['╱', '♢', '◇', '⌁', '✣'][index]}</b><strong>{role}</strong><small>{[68, 62, 54, 44, 48][index]}%</small></span>)}</div></Panel><Panel className="profile-matches"><PanelHeading>DERNIERS MATCHS</PanelHeading>{matches.slice(0, 4).map((match) => <MatchRow key={match.id} match={match} />)}</Panel></div></div>;
+  return <div className="profile-page page-enter"><aside className="profile-sidebar"><Avatar tone="rose" label="PinkWard" size="large" /><h1>PinkWard</h1><p>@EUW</p><Status tone="success">EN LIGNE</Status><nav>{['APERÇU', 'HISTORIQUE DES MATCHS', 'CHAMPIONS', 'RANGS', 'HIGHLIGHTS', 'STATS'].map((item, index) => <button className={index === 0 ? 'active' : ''} key={item}>{item}</button>)}</nav></aside><div className="profile-content"><Panel className="identity-stats"><div><span className="page-kicker">RANG ACTUEL</span><strong>DIAMANT III</strong><small>75 LP</small></div><div><span className="page-kicker">MEILLEUR RANG</span><strong>DIAMANT II</strong><small>32 LP</small></div><div><span className="page-kicker">TAUX DE VICTOIRE</span><strong>68%</strong><small>42 V — 20 D</small></div><div><span className="page-kicker">ELO PERSONNEL</span><strong>1 842</strong><small>Top 7%</small></div></Panel><div className="profile-lower"><div className="profile-main-column"><Panel className="preferred-roles"><PanelHeading>RÔLES PRÉFÉRÉS</PanelHeading><div>{roles.map((role, index) => <span key={role}><b>{['╱', '♢', '◇', '⌁', '✣'][index]}</b><strong>{role}</strong><small>{[68, 62, 54, 44, 48][index]}%</small></span>)}</div></Panel><Panel className="champion-panel"><PanelHeading action={<button className="text-link">VOIR PLUS DE STATS →</button>}>CHAMPIONS LES PLUS JOUÉS</PanelHeading><div>{favoriteChampions.map((champion) => <span key={champion.name}><Avatar tone={champion.tone} label={champion.name} size="large" /><strong>{champion.name}</strong><b>{champion.winRate}%</b><small>{champion.games} parties</small></span>)}</div></Panel></div><Panel className="recent-summary"><PanelHeading>RÉSUMÉ RÉCENT</PanelHeading>{matches.slice(0, 3).map((match) => <div className="summary-match" key={match.id}><Avatar tone={match.result === 'VICTOIRE' ? 'green' : 'red'} label={match.result} /><span><strong className={match.result === 'VICTOIRE' ? 'success' : 'danger'}>{match.score}</strong><b>{match.result}</b><small>{match.time}</small></span></div>)}</Panel></div></div></div>;
 }
 
 function SettingsPage() {
