@@ -13,12 +13,12 @@ const party = [
 ] as const;
 
 const matches = [
-  ['VICTORY', '5V5 Ranked', 'MID', '31:42', '+21', '2h ago'],
-  ['DEFEAT', '5V5 Ranked', 'JUNGLE', '27:18', '-16', '5h ago'],
-  ['VICTORY', 'Flex', 'MID', '29:04', '+18', '1d ago'],
-  ['VICTORY', 'Custom', 'SUPPORT', '35:11', '+12', '2d ago'],
-  ['DEFEAT', '5V5 Ranked', 'ADC', '24:06', '-19', '3d ago'],
-  ['VICTORY', 'Flex', 'TOP', '33:20', '+16', '4d ago'],
+  ['VICTORY', '5V5 TrueSkill', 'MID', '31:42', '+21', '2h ago'],
+  ['DEFEAT', '1V1 Glicko-2', 'TOP', '12:18', '-16', '5h ago'],
+  ['VICTORY', '5V5 TrueSkill', 'JUNGLE', '29:04', '+18', '1d ago'],
+  ['VICTORY', '1V1 Glicko-2', 'MID', '09:11', '+12', '2d ago'],
+  ['DEFEAT', '5V5 TrueSkill', 'ADC', '24:06', '-19', '3d ago'],
+  ['VICTORY', '5V5 TrueSkill', 'SUPPORT', '33:20', '+16', '4d ago'],
 ] as const;
 
 const lfg = [
@@ -52,7 +52,7 @@ function PartyRows({ compact = false }: { compact?: boolean }) {
 }
 
 function Home({ go }: { go: (page: Page) => void }) {
-  return <div className="page home-page"><div className="home-top"><Card className="season-card"><span className="eyebrow">CURRENT SEASON</span><h1>ASCENSION // SPLIT 02</h1><p>Competitive community matchmaking for League of Legends.</p><Button onClick={() => go('play')}>FIND MATCH</Button><small>Season ends in 24d 14h</small></Card><Card className="rank-card"><span className="eyebrow">YOUR RANK</span><h2>EMERALD II</h2><b>1482 MMR</b><div className="progress"><i /></div><p>56% WIN RATE&nbsp;&nbsp;•&nbsp;&nbsp;128 MATCHES</p></Card></div><div className="home-bottom"><div><h3 className="section-label">YOUR PARTY</h3><Card className="party-card"><PartyRows /><button className="text-button">+ INVITE PLAYER</button></Card></div><div><h3 className="section-label">RECENT MATCHES</h3><Card className="recent-card">{matches.slice(0, 3).map((m) => <div className="recent-row" key={`${m[0]}${m[3]}`}><b className={m[0] === 'VICTORY' ? 'positive' : 'negative'}>{m[0]}</b><span>{m[1].startsWith('5V5') ? '5V5' : m[1]}</span><strong>{m[2]}</strong><span>{m[3]}</span><b className={m[4].startsWith('+') ? 'positive' : 'negative'}>{m[4]}</b></div>)}<button className="text-button align-right" onClick={() => go('matches')}>VIEW ALL MATCHES</button></Card></div></div><Card className="queue-strip"><span><small>NOT IN QUEUE</small><strong>5V5 · EUW · MID / JUNGLE</strong></span><Button onClick={() => go('play')}>FIND MATCH</Button></Card></div>;
+  return <div className="page home-page"><div className="home-top"><Card className="season-card"><span className="eyebrow">CURRENT SEASON</span><h1>ASCENSION // SPLIT 02</h1><p>Competitive community matchmaking for League of Legends.</p><Button onClick={() => go('play')}>FIND MATCH</Button><small>Season ends in 24d 14h</small></Card><Card className="rank-card"><span className="eyebrow">YOUR RANK</span><h2>EMERALD II</h2><b>1482 MMR</b><div className="progress"><i /></div><p>56% WIN RATE&nbsp;&nbsp;•&nbsp;&nbsp;128 MATCHES</p></Card></div><div className="home-bottom"><div><h3 className="section-label">YOUR PARTY</h3><Card className="party-card"><PartyRows /><button className="text-button">+ INVITE PLAYER</button></Card></div><div><h3 className="section-label">RECENT MATCHES</h3><Card className="recent-card">{matches.slice(0, 3).map((m) => <div className="recent-row" key={`${m[0]}${m[3]}`}><b className={m[0] === 'VICTORY' ? 'positive' : 'negative'}>{m[0]}</b><span>{m[1].startsWith('5V5') ? '5V5' : '1V1'}</span><strong>{m[2]}</strong><span>{m[3]}</span><b className={m[4].startsWith('+') ? 'positive' : 'negative'}>{m[4]}</b></div>)}<button className="text-button align-right" onClick={() => go('matches')}>VIEW ALL MATCHES</button></Card></div></div><Card className="queue-strip"><span><small>NOT IN QUEUE</small><strong>5V5 · EUW · MID / JUNGLE</strong></span><Button onClick={() => go('play')}>FIND MATCH</Button></Card></div>;
 }
 
 function RolePicker({ label, value, blocked, onChange }: { label: string; value: Role; blocked: Role; onChange: (role: Role) => void }) {
@@ -83,8 +83,8 @@ function Team({ title, players }: { title: string; players: string[][] }) { retu
 function Lobby() { return <div className="page lobby-page"><PageTitle title="MATCH LOBBY" text="Custom 5v5 · EUW · Lobby ready" /><div className="lobby-grid"><Team title="BLUE TEAM" players={blue} /><div className="lobby-status"><Card><small>READY</small><strong>8/10</strong><b>00:17</b></Card><Button>OPEN</Button></div><Team title="RED TEAM" players={red} /></div></div>; }
 
 function Matches() {
-  const [filter, setFilter] = useState('ALL');
-  return <div className="page matches-page"><PageTitle title="MATCH HISTORY" text="Your recent competitive and custom matches." /><div className="tabs">{['ALL', 'RANKED', 'FLEX', 'CUSTOM'].map((item) => <button className={filter === item ? 'active' : ''} onClick={() => setFilter(item)} key={item}>{item}</button>)}</div><div className="match-table"><div className="match-head"><span>RESULT</span><span>MODE</span><span>ROLE</span><span>DURATION</span><span>MMR</span><span>DATE</span></div>{matches.filter((m) => filter === 'ALL' || m[1].toUpperCase().includes(filter)).map((m) => <div className="match-line" key={`${m[0]}${m[3]}`}><b className={m[0] === 'VICTORY' ? 'positive' : 'negative'}>{m[0]}</b><span>{m[1]}</span><strong>{m[2]}</strong><span>{m[3]}</span><b className={m[4].startsWith('+') ? 'positive' : 'negative'}>{m[4]}</b><span>{m[5]}</span></div>)}</div></div>;
+  const [filter, setFilter] = useState('1V1 GLICKO-2');
+  return <div className="page matches-page"><PageTitle title="MATCH HISTORY" text="Your recent competitive matches." /><div className="tabs">{['1V1 GLICKO-2', '5V5 TRUESKILL'].map((item) => <button className={filter === item ? 'active' : ''} onClick={() => setFilter(item)} key={item}>{item}</button>)}</div><div className="match-table"><div className="match-head"><span>RESULT</span><span>MODE</span><span>ROLE</span><span>DURATION</span><span>MMR</span><span>DATE</span></div>{matches.filter((m) => m[1].toUpperCase() === filter).map((m) => <div className="match-line" key={`${m[0]}${m[3]}`}><b className={m[0] === 'VICTORY' ? 'positive' : 'negative'}>{m[0]}</b><span>{m[1]}</span><strong>{m[2]}</strong><span>{m[3]}</span><b className={m[4].startsWith('+') ? 'positive' : 'negative'}>{m[4]}</b><span>{m[5]}</span></div>)}</div></div>;
 }
 
 function Community() {
