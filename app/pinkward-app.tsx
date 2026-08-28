@@ -3,7 +3,7 @@
 import { ReactNode, useEffect, useState } from 'react';
 import Image from 'next/image';
 
-type Page = 'home' | 'play' | 'searching' | 'ready' | 'lobby' | 'matches' | 'community' | 'events' | 'profile' | 'settings';
+type Page = 'home' | 'play' | 'searching' | 'ready' | 'lobby' | 'matches' | 'community' | 'leaderboard' | 'profile' | 'settings';
 type Role = 'TOP' | 'JUNGLE' | 'MID' | 'ADC' | 'SUPPORT';
 
 const party = [
@@ -31,7 +31,7 @@ const lfg = [
 
 function Shell({ page, setPage, children }: { page: Page; setPage: (page: Page) => void; children: ReactNode }) {
   const current = page === 'searching' || page === 'ready' || page === 'lobby' ? 'play' : page;
-  const nav: Array<[Page, string]> = [['home', 'HOME'], ['play', 'PLAY'], ['matches', 'MATCHES'], ['community', 'COMMUNITY'], ['events', 'EVENTS']];
+  const nav: Array<[Page, string]> = [['home', 'HOME'], ['play', 'PLAY'], ['matches', 'MATCHES'], ['community', 'COMMUNITY'], ['leaderboard', 'LEADERBOARD']];
   return <div className="app-shell"><header className="topbar"><button className="wordmark" onClick={() => setPage('home')}>PINKWARD</button><nav aria-label="Primary navigation">{nav.map(([id, label]) => <button key={id} className={current === id ? 'active' : ''} onClick={() => setPage(id)}>{label}</button>)}</nav><div className="account-links"><button onClick={() => setPage('profile')}>NYXARA</button><button className="online" onClick={() => setPage('settings')}>EUW · ONLINE</button></div></header><main>{children}</main></div>;
 }
 
@@ -94,7 +94,15 @@ function Community() {
 
 function Profile() { return <div className="page profile-page"><PageTitle title="PROFILE" /><Card className="profile-hero"><h1>NYXARA #EUW</h1><p className="positive">Emerald II&nbsp;&nbsp;•&nbsp;&nbsp;MID main&nbsp;&nbsp;•&nbsp;&nbsp;Online</p><div><span><b>128</b> MATCHES</span><span><b>56%</b> WIN RATE</span><span><b>1482</b> MMR</span></div></Card><div className="tabs"><button className="active">OVERVIEW</button><button>MATCHES</button><button>STATISTICS</button><button>RIOT</button></div><div className="profile-grid"><Card><h3>SEASON STATISTICS</h3>{[['Matches', '128'], ['Win rate', '56%'], ['KDA', '2.8'], ['Avg. duration', '31:42'], ['Positive MMR', '+164']].map(([a,b]) => <div className="stat-row" key={a}><span>{a}</span><b className={a === 'Positive MMR' ? 'positive' : ''}>{b}</b></div>)}</Card><Card><h3>ROLE PROFILE</h3>{[['MID', 48], ['JUNGLE', 28], ['SUPPORT', 14], ['TOP', 6], ['ADC', 4]].map(([role, value]) => <div className="role-stat" key={role}><b>{role}</b><div><i style={{width:`${value}%`}} /></div><span>{value}%</span></div>)}</Card></div></div>; }
 
-function Events() { return <div className="page events-page"><PageTitle eyebrow="CURRENT SEASON" title="ASCENSION // SPLIT 02" text="Climb together. Compete with purpose." /><div className="events-grid"><Card><span className="eyebrow">SEASON PROGRESS</span><h2>EMERALD II</h2><b>1482 MMR</b><div className="progress"><i /></div><p>56% win rate · 128 matches</p></Card><Card><span className="eyebrow">NEXT COMMUNITY CUP</span><h2>PINKWARD OPEN</h2><b>17 MAY · 19:00 CET</b><p>5v5 single elimination · EUW</p><Button>REGISTER TEAM</Button></Card></div></div>; }
+const leaderboard = {
+  '1V1 GLICKO-2': [['Nyxara', '1 842', '42 — 20', '68%'], ['Rivenous', '1 798', '38 — 24', '61%'], ['Khaelis', '1 754', '35 — 22', '61%'], ['Luneth', '1 709', '31 — 25', '55%'], ['Zyph', '1 681', '29 — 26', '53%']],
+  '5V5 TRUESKILL': [['Khaelis', '31.8', '51 — 27', '65%'], ['Nyxara', '30.6', '48 — 28', '63%'], ['Rivenous', '29.9', '44 — 31', '59%'], ['Zyph', '28.7', '39 — 33', '54%'], ['Luneth', '27.9', '36 — 35', '51%']],
+} as const;
+
+function Leaderboard() {
+  const [category, setCategory] = useState<keyof typeof leaderboard>('1V1 GLICKO-2');
+  return <div className="page leaderboard-page"><PageTitle title="LEADERBOARD" text="The highest-rated Pinkward competitors." /><div className="tabs">{(Object.keys(leaderboard) as Array<keyof typeof leaderboard>).map((item) => <button className={category === item ? 'active' : ''} onClick={() => setCategory(item)} key={item}>{item}</button>)}</div><div className="leaderboard-table"><div className="leaderboard-head"><span>#</span><span>PLAYER</span><span>{category === '1V1 GLICKO-2' ? 'RATING' : 'SKILL'}</span><span>RECORD</span><span>WIN RATE</span></div>{leaderboard[category].map(([name, rating, record, winRate], index) => <div className={`leaderboard-row${name === 'Nyxara' ? ' is-you' : ''}`} key={name}><b>{String(index + 1).padStart(2, '0')}</b><strong>{name}{name === 'Nyxara' && <small>YOU</small>}</strong><span>{rating}</span><span>{record}</span><b className="positive">{winRate}</b></div>)}</div></div>;
+}
 
 function Settings() {
   const [settings, setSettings] = useState([true, true, false, true]); const labels = ['Real-time match notifications', 'Automatic lobby handoff', 'In-game overlay', 'Start with Windows'];
@@ -103,5 +111,5 @@ function Settings() {
 
 export default function PinkwardApp() {
   const [page, setPage] = useState<Page>('home');
-  return <Shell page={page} setPage={setPage}>{page === 'home' && <Home go={setPage} />}{page === 'play' && <Play go={setPage} />}{page === 'searching' && <Searching go={setPage} />}{page === 'ready' && <Ready go={setPage} />}{page === 'lobby' && <Lobby />}{page === 'matches' && <Matches />}{page === 'community' && <Community />}{page === 'events' && <Events />}{page === 'profile' && <Profile />}{page === 'settings' && <Settings />}</Shell>;
+  return <Shell page={page} setPage={setPage}>{page === 'home' && <Home go={setPage} />}{page === 'play' && <Play go={setPage} />}{page === 'searching' && <Searching go={setPage} />}{page === 'ready' && <Ready go={setPage} />}{page === 'lobby' && <Lobby />}{page === 'matches' && <Matches />}{page === 'community' && <Community />}{page === 'leaderboard' && <Leaderboard />}{page === 'profile' && <Profile />}{page === 'settings' && <Settings />}</Shell>;
 }
