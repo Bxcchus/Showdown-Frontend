@@ -3,7 +3,7 @@
 import { ReactNode, useEffect, useState } from 'react';
 import Image from 'next/image';
 
-type Page = 'home' | 'play' | 'searching' | 'ready' | 'lobby' | 'matches' | 'community' | 'leaderboard' | 'profile' | 'settings';
+type Page = 'home' | 'play' | 'searching' | 'ready' | 'lobby' | 'matches' | 'leaderboard' | 'profile' | 'settings';
 type Role = 'TOP' | 'JUNGLE' | 'MID' | 'ADC' | 'SUPPORT';
 
 const party = [
@@ -21,17 +21,9 @@ const matches = [
   ['VICTORY', '5V5 TrueSkill', 'SUPPORT', '33:20', '+16', '4d ago'],
 ] as const;
 
-const lfg = [
-  ['Flex 5v5 — Diamond+', 'Need jungle. Competitive comms.', '4 / 5'],
-  ['Duo to Master', 'Mid main looking for jungle.', '1 / 2'],
-  ['Tournament practice', 'Scrim tonight, EUW.', '3 / 5'],
-  ['Support main for duo', 'Emerald+, voice preferred.', '1 / 2'],
-  ['Custom 5v5 tonight', 'Chill but structured games.', '7 / 10'],
-] as const;
-
 function Shell({ page, setPage, children }: { page: Page; setPage: (page: Page) => void; children: ReactNode }) {
   const current = page === 'searching' || page === 'ready' || page === 'lobby' ? 'play' : page;
-  const nav: Array<[Page, string]> = [['home', 'HOME'], ['play', 'PLAY'], ['matches', 'MATCHES'], ['community', 'COMMUNITY'], ['leaderboard', 'LEADERBOARD']];
+  const nav: Array<[Page, string]> = [['home', 'HOME'], ['play', 'PLAY'], ['matches', 'MATCHES'], ['leaderboard', 'LEADERBOARD']];
   return <div className="app-shell"><header className="topbar"><button className="wordmark" onClick={() => setPage('home')}>PINKWARD</button><nav aria-label="Primary navigation">{nav.map(([id, label]) => <button key={id} className={current === id ? 'active' : ''} onClick={() => setPage(id)}>{label}</button>)}</nav><div className="account-links"><button onClick={() => setPage('profile')}>NYXARA</button><button className="online" onClick={() => setPage('settings')}>EUW · ONLINE</button></div></header><main>{children}</main></div>;
 }
 
@@ -52,7 +44,7 @@ function PartyRows({ compact = false }: { compact?: boolean }) {
 }
 
 function Home({ go }: { go: (page: Page) => void }) {
-  return <div className="page home-page"><div className="home-top"><Card className="season-card"><span className="eyebrow">CURRENT SEASON</span><h1>ASCENSION // SPLIT 02</h1><p>Competitive community matchmaking for League of Legends.</p><Button onClick={() => go('play')}>FIND MATCH</Button><small>Season ends in 24d 14h</small></Card><Card className="rank-card"><span className="eyebrow">YOUR RANK</span><h2>EMERALD II</h2><b>1482 MMR</b><div className="progress"><i /></div><p>56% WIN RATE&nbsp;&nbsp;•&nbsp;&nbsp;128 MATCHES</p></Card></div><div className="home-bottom"><div><h3 className="section-label">YOUR PARTY</h3><Card className="party-card"><PartyRows /><button className="text-button">+ INVITE PLAYER</button></Card></div><div><h3 className="section-label">RECENT MATCHES</h3><Card className="recent-card">{matches.slice(0, 3).map((m) => <div className="recent-row" key={`${m[0]}${m[3]}`}><b className={m[0] === 'VICTORY' ? 'positive' : 'negative'}>{m[0]}</b><span>{m[1].startsWith('5V5') ? '5V5' : '1V1'}</span><strong>{m[2]}</strong><span>{m[3]}</span><b className={m[4].startsWith('+') ? 'positive' : 'negative'}>{m[4]}</b></div>)}<button className="text-button align-right" onClick={() => go('matches')}>VIEW ALL MATCHES</button></Card></div></div><Card className="queue-strip"><span><small>NOT IN QUEUE</small><strong>5V5 · EUW · MID / JUNGLE</strong></span><Button onClick={() => go('play')}>FIND MATCH</Button></Card></div>;
+  return <div className="page home-page"><div className="home-top"><Card className="season-card"><span className="eyebrow">CURRENT SEASON</span><h1>ASCENSION // SPLIT 02</h1><p>Competitive matchmaking for League of Legends.</p><Button onClick={() => go('play')}>FIND MATCH</Button><small>Season ends in 24d 14h</small></Card><Card className="rank-card"><span className="eyebrow">YOUR RANK</span><h2>EMERALD II</h2><b>1482 MMR</b><div className="progress"><i /></div><p>56% WIN RATE&nbsp;&nbsp;•&nbsp;&nbsp;128 MATCHES</p></Card></div><div className="home-bottom"><div><h3 className="section-label">YOUR PARTY</h3><Card className="party-card"><PartyRows /><button className="text-button">+ INVITE PLAYER</button></Card></div><div><h3 className="section-label">RECENT MATCHES</h3><Card className="recent-card">{matches.slice(0, 3).map((m) => <div className="recent-row" key={`${m[0]}${m[3]}`}><b className={m[0] === 'VICTORY' ? 'positive' : 'negative'}>{m[0]}</b><span>{m[1].startsWith('5V5') ? '5V5' : '1V1'}</span><strong>{m[2]}</strong><span>{m[3]}</span><b className={m[4].startsWith('+') ? 'positive' : 'negative'}>{m[4]}</b></div>)}<button className="text-button align-right" onClick={() => go('matches')}>VIEW ALL MATCHES</button></Card></div></div><Card className="queue-strip"><span><small>NOT IN QUEUE</small><strong>5V5 · EUW · MID / JUNGLE</strong></span><Button onClick={() => go('play')}>FIND MATCH</Button></Card></div>;
 }
 
 function RolePicker({ label, value, blocked, onChange }: { label: string; value: Role; blocked: Role; onChange: (role: Role) => void }) {
@@ -87,11 +79,6 @@ function Matches() {
   return <div className="page matches-page"><PageTitle title="MATCH HISTORY" text="Your recent competitive matches." /><div className="tabs">{['1V1 GLICKO-2', '5V5 TRUESKILL'].map((item) => <button className={filter === item ? 'active' : ''} onClick={() => setFilter(item)} key={item}>{item}</button>)}</div><div className="match-table"><div className="match-head"><span>RESULT</span><span>MODE</span><span>ROLE</span><span>DURATION</span><span>MMR</span><span>DATE</span></div>{matches.filter((m) => m[1].toUpperCase() === filter).map((m) => <div className="match-line" key={`${m[0]}${m[3]}`}><b className={m[0] === 'VICTORY' ? 'positive' : 'negative'}>{m[0]}</b><span>{m[1]}</span><strong>{m[2]}</strong><span>{m[3]}</span><b className={m[4].startsWith('+') ? 'positive' : 'negative'}>{m[4]}</b><span>{m[5]}</span></div>)}</div></div>;
 }
 
-function Community() {
-  const [joined, setJoined] = useState<string[]>([]);
-  return <div className="page community-page"><PageTitle title="COMMUNITY / LFG" text="Find players and groups without leaving the competitive context." action={<Button>CREATE POST</Button>} /><div className="community-grid"><Card className="filters"><h3>FILTERS</h3>{['MODE  5V5', 'REGION  EUW', 'ROLE  ANY', 'RANK  EMERALD+', 'VOICE  OPTIONAL'].map((f) => <button key={f}>{f}</button>)}</Card><Card className="lfg-card"><h3>LOOKING FOR GROUP</h3>{lfg.map(([title, text, count]) => <div className="lfg-row" key={title}><span><strong>{title}</strong><small>{text}</small></span><b>{count}</b><button className={joined.includes(title) ? 'positive' : ''} onClick={() => setJoined((v) => v.includes(title) ? v.filter((x) => x !== title) : [...v, title])}>{joined.includes(title) ? 'JOINED' : 'JOIN'}</button></div>)}</Card></div></div>;
-}
-
 function Profile() { return <div className="page profile-page"><PageTitle title="PROFILE" /><Card className="profile-hero"><h1>NYXARA #EUW</h1><p className="positive">Emerald II&nbsp;&nbsp;•&nbsp;&nbsp;MID main&nbsp;&nbsp;•&nbsp;&nbsp;Online</p><div><span><b>128</b> MATCHES</span><span><b>56%</b> WIN RATE</span><span><b>1482</b> MMR</span></div></Card><div className="tabs"><button className="active">OVERVIEW</button><button>MATCHES</button><button>STATISTICS</button><button>RIOT</button></div><div className="profile-grid"><Card><h3>SEASON STATISTICS</h3>{[['Matches', '128'], ['Win rate', '56%'], ['KDA', '2.8'], ['Avg. duration', '31:42'], ['Positive MMR', '+164']].map(([a,b]) => <div className="stat-row" key={a}><span>{a}</span><b className={a === 'Positive MMR' ? 'positive' : ''}>{b}</b></div>)}</Card><Card><h3>ROLE PROFILE</h3>{[['MID', 48], ['JUNGLE', 28], ['SUPPORT', 14], ['TOP', 6], ['ADC', 4]].map(([role, value]) => <div className="role-stat" key={role}><b>{role}</b><div><i style={{width:`${value}%`}} /></div><span>{value}%</span></div>)}</Card></div></div>; }
 
 const leaderboard = {
@@ -111,5 +98,5 @@ function Settings() {
 
 export default function PinkwardApp() {
   const [page, setPage] = useState<Page>('home');
-  return <Shell page={page} setPage={setPage}>{page === 'home' && <Home go={setPage} />}{page === 'play' && <Play go={setPage} />}{page === 'searching' && <Searching go={setPage} />}{page === 'ready' && <Ready go={setPage} />}{page === 'lobby' && <Lobby />}{page === 'matches' && <Matches />}{page === 'community' && <Community />}{page === 'leaderboard' && <Leaderboard />}{page === 'profile' && <Profile />}{page === 'settings' && <Settings />}</Shell>;
+  return <Shell page={page} setPage={setPage}>{page === 'home' && <Home go={setPage} />}{page === 'play' && <Play go={setPage} />}{page === 'searching' && <Searching go={setPage} />}{page === 'ready' && <Ready go={setPage} />}{page === 'lobby' && <Lobby />}{page === 'matches' && <Matches />}{page === 'leaderboard' && <Leaderboard />}{page === 'profile' && <Profile />}{page === 'settings' && <Settings />}</Shell>;
 }
