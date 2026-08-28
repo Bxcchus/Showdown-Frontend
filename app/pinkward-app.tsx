@@ -23,7 +23,7 @@ const matches = [
 
 function Shell({ page, setPage, children }: { page: Page; setPage: (page: Page) => void; children: ReactNode }) {
   const current = page === 'searching' || page === 'ready' || page === 'lobby' ? 'play' : page;
-  const nav: Array<[Page, string]> = [['home', 'HOME'], ['play', 'PLAY'], ['matches', 'MATCHES'], ['leaderboard', 'LEADERBOARD'], ['profile', 'PROFILE'], ['download', 'DOWNLOAD']];
+  const nav: Array<[Page, string]> = [['home', 'HOME'], ['play', 'PLAY'], ['matches', 'HISTORY'], ['leaderboard', 'LEADERBOARD'], ['profile', 'PROFILE'], ['download', 'DOWNLOAD']];
   return <div className="app-shell"><header className="topbar"><button className="wordmark" onClick={() => setPage('home')}>PINKWARD</button><nav aria-label="Primary navigation">{nav.map(([id, label]) => <button key={id} className={current === id ? 'active' : ''} onClick={() => setPage(id)}>{label}</button>)}</nav><div className="account-links"><button onClick={() => setPage('profile')}>NYXARA</button><button className="online" onClick={() => setPage('settings')}>EUW · ONLINE</button></div></header><main>{children}</main></div>;
 }
 
@@ -75,8 +75,8 @@ function Team({ title, players }: { title: string; players: string[][] }) { retu
 function Lobby() { return <div className="page lobby-page"><PageTitle title="MATCH LOBBY" text="Custom 5v5 · EUW · Lobby ready" /><div className="lobby-grid"><Team title="BLUE TEAM" players={blue} /><div className="lobby-status"><Card><small>READY</small><strong>8/10</strong><b>00:17</b></Card><Button>OPEN</Button></div><Team title="RED TEAM" players={red} /></div></div>; }
 
 function Matches() {
-  const [filter, setFilter] = useState('1V1 GLICKO-2');
-  return <div className="page matches-page"><PageTitle title="MATCH HISTORY" text="Your recent competitive matches." /><div className="tabs">{['1V1 GLICKO-2', '5V5 TRUESKILL'].map((item) => <button className={filter === item ? 'active' : ''} onClick={() => setFilter(item)} key={item}>{item}</button>)}</div><div className="match-table"><div className="match-head"><span>RESULT</span><span>MODE</span><span>ROLE</span><span>DURATION</span><span>MMR</span><span>DATE</span></div>{matches.filter((m) => m[1].toUpperCase() === filter).map((m) => <div className="match-line" key={`${m[0]}${m[3]}`}><b className={m[0] === 'VICTORY' ? 'positive' : 'negative'}>{m[0]}</b><span>{m[1]}</span><strong>{m[2]}</strong><span>{m[3]}</span><b className={m[4].startsWith('+') ? 'positive' : 'negative'}>{m[4]}</b><span>{m[5]}</span></div>)}</div></div>;
+  const [filter, setFilter] = useState('ALL');
+  return <div className="page matches-page"><PageTitle title="HISTORY" text="Your recent competitive matches." /><div className="tabs">{['ALL', '1V1 GLICKO-2', '5V5 TRUESKILL'].map((item) => <button className={filter === item ? 'active' : ''} onClick={() => setFilter(item)} key={item}>{item}</button>)}</div><div className="match-table"><div className="match-head"><span>RESULT</span><span>MODE</span><span>ROLE</span><span>DURATION</span><span>MMR</span><span>DATE</span></div>{matches.filter((m) => filter === 'ALL' || m[1].toUpperCase() === filter).map((m) => <div className="match-line" key={`${m[0]}${m[3]}`}><b className={m[0] === 'VICTORY' ? 'positive' : 'negative'}>{m[0]}</b><span>{m[1]}</span><strong>{m[2]}</strong><span>{m[3]}</span><b className={m[4].startsWith('+') ? 'positive' : 'negative'}>{m[4]}</b><span>{m[5]}</span></div>)}</div></div>;
 }
 
 function Profile() {
