@@ -1,6 +1,7 @@
 'use client';
 
 import { ReactNode, useEffect, useState } from 'react';
+import Image from 'next/image';
 
 type Page = 'home' | 'play' | 'searching' | 'ready' | 'lobby' | 'matches' | 'community' | 'events' | 'profile' | 'settings';
 type Role = 'TOP' | 'JUNGLE' | 'MID' | 'ADC' | 'SUPPORT';
@@ -56,7 +57,8 @@ function Home({ go }: { go: (page: Page) => void }) {
 
 function RolePicker({ label, value, blocked, onChange }: { label: string; value: Role; blocked: Role; onChange: (role: Role) => void }) {
   const roles: Role[] = ['TOP', 'JUNGLE', 'MID', 'ADC', 'SUPPORT'];
-  return <fieldset><legend>{label}</legend><div className="role-picker">{roles.map((role) => <button type="button" key={role} disabled={role === blocked} className={value === role ? 'selected' : ''} onClick={() => onChange(role)}>{role}</button>)}</div></fieldset>;
+  const icons: Record<Role, string> = { TOP: 'top', JUNGLE: 'jungle', MID: 'mid', ADC: 'adc', SUPPORT: 'support' };
+  return <fieldset><legend>{label}</legend><div className="role-picker">{roles.map((role) => <button type="button" key={role} disabled={role === blocked} className={value === role ? 'selected' : ''} onClick={() => onChange(role)} aria-pressed={value === role}><Image src={`/role-icons/${icons[role]}.svg`} alt="" aria-hidden="true" width={28} height={28} /><span>{role}</span></button>)}</div></fieldset>;
 }
 
 function Play({ go }: { go: (page: Page) => void }) {
