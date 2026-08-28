@@ -11,7 +11,7 @@ type TokenResponse = {
   expires_in: number;
 };
 
-type TokenClaims = { sub: string; preferred_username?: string };
+type TokenClaims = { sub: string; preferred_username?: string; scope?: string[] | string };
 type AuthorizationFlow = { state: string; verifier: string; redirectUri: string };
 
 export type UserSession = {
@@ -56,6 +56,12 @@ function decodeClaims(token: string): TokenClaims {
   return JSON.parse(atob(payload + padding)) as TokenClaims;
 }
 
+function hasRequiredScopes(token: string) {
+  const claim = decodeClaims(token).scope;
+  const granted = new Set(Array.isArray(claim) ? claim : (claim ?? '').split(/\s+/).filter(Boolean));
+  return SCOPES.split(' ').every((scope) => granted.has(scope));
+}
+
 function saveSession(tokens: TokenResponse) {
   const claims = decodeClaims(tokens.access_token);
   const session: UserSession = {
@@ -72,11 +78,18 @@ function saveSession(tokens: TokenResponse) {
 export function readSession(): UserSession | null {
   const serialized = sessionStorage.getItem(SESSION_KEY);
   if (!serialized) return null;
-  try { return JSON.parse(serialized) as UserSession; }
+  try {
+    const session = JSON.parse(serialized) as UserSession;
+    if (!hasRequiredScopes(session.accessToken)) {
+      sessionStorage.removeItem(SESSION_KEY);
+      return null;
+    }
+    return session;
+  }
   catch { sessionStorage.removeItem(SESSION_KEY); return null; }
 }
 
-export async function beginLogin() {
+export async function beginLogin(forceConsent = false) {
   const verifier = randomUrlSafe(64);
   const flow: AuthorizationFlow = {
     state: randomUrlSafe(32),
@@ -89,6 +102,7 @@ export async function beginLogin() {
     redirect_uri: flow.redirectUri, state: flow.state,
     code_challenge: await codeChallenge(verifier), code_challenge_method: 'S256',
   });
+  if (forceConsent) parameters.set('prompt', 'consent');
   window.location.assign(`${identityOrigin()}/oauth2/authorize?${parameters}`);
 }
 

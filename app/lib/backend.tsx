@@ -144,6 +144,12 @@ export function BackendProvider({ children }: { children: ReactNode }) {
         headers: { 'Content-Type': 'application/json', 'Idempotency-Key': crypto.randomUUID() },
         body: JSON.stringify({ region: profile?.region ?? 'EUW', mode, primaryRole: primary, secondaryRole: secondary }),
       });
+      if (response.status === 403) {
+        signOut();
+        setSession(null);
+        await beginLogin(true);
+        return false;
+      }
       if (!response.ok) throw new Error(`Impossible de rejoindre la file (${response.status}).`);
       setQueue(await response.json() as QueueEntry);
       return true;
