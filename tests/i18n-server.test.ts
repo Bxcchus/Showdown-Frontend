@@ -114,6 +114,7 @@ describe("route de changement de langue", () => {
     expect(response.headers.get("set-cookie")).toContain(
       "pinkward.language=en",
     );
+    expect(response.headers.get("set-cookie")).toContain("Secure");
   });
 
   it("refuse une langue inconnue et une origine tierce", async () => {

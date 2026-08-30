@@ -4,6 +4,7 @@ import {
   cookieHeader,
   exchangeToken,
   OAuthExchangeError,
+  publicRequestOrigin,
   sessionErrorResponse,
   tokenParameters,
 } from "../_shared";
@@ -52,7 +53,10 @@ export async function POST(request: Request) {
       typeof body.redirectUri !== "string"
     )
       return sessionErrorResponse("Requête incomplète.", 400);
-    const expectedRedirect = new URL("/oauth/callback", request.url).href;
+    const expectedRedirect = new URL(
+      "/oauth/callback",
+      publicRequestOrigin(request),
+    ).href;
     let redirect: string;
     try {
       redirect = new URL(body.redirectUri).href;

@@ -6,6 +6,7 @@ import {
   refreshCookie,
 } from "../app/api/session/_shared";
 import { POST as logout } from "../app/api/session/logout/route";
+import { POST as exchangeAuthorizationCode } from "../app/api/session/token/route";
 import {
   PUBLIC_SCOPES,
   completeLogin,
@@ -66,6 +67,35 @@ describe("sécurité de session", () => {
       },
     });
     expect(() => assertSameOrigin(request)).toThrow();
+  });
+
+  it("échange le code OAuth avec le callback HTTPS public derrière Docker", async () => {
+    vi.stubEnv("SHOWDOWN_WEB_ORIGIN", "https://gyms.lol");
+    vi.stubEnv("PINKWARD_BACKEND_ORIGIN", "https://api.gyms.lol");
+    const fetchMock = vi.fn().mockResolvedValue(
+      Response.json({ access_token: "access-token", expires_in: 3600 }),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+    const response = await exchangeAuthorizationCode(
+      new Request("http://web-app:3000/api/session/token", {
+        method: "POST",
+        headers: {
+          Origin: "https://gyms.lol",
+          "Sec-Fetch-Site": "same-origin",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          code: "authorization-code",
+          verifier: "v".repeat(43),
+          redirectUri: "https://gyms.lol/oauth/callback",
+        }),
+      }),
+    );
+    expect(response.status).toBe(200);
+    const [, init] = fetchMock.mock.calls[0] as [string, RequestInit];
+    expect(String(init.body)).toContain(
+      "redirect_uri=https%3A%2F%2Fgyms.lol%2Foauth%2Fcallback",
+    );
   });
 
   it("lit le cookie sans exposer les autres valeurs", () => {

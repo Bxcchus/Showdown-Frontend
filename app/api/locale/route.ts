@@ -26,7 +26,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const secure = new URL(request.url).protocol === "https:";
+    const secure = new URL(publicRequestOrigin(request)).protocol === "https:";
     const headers = {
       "Set-Cookie": languageCookieHeader(language, secure),
       "Cache-Control": "no-store",
