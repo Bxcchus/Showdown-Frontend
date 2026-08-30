@@ -7,6 +7,7 @@ const SESSION_KEY = "pinkward.oauth.access";
 const FLOW_KEY = "pinkward.oauth.flow";
 const LOGOUT_KEY = "pinkward.oauth.logout";
 const SESSION_INVALIDATED_EVENT = "pinkward:session-invalidated";
+const SESSION_REQUEST_TIMEOUT_MS = 12_000;
 
 type TokenResponse = { access_token: string; expires_in: number };
 type TokenClaims = {
@@ -68,6 +69,36 @@ export class SessionRefreshError extends Error {
   ) {
     super(message);
     this.name = "SessionRefreshError";
+  }
+}
+
+class SessionRequestTimeoutError extends Error {
+  constructor() {
+    super("La préparation de la session a dépassé le délai autorisé.");
+    this.name = "SessionRequestTimeoutError";
+  }
+}
+
+async function sessionFetch(input: RequestInfo | URL, init: RequestInit = {}) {
+  const controller = new AbortController();
+  const timeout = new Promise<never>((_, reject) => {
+    const timer = window.setTimeout(() => {
+      controller.abort();
+      reject(new SessionRequestTimeoutError());
+    }, SESSION_REQUEST_TIMEOUT_MS);
+    controller.signal.addEventListener(
+      "abort",
+      () => window.clearTimeout(timer),
+      { once: true },
+    );
+  });
+  try {
+    return await Promise.race([
+      fetch(input, { ...init, signal: controller.signal }),
+      timeout,
+    ]);
+  } finally {
+    controller.abort();
   }
 }
 
@@ -210,16 +241,25 @@ async function completeAuthorizationCode(): Promise<UserSession | null> {
     throw new Error("Réponse OAuth2 incomplète.");
   const flow = JSON.parse(serialized) as AuthorizationFlow;
   if (state !== flow.state) throw new Error("État OAuth2 invalide.");
-  const response = await fetch("/api/session/token", {
-    method: "POST",
-    credentials: "same-origin",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      code,
-      verifier: flow.verifier,
-      redirectUri: flow.redirectUri,
-    }),
-  });
+  let response: Response;
+  try {
+    response = await sessionFetch("/api/session/token", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        code,
+        verifier: flow.verifier,
+        redirectUri: flow.redirectUri,
+      }),
+    });
+  } catch {
+    storageRemove(sessionStorage, FLOW_KEY);
+    window.history.replaceState({}, "", "/");
+    throw new Error(
+      "La connexion a pris trop de temps. Relance-la depuis GYMS.LOL.",
+    );
+  }
   if (!response.ok) {
     storageRemove(sessionStorage, FLOW_KEY);
     window.history.replaceState({}, "", "/");
@@ -252,7 +292,7 @@ async function performRefresh(epoch: number): Promise<UserSession | null> {
   if (logoutRequested()) return null;
   let response: Response;
   try {
-    response = await fetch("/api/session/refresh", {
+    response = await sessionFetch("/api/session/refresh", {
       method: "POST",
       credentials: "same-origin",
     });

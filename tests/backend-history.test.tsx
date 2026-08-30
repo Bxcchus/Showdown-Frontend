@@ -152,6 +152,19 @@ describe("ressource historique du BackendProvider", () => {
     expect(screen.getByTestId("history")).toHaveTextContent("na-match");
   });
 
+  it("quitte la préparation dès que la session est établie même si les données restent lentes", async () => {
+    const pending = deferred<Response>();
+    auth.authenticatedFetch.mockImplementation(() => pending.promise);
+
+    mount();
+
+    await waitFor(() =>
+      expect(screen.getByTestId("session-status")).toHaveTextContent(
+        "AUTHENTICATED",
+      ),
+    );
+  });
+
   it("n’autorise pas une réponse en vol à repeupler l’historique après logout", async () => {
     const pending = deferred<Response>();
     auth.authenticatedFetch.mockImplementation(async (path: string) => {

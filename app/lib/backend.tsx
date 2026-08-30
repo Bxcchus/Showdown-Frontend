@@ -458,11 +458,14 @@ export function BackendProvider({ children }: { children: ReactNode }) {
         .then((response) => setBackendOnline(response.ok))
         .catch(() => setBackendOnline(false));
       completeLogin()
-        .then(async (connected) => {
+        .then((connected) => {
           setSession(connected);
           if (connected) {
-            await refresh();
             setSessionStatus("AUTHENTICATED");
+            // Authentication is complete at this point. Account and match data
+            // load in the background so one slow microservice cannot leave the
+            // entire application stuck on the preparation screen.
+            void refresh();
           } else {
             setSessionStatus("ANONYMOUS");
             setRealtimeStatus("IDLE");
@@ -996,11 +999,7 @@ export function BackendProvider({ children }: { children: ReactNode }) {
             challengeId: string;
             expiresAt: string;
           };
-          const watcher = await watcherFetch(
-            "/v1/identity",
-            {},
-            true,
-          );
+          const watcher = await watcherFetch("/v1/identity", {}, true);
           if (!watcher.ok)
             throw new Error(
               await errorMessage(

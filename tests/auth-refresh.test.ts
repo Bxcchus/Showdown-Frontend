@@ -71,6 +71,42 @@ describe("refresh OAuth mutualisé", () => {
     expect(sessionStorage.getItem("pinkward.oauth.flow")).toBeNull();
   });
 
+  it("abandonne proprement un échange OAuth bloqué au lieu de préparer la session indéfiniment", async () => {
+    vi.useFakeTimers();
+    try {
+      vi.stubGlobal(
+        "fetch",
+        vi.fn(() => new Promise<Response>(() => {})),
+      );
+      sessionStorage.setItem(
+        "pinkward.oauth.flow",
+        JSON.stringify({
+          state: "slow-callback-state",
+          verifier: "a".repeat(64),
+          redirectUri: "https://gyms.lol/oauth/callback",
+        }),
+      );
+      window.history.replaceState(
+        {},
+        "",
+        "/oauth/callback?code=slow-code&state=slow-callback-state",
+      );
+      const auth = await import("../app/lib/auth");
+      const completion = auth.completeLogin();
+      const rejection = expect(completion).rejects.toThrow(
+        "La connexion a pris trop de temps",
+      );
+
+      await vi.advanceTimersByTimeAsync(12_001);
+      await rejection;
+
+      expect(window.location.pathname).toBe("/");
+      expect(sessionStorage.getItem("pinkward.oauth.flow")).toBeNull();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
   it("partage un refresh entre les requêtes HTTP et le WebSocket", async () => {
     const gate = deferred<Response>();
     let refreshCalls = 0;
