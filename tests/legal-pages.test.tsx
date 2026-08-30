@@ -24,13 +24,34 @@ describe("legal pages", () => {
   });
 
   it.each([
-    ["legal", "MENTIONS LÉGALES"],
     ["privacy", "POLITIQUE DE CONFIDENTIALITÉ"],
     ["terms", "CONDITIONS D’UTILISATION"],
-  ] as const)("renders the French %s document", (document, title) => {
+  ] as const)("renders the unfinished French %s document", (document, title) => {
     renderDocument(document);
     expect(screen.getByRole("heading", { name: title })).toBeInTheDocument();
     expect(screen.getByText(/À FINALISER/i)).toBeInTheDocument();
+  });
+
+  it("renders the completed French notice for a non-professional publisher", () => {
+    renderDocument("legal");
+    expect(
+      screen.getByRole("heading", { name: "MENTIONS LÉGALES" }),
+    ).toBeInTheDocument();
+    expect(screen.queryByText(/À FINALISER/i)).not.toBeInTheDocument();
+    expect(screen.getByText("ÉDITEUR NON PROFESSIONNEL")).toBeInTheDocument();
+    expect(screen.getByText(/article 1-1, II/i)).toBeInTheDocument();
+    expect(screen.getByText(/OVH SAS/i)).toBeInTheDocument();
+    expect(screen.getByText(/2 rue Kellermann/i)).toBeInTheDocument();
+  });
+
+  it("renders the completed English legal notice", () => {
+    renderDocument("legal", "en");
+    expect(
+      screen.getByRole("heading", { name: "LEGAL NOTICE" }),
+    ).toBeInTheDocument();
+    expect(screen.queryByText(/TO BE FINALISED/i)).not.toBeInTheDocument();
+    expect(screen.getByText("NON-PROFESSIONAL PUBLISHER")).toBeInTheDocument();
+    expect(screen.getByText(/OVH SAS/i)).toBeInTheDocument();
   });
 
   it("renders the complete English privacy document", () => {

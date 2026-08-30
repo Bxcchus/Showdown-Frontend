@@ -15,6 +15,7 @@ type DocumentCopy = {
   eyebrow: string;
   title: string;
   introduction: string;
+  noticeLabel: string;
   notice: string;
   sections: Section[];
 };
@@ -25,32 +26,43 @@ const documents: Record<"fr" | "en", Record<LegalDocument, DocumentCopy>> = {
       eyebrow: "INFORMATIONS LÉGALES",
       title: "MENTIONS LÉGALES",
       introduction:
-        "Informations relatives à l’édition, à l’hébergement et à la propriété intellectuelle de Pinkward.",
+        "Informations relatives à l’éditeur non professionnel, à l’hébergement et à l’utilisation de Pinkward.",
+      noticeLabel: "ÉDITEUR NON PROFESSIONNEL",
       notice:
-        "Version de développement local. L’identité juridique, l’adresse, le directeur de publication et l’hébergeur de production doivent être complétés avant toute ouverture publique.",
+        "Pinkward est édité à titre personnel et non professionnel par une personne physique. Il ne s’agit ni d’une société ni d’une activité commerciale.",
       sections: [
         {
-          title: "Éditeur du service",
+          title: "Éditeur non professionnel",
           paragraphs: [
-            "Pinkward est actuellement un projet communautaire en développement local. L’éditeur légal, sa forme juridique, son adresse, ses coordonnées et, le cas échéant, son numéro d’immatriculation restent à renseigner avant la mise en production.",
+            "Pinkward est édité par une personne physique résidant en France, à titre non professionnel.",
+            "Conformément à l’article 1-1, II, de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l’économie numérique (LCEN), l’éditeur a choisi de préserver son anonymat. Les éléments d’identification personnelle requis ont été communiqués à l’hébergeur.",
           ],
         },
         {
           title: "Direction de la publication",
           paragraphs: [
-            "Le nom du directeur ou de la directrice de publication doit être ajouté lorsque l’entité responsable du service sera constituée ou identifiée.",
+            "La direction de la publication est assurée par l’éditeur personne physique. Son identité n’est pas rendue publique dans le cadre du régime applicable aux éditeurs non professionnels.",
           ],
         },
         {
           title: "Hébergement",
           paragraphs: [
-            "Cette version est exécutée localement dans une infrastructure Docker accessible uniquement en loopback. Le nom, l’adresse et les coordonnées de l’hébergeur devront être publiés avant un déploiement accessible au public.",
+            "Le service est hébergé par OVH SAS, société par actions simplifiée immatriculée au RCS de Lille Métropole sous le numéro 424 761 419, dont le siège social est situé 2 rue Kellermann, 59100 Roubaix, France.",
+            "Site de l’hébergeur : www.ovhcloud.com.",
           ],
         },
         {
-          title: "Contact",
+          title: "Contact, signalement et droit de réponse",
           paragraphs: [
-            "Une adresse de contact dédiée à l’éditeur et aux demandes relatives aux données personnelles doit être renseignée avant la publication du service.",
+            "Toute demande légale, demande de droit de réponse ou notification relative à un contenu peut être adressée à l’hébergeur, en indiquant précisément l’adresse du site et le contenu concerné, afin qu’elle soit transmise à l’éditeur.",
+            "Les demandes concernant les données personnelles suivent la procédure indiquée dans la politique de confidentialité de Pinkward.",
+          ],
+        },
+        {
+          title: "Nature du service",
+          paragraphs: [
+            "Pinkward est un projet communautaire indépendant consacré à l’organisation et au suivi de parties personnalisées. Le service est actuellement proposé à titre non professionnel et sans vente de biens ou de services.",
+            "Les présentes mentions devront être mises à jour si l’activité devient professionnelle ou commerciale.",
           ],
         },
         {
@@ -63,7 +75,14 @@ const documents: Record<"fr" | "en", Record<LegalDocument, DocumentCopy>> = {
         {
           title: "Responsabilité",
           paragraphs: [
-            "Le service est encore en développement. Son fonctionnement, ses données de test et sa disponibilité peuvent évoluer. Les informations de cette page devront être revues par le responsable du projet avant une exploitation publique.",
+            "L’éditeur met en œuvre des moyens raisonnables pour assurer l’exactitude et la disponibilité du service, sans pouvoir garantir une absence totale d’erreur ou d’interruption. Il ne saurait être tenu responsable au-delà des limites prévues par la loi.",
+            "Les liens vers des services tiers sont fournis à titre pratique. Leur contenu et leur disponibilité relèvent de leurs éditeurs respectifs.",
+          ],
+        },
+        {
+          title: "Droit applicable",
+          paragraphs: [
+            "Les présentes mentions légales sont soumises au droit français, sous réserve des règles impératives éventuellement applicables.",
           ],
         },
       ],
@@ -73,6 +92,7 @@ const documents: Record<"fr" | "en", Record<LegalDocument, DocumentCopy>> = {
       title: "POLITIQUE DE CONFIDENTIALITÉ",
       introduction:
         "Cette page décrit les données utilisées par Pinkward et le fonctionnement actuel de la version locale.",
+      noticeLabel: "À FINALISER",
       notice:
         "Cette politique décrit l’implémentation actuelle. Le responsable du traitement, les bases légales et les durées définitives devront être formalisés avant la mise en production.",
       sections: [
@@ -134,6 +154,7 @@ const documents: Record<"fr" | "en", Record<LegalDocument, DocumentCopy>> = {
       title: "CONDITIONS D’UTILISATION",
       introduction:
         "Règles essentielles applicables à l’utilisation des fonctionnalités compétitives de Pinkward.",
+      noticeLabel: "À FINALISER",
       notice:
         "Projet en développement : ces conditions constituent une base fonctionnelle et devront être validées et complétées avant l’ouverture au public.",
       sections: [
@@ -190,32 +211,43 @@ const documents: Record<"fr" | "en", Record<LegalDocument, DocumentCopy>> = {
       eyebrow: "LEGAL INFORMATION",
       title: "LEGAL NOTICE",
       introduction:
-        "Information about Pinkward’s publisher, hosting and intellectual property.",
+        "Information about Pinkward’s non-professional publisher, hosting and use.",
+      noticeLabel: "NON-PROFESSIONAL PUBLISHER",
       notice:
-        "Local development version. The legal entity, address, publication director and production host must be completed before any public launch.",
+        "Pinkward is personally published on a non-professional basis by an individual. It is neither a company nor a commercial activity.",
       sections: [
         {
-          title: "Service publisher",
+          title: "Non-professional publisher",
           paragraphs: [
-            "Pinkward is currently a community project under local development. The legal publisher, legal form, address, contact details and registration number, where applicable, must be provided before production.",
+            "Pinkward is published by an individual residing in France on a non-professional basis.",
+            "Under Article 1-1(II) of French Act No. 2004-575 of 21 June 2004 on confidence in the digital economy (LCEN), the publisher has chosen to preserve their anonymity. The required personal identification details have been provided to the hosting provider.",
           ],
         },
         {
           title: "Publication director",
           paragraphs: [
-            "The publication director’s name must be added once the entity responsible for the service has been established or identified.",
+            "The individual publisher acts as publication director. Their identity is not made public under the rules applicable to non-professional publishers.",
           ],
         },
         {
           title: "Hosting",
           paragraphs: [
-            "This version runs locally in a loopback-only Docker environment. The production hosting provider’s name, address and contact details must be published before public deployment.",
+            "The service is hosted by OVH SAS, a simplified joint-stock company registered with the Lille Métropole Trade and Companies Register under number 424 761 419, whose registered office is located at 2 rue Kellermann, 59100 Roubaix, France.",
+            "Hosting provider website: www.ovhcloud.com.",
           ],
         },
         {
-          title: "Contact",
+          title: "Contact, reporting and right of reply",
           paragraphs: [
-            "A dedicated publisher and data-protection contact address must be provided before the service is published.",
+            "Legal requests, right-of-reply requests or content notifications may be sent to the hosting provider, clearly identifying the website address and the content concerned, so they can be forwarded to the publisher.",
+            "Requests concerning personal data follow the process described in Pinkward’s privacy policy.",
+          ],
+        },
+        {
+          title: "Nature of the service",
+          paragraphs: [
+            "Pinkward is an independent community project for organising and tracking custom games. The service is currently provided on a non-professional basis and does not sell goods or services.",
+            "This legal notice must be updated if the activity becomes professional or commercial.",
           ],
         },
         {
@@ -228,7 +260,14 @@ const documents: Record<"fr" | "en", Record<LegalDocument, DocumentCopy>> = {
         {
           title: "Liability",
           paragraphs: [
-            "The service is still under development. Its operation, test data and availability may change. This page must be reviewed by the project owner before public operation.",
+            "The publisher takes reasonable steps to ensure the accuracy and availability of the service but cannot guarantee that it will always be error-free or uninterrupted. Liability is not excluded beyond the limits permitted by law.",
+            "Links to third-party services are provided for convenience. Their content and availability remain the responsibility of their respective publishers.",
+          ],
+        },
+        {
+          title: "Applicable law",
+          paragraphs: [
+            "This legal notice is governed by French law, subject to any mandatory rules that may apply.",
           ],
         },
       ],
@@ -238,6 +277,7 @@ const documents: Record<"fr" | "en", Record<LegalDocument, DocumentCopy>> = {
       title: "PRIVACY POLICY",
       introduction:
         "This page describes the data used by Pinkward and the current local version’s operation.",
+      noticeLabel: "TO BE FINALISED",
       notice:
         "This policy describes the current implementation. The controller, legal bases and final retention periods must be formalised before production.",
       sections: [
@@ -299,6 +339,7 @@ const documents: Record<"fr" | "en", Record<LegalDocument, DocumentCopy>> = {
       title: "TERMS OF USE",
       introduction:
         "Core rules governing the use of Pinkward’s competitive features.",
+      noticeLabel: "TO BE FINALISED",
       notice:
         "Development project: these terms are a functional baseline and must be reviewed and completed before public launch.",
       sections: [
@@ -364,7 +405,7 @@ export default function LegalPage({ document }: { document: LegalDocument }) {
         text={copy.introduction}
       />
       <aside className="legal-notice" role="note">
-        <strong>{language === "fr" ? "À FINALISER" : "TO BE FINALISED"}</strong>
+        <strong>{copy.noticeLabel}</strong>
         <p>{copy.notice}</p>
       </aside>
       <div className="legal-sections">
@@ -386,8 +427,8 @@ export default function LegalPage({ document }: { document: LegalDocument }) {
       </div>
       <p className="legal-updated">
         {language === "fr"
-          ? "Dernière mise à jour : 29 août 2026"
-          : "Last updated: 29 August 2026"}
+          ? "Dernière mise à jour : 30 août 2026"
+          : "Last updated: 30 August 2026"}
       </p>
     </div>
   );
