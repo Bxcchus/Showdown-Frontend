@@ -26,10 +26,10 @@ describe("legal pages", () => {
   it.each([
     ["privacy", "POLITIQUE DE CONFIDENTIALITÉ"],
     ["terms", "CONDITIONS D’UTILISATION"],
-  ] as const)("renders the unfinished French %s document", (document, title) => {
+  ] as const)("renders the completed French %s document", (document, title) => {
     renderDocument(document);
     expect(screen.getByRole("heading", { name: title })).toBeInTheDocument();
-    expect(screen.getByText(/À FINALISER/i)).toBeInTheDocument();
+    expect(screen.queryByText(/À FINALISER/i)).not.toBeInTheDocument();
   });
 
   it("renders the completed French notice for a non-professional publisher", () => {
@@ -59,7 +59,7 @@ describe("legal pages", () => {
     expect(
       screen.getByRole("heading", { name: "PRIVACY POLICY" }),
     ).toBeInTheDocument();
-    expect(screen.getByText(/TO BE FINALISED/i)).toBeInTheDocument();
+    expect(screen.queryByText(/TO BE FINALISED/i)).not.toBeInTheDocument();
     expect(
       screen.getByRole("heading", { name: "Individual rights" }),
     ).toBeInTheDocument();
