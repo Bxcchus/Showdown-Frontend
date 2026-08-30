@@ -154,7 +154,7 @@ describe("sécurité de session", () => {
   it("limite la CSP hébergée aux origines GYMS.LOL attendues", () => {
     const hostedHeaders = readFileSync("public/_headers", "utf8");
     expect(hostedHeaders).toContain(
-      "connect-src 'self' https://api.pinkward.lol wss://api.pinkward.lol http://127.0.0.1:43991",
+      "connect-src 'self' https://api.gyms.lol wss://api.gyms.lol http://127.0.0.1:43991",
     );
     expect(hostedHeaders).toContain("form-action 'self'");
     expect(hostedHeaders).not.toContain("connect-src 'self' https: wss:");

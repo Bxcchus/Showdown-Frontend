@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { pagePaths, type Page } from "./navigation";
 import type { Language } from "./i18n-shared";
 
-const SITE_URL = "https://gyms-lol.guy-alexis60.chatgpt.site";
+const SITE_URL = "https://gyms.lol";
 const SOCIAL_IMAGE = `${SITE_URL}/og.png`;
 
 const siteCopy: Record<
