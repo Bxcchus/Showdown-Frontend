@@ -35,6 +35,42 @@ describe("refresh OAuth mutualisé", () => {
     window.history.replaceState({}, "", "/");
   });
 
+  it("n’échange qu’une fois un callback OAuth monté plusieurs fois", async () => {
+    const gate = deferred<Response>();
+    const fetchMock = vi.fn(() => gate.promise);
+    vi.stubGlobal("fetch", fetchMock);
+    sessionStorage.setItem(
+      "pinkward.oauth.flow",
+      JSON.stringify({
+        state: "callback-state",
+        verifier: "a".repeat(64),
+        redirectUri: "https://gyms.lol/oauth/callback",
+      }),
+    );
+    window.history.replaceState(
+      {},
+      "",
+      "/oauth/callback?code=one-time-code&state=callback-state",
+    );
+    const auth = await import("../app/lib/auth");
+
+    const first = auth.completeLogin();
+    const second = auth.completeLogin();
+    await vi.waitFor(() => expect(fetchMock).toHaveBeenCalledOnce());
+    gate.resolve(
+      Response.json({
+        access_token: accessToken("callback-player"),
+        expires_in: 3600,
+      }),
+    );
+
+    const [firstSession, secondSession] = await Promise.all([first, second]);
+    expect(firstSession?.accessToken).toBe(secondSession?.accessToken);
+    expect(fetchMock).toHaveBeenCalledOnce();
+    expect(window.location.pathname).toBe("/");
+    expect(sessionStorage.getItem("pinkward.oauth.flow")).toBeNull();
+  });
+
   it("partage un refresh entre les requêtes HTTP et le WebSocket", async () => {
     const gate = deferred<Response>();
     let refreshCalls = 0;

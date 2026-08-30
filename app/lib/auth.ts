@@ -28,6 +28,7 @@ export type UserSession = {
 };
 
 let inMemorySession: UserSession | null = null;
+let loginCompletionInFlight: Promise<UserSession | null> | null = null;
 let refreshInFlight: Promise<UserSession | null> | null = null;
 let signOutInFlight: Promise<void> | null = null;
 let authEpoch = 0;
@@ -194,11 +195,7 @@ export async function beginLogin(forceConsent = false) {
   window.location.assign(`${backendOrigin()}/oauth2/authorize?${parameters}`);
 }
 
-export async function completeLogin(): Promise<UserSession | null> {
-  if (window.location.pathname !== "/oauth/callback") {
-    if (logoutRequested()) return null;
-    return readSession() ?? refreshSession();
-  }
+async function completeAuthorizationCode(): Promise<UserSession | null> {
   const query = new URLSearchParams(window.location.search);
   if (query.get("error"))
     throw new Error(
@@ -223,12 +220,32 @@ export async function completeLogin(): Promise<UserSession | null> {
       redirectUri: flow.redirectUri,
     }),
   });
-  if (!response.ok) throw new Error("Échange du code OAuth2 refusé.");
+  if (!response.ok) {
+    storageRemove(sessionStorage, FLOW_KEY);
+    window.history.replaceState({}, "", "/");
+    throw new Error("Échange du code OAuth2 refusé.");
+  }
   storageRemove(sessionStorage, FLOW_KEY);
   storageRemove(localStorage, LOGOUT_KEY);
   const session = saveAccessSession((await response.json()) as TokenResponse);
   window.history.replaceState({}, "", "/");
   return session;
+}
+
+export function completeLogin(): Promise<UserSession | null> {
+  if (window.location.pathname !== "/oauth/callback") {
+    if (logoutRequested()) return null;
+    return Promise.resolve(readSession()).then(
+      (session) => session ?? refreshSession(),
+    );
+  }
+  if (loginCompletionInFlight) return loginCompletionInFlight;
+  const operation = completeAuthorizationCode();
+  const tracked = operation.finally(() => {
+    if (loginCompletionInFlight === tracked) loginCompletionInFlight = null;
+  });
+  loginCompletionInFlight = tracked;
+  return tracked;
 }
 
 async function performRefresh(epoch: number): Promise<UserSession | null> {
