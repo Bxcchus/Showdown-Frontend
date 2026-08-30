@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { POST } from "../app/api/locale/route";
 import { pageMetadata, siteMetadata } from "../app/lib/i18n-metadata";
 import {
@@ -64,6 +64,8 @@ describe("résolution serveur de la langue", () => {
 });
 
 describe("route de changement de langue", () => {
+  afterEach(() => vi.unstubAllEnvs());
+
   it("pose le cookie et revient sur la route même origine", async () => {
     const response = await POST(localeRequest("en"));
     expect(response.status).toBe(303);
@@ -93,6 +95,22 @@ describe("route de changement de langue", () => {
     const response = await POST(request);
     expect(response.status).toBe(204);
     expect(response.headers.get("location")).toBeNull();
+    expect(response.headers.get("set-cookie")).toContain(
+      "pinkward.language=en",
+    );
+  });
+
+  it("fonctionne derrière le proxy avec l’origine publique configurée", async () => {
+    vi.stubEnv("SHOWDOWN_WEB_ORIGIN", "https://gyms.lol");
+    const response = await POST(
+      localeRequest("en", {
+        url: "http://web-app:3000/api/locale",
+        origin: "https://gyms.lol",
+        referer: "https://gyms.lol/play",
+      }),
+    );
+    expect(response.status).toBe(303);
+    expect(response.headers.get("location")).toBe("/play");
     expect(response.headers.get("set-cookie")).toContain(
       "pinkward.language=en",
     );

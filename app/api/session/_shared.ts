@@ -21,6 +21,28 @@ export class OAuthExchangeError extends Error {
 
 const refreshExchanges = new Map<string, Promise<OAuthTokenSet>>();
 
+export function publicRequestOrigin(request: Request) {
+  const configured = (process.env.SHOWDOWN_WEB_ORIGIN ?? "").trim();
+  if (!configured) return new URL(request.url).origin;
+  let parsed: URL;
+  try {
+    parsed = new URL(configured);
+  } catch {
+    throw new Response("Origine publique non configurée.", { status: 503 });
+  }
+  if (
+    parsed.username ||
+    parsed.password ||
+    parsed.pathname !== "/" ||
+    parsed.search ||
+    parsed.hash ||
+    (process.env.NODE_ENV === "production" && parsed.protocol !== "https:") ||
+    !["http:", "https:"].includes(parsed.protocol)
+  )
+    throw new Response("Origine publique non configurée.", { status: 503 });
+  return parsed.origin;
+}
+
 function backendOrigin() {
   const configured = (
     process.env.PINKWARD_BACKEND_ORIGIN ??
@@ -51,7 +73,7 @@ export function assertSameOrigin(request: Request) {
   const fetchSite = request.headers.get("sec-fetch-site");
   if (
     !origin ||
-    origin !== new URL(request.url).origin ||
+    origin !== publicRequestOrigin(request) ||
     (fetchSite !== null && fetchSite !== "same-origin")
   )
     throw new Response("Origine refusée.", { status: 403 });

@@ -1,4 +1,4 @@
-import { assertSameOrigin } from "../session/_shared";
+import { assertSameOrigin, publicRequestOrigin } from "../session/_shared";
 import { isLanguage, languageCookieHeader } from "../../lib/i18n-shared";
 
 function safeReturnLocation(request: Request) {
@@ -7,7 +7,7 @@ function safeReturnLocation(request: Request) {
   if (!referer) return fallback;
   try {
     const source = new URL(referer);
-    if (source.origin !== new URL(request.url).origin) return fallback;
+    if (source.origin !== publicRequestOrigin(request)) return fallback;
     return `${source.pathname}${source.search}${source.hash}` || fallback;
   } catch {
     return fallback;

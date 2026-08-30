@@ -44,6 +44,30 @@ describe("sécurité de session", () => {
     expect(() => assertSameOrigin(request)).toThrow();
   });
 
+  it("accepte l’origine publique configurée derrière le proxy Docker", () => {
+    vi.stubEnv("SHOWDOWN_WEB_ORIGIN", "https://gyms.lol");
+    const request = new Request("http://web-app:3000/api/session/refresh", {
+      method: "POST",
+      headers: {
+        Origin: "https://gyms.lol",
+        "Sec-Fetch-Site": "same-origin",
+      },
+    });
+    expect(() => assertSameOrigin(request)).not.toThrow();
+  });
+
+  it("refuse une autre origine même derrière le proxy Docker", () => {
+    vi.stubEnv("SHOWDOWN_WEB_ORIGIN", "https://gyms.lol");
+    const request = new Request("http://web-app:3000/api/session/refresh", {
+      method: "POST",
+      headers: {
+        Origin: "https://attacker.example",
+        "Sec-Fetch-Site": "cross-site",
+      },
+    });
+    expect(() => assertSameOrigin(request)).toThrow();
+  });
+
   it("lit le cookie sans exposer les autres valeurs", () => {
     const request = new Request("http://localhost:3000/api/session/refresh", {
       headers: { Cookie: "foo=bar; pinkward_refresh=abc123" },
