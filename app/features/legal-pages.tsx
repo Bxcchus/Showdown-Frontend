@@ -26,15 +26,15 @@ const documents: Record<"fr" | "en", Record<LegalDocument, DocumentCopy>> = {
       eyebrow: "INFORMATIONS LÉGALES",
       title: "MENTIONS LÉGALES",
       introduction:
-        "Informations relatives à l’éditeur non professionnel, à l’hébergement et à l’utilisation de Pinkward.",
+        "Informations relatives à l’éditeur non professionnel, à l’hébergement et à l’utilisation de GYMS.LOL.",
       noticeLabel: "ÉDITEUR NON PROFESSIONNEL",
       notice:
-        "Pinkward est édité à titre personnel et non professionnel par une personne physique. Il ne s’agit ni d’une société ni d’une activité commerciale.",
+        "GYMS.LOL est édité à titre personnel et non professionnel par une personne physique. Il ne s’agit ni d’une société ni d’une activité commerciale.",
       sections: [
         {
           title: "Éditeur non professionnel",
           paragraphs: [
-            "Pinkward est édité par une personne physique résidant en France, à titre non professionnel.",
+            "GYMS.LOL est édité par une personne physique résidant en France, à titre non professionnel.",
             "Conformément à l’article 1-1, II, de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l’économie numérique (LCEN), l’éditeur a choisi de préserver son anonymat. Les éléments d’identification personnelle requis ont été communiqués à l’hébergeur.",
           ],
         },
@@ -55,21 +55,21 @@ const documents: Record<"fr" | "en", Record<LegalDocument, DocumentCopy>> = {
           title: "Contact, signalement et droit de réponse",
           paragraphs: [
             "Toute demande légale, demande de droit de réponse ou notification relative à un contenu peut être adressée à l’hébergeur, en indiquant précisément l’adresse du site et le contenu concerné, afin qu’elle soit transmise à l’éditeur.",
-            "Les demandes concernant les données personnelles suivent la procédure indiquée dans la politique de confidentialité de Pinkward.",
+            "Les demandes concernant les données personnelles suivent la procédure indiquée dans la politique de confidentialité de GYMS.LOL.",
           ],
         },
         {
           title: "Nature du service",
           paragraphs: [
-            "Pinkward est un projet communautaire indépendant consacré à l’organisation et au suivi de parties personnalisées. Le service est actuellement proposé à titre non professionnel et sans vente de biens ou de services.",
+            "GYMS.LOL est un projet communautaire indépendant consacré à l’organisation et au suivi de parties personnalisées. Le service est actuellement proposé à titre non professionnel et sans vente de biens ou de services.",
             "Les présentes mentions devront être mises à jour si l’activité devient professionnelle ou commerciale.",
           ],
         },
         {
           title: "Propriété intellectuelle et marques tierces",
           paragraphs: [
-            "Les éléments propres à Pinkward sont protégés selon les droits applicables. League of Legends, Riot Games et leurs éléments graphiques appartiennent à leurs titulaires respectifs.",
-            "Pinkward est un projet communautaire indépendant, non approuvé, non sponsorisé et non affilié à Riot Games.",
+            "Les éléments propres à GYMS.LOL sont protégés selon les droits applicables. League of Legends, Riot Games et leurs éléments graphiques appartiennent à leurs titulaires respectifs.",
+            "GYMS.LOL est un projet communautaire indépendant, non approuvé, non sponsorisé et non affilié à Riot Games.",
           ],
         },
         {
@@ -91,7 +91,7 @@ const documents: Record<"fr" | "en", Record<LegalDocument, DocumentCopy>> = {
       eyebrow: "DONNÉES PERSONNELLES",
       title: "POLITIQUE DE CONFIDENTIALITÉ",
       introduction:
-        "Cette page décrit les données utilisées par Pinkward et le fonctionnement actuel de la version locale.",
+        "Cette page décrit les données utilisées par GYMS.LOL et le fonctionnement actuel de la version locale.",
       noticeLabel: "À FINALISER",
       notice:
         "Cette politique décrit l’implémentation actuelle. Le responsable du traitement, les bases légales et les durées définitives devront être formalisés avant la mise en production.",
@@ -131,7 +131,7 @@ const documents: Record<"fr" | "en", Record<LegalDocument, DocumentCopy>> = {
         {
           title: "Destinataires et sécurité",
           paragraphs: [
-            "Dans la version locale, les données circulent uniquement entre les services Pinkward nécessaires au fonctionnement. Les accès sont protégés par OAuth2/OIDC, JWT et des contrôles de périmètre. Pinkward ne vend pas les données des joueurs.",
+            "Dans la version locale, les données circulent uniquement entre les services GYMS.LOL nécessaires au fonctionnement. Les accès sont protégés par OAuth2/OIDC, JWT et des contrôles de périmètre. GYMS.LOL ne vend pas les données des joueurs.",
           ],
         },
         {
@@ -153,7 +153,7 @@ const documents: Record<"fr" | "en", Record<LegalDocument, DocumentCopy>> = {
       eyebrow: "RÈGLES DU SERVICE",
       title: "CONDITIONS D’UTILISATION",
       introduction:
-        "Règles essentielles applicables à l’utilisation des fonctionnalités compétitives de Pinkward.",
+        "Règles essentielles applicables à l’utilisation des fonctionnalités compétitives de GYMS.LOL.",
       noticeLabel: "À FINALISER",
       notice:
         "Projet en développement : ces conditions constituent une base fonctionnelle et devront être validées et complétées avant l’ouverture au public.",
@@ -182,7 +182,7 @@ const documents: Record<"fr" | "en", Record<LegalDocument, DocumentCopy>> = {
         {
           title: "Watcher local",
           paragraphs: [
-            "Le Watcher est limité à l’automatisation et à la vérification des parties personnalisées prévues par Pinkward. Il ne doit pas être modifié ou utilisé pour obtenir un avantage en jeu.",
+            "Le Watcher est limité à l’automatisation et à la vérification des parties personnalisées prévues par GYMS.LOL. Il ne doit pas être modifié ou utilisé pour obtenir un avantage en jeu.",
           ],
         },
         {
@@ -211,15 +211,15 @@ const documents: Record<"fr" | "en", Record<LegalDocument, DocumentCopy>> = {
       eyebrow: "LEGAL INFORMATION",
       title: "LEGAL NOTICE",
       introduction:
-        "Information about Pinkward’s non-professional publisher, hosting and use.",
+        "Information about GYMS.LOL’s non-professional publisher, hosting and use.",
       noticeLabel: "NON-PROFESSIONAL PUBLISHER",
       notice:
-        "Pinkward is personally published on a non-professional basis by an individual. It is neither a company nor a commercial activity.",
+        "GYMS.LOL is personally published on a non-professional basis by an individual. It is neither a company nor a commercial activity.",
       sections: [
         {
           title: "Non-professional publisher",
           paragraphs: [
-            "Pinkward is published by an individual residing in France on a non-professional basis.",
+            "GYMS.LOL is published by an individual residing in France on a non-professional basis.",
             "Under Article 1-1(II) of French Act No. 2004-575 of 21 June 2004 on confidence in the digital economy (LCEN), the publisher has chosen to preserve their anonymity. The required personal identification details have been provided to the hosting provider.",
           ],
         },
@@ -240,21 +240,21 @@ const documents: Record<"fr" | "en", Record<LegalDocument, DocumentCopy>> = {
           title: "Contact, reporting and right of reply",
           paragraphs: [
             "Legal requests, right-of-reply requests or content notifications may be sent to the hosting provider, clearly identifying the website address and the content concerned, so they can be forwarded to the publisher.",
-            "Requests concerning personal data follow the process described in Pinkward’s privacy policy.",
+            "Requests concerning personal data follow the process described in GYMS.LOL’s privacy policy.",
           ],
         },
         {
           title: "Nature of the service",
           paragraphs: [
-            "Pinkward is an independent community project for organising and tracking custom games. The service is currently provided on a non-professional basis and does not sell goods or services.",
+            "GYMS.LOL is an independent community project for organising and tracking custom games. The service is currently provided on a non-professional basis and does not sell goods or services.",
             "This legal notice must be updated if the activity becomes professional or commercial.",
           ],
         },
         {
           title: "Intellectual property and third-party marks",
           paragraphs: [
-            "Pinkward-specific materials are protected under applicable rights. League of Legends, Riot Games and their visual assets belong to their respective owners.",
-            "Pinkward is an independent community project and is not endorsed, sponsored by or affiliated with Riot Games.",
+            "GYMS.LOL-specific materials are protected under applicable rights. League of Legends, Riot Games and their visual assets belong to their respective owners.",
+            "GYMS.LOL is an independent community project and is not endorsed, sponsored by or affiliated with Riot Games.",
           ],
         },
         {
@@ -276,7 +276,7 @@ const documents: Record<"fr" | "en", Record<LegalDocument, DocumentCopy>> = {
       eyebrow: "PERSONAL DATA",
       title: "PRIVACY POLICY",
       introduction:
-        "This page describes the data used by Pinkward and the current local version’s operation.",
+        "This page describes the data used by GYMS.LOL and the current local version’s operation.",
       noticeLabel: "TO BE FINALISED",
       notice:
         "This policy describes the current implementation. The controller, legal bases and final retention periods must be formalised before production.",
@@ -316,7 +316,7 @@ const documents: Record<"fr" | "en", Record<LegalDocument, DocumentCopy>> = {
         {
           title: "Recipients and security",
           paragraphs: [
-            "In the local version, data only circulates between Pinkward services required for operation. Access is protected using OAuth2/OIDC, JWT and scope controls. Pinkward does not sell player data.",
+            "In the local version, data only circulates between GYMS.LOL services required for operation. Access is protected using OAuth2/OIDC, JWT and scope controls. GYMS.LOL does not sell player data.",
           ],
         },
         {
@@ -338,7 +338,7 @@ const documents: Record<"fr" | "en", Record<LegalDocument, DocumentCopy>> = {
       eyebrow: "SERVICE RULES",
       title: "TERMS OF USE",
       introduction:
-        "Core rules governing the use of Pinkward’s competitive features.",
+        "Core rules governing the use of GYMS.LOL’s competitive features.",
       noticeLabel: "TO BE FINALISED",
       notice:
         "Development project: these terms are a functional baseline and must be reviewed and completed before public launch.",
@@ -367,7 +367,7 @@ const documents: Record<"fr" | "en", Record<LegalDocument, DocumentCopy>> = {
         {
           title: "Local Watcher",
           paragraphs: [
-            "The Watcher is limited to automating and verifying the custom games supported by Pinkward. It must not be modified or used to gain an in-game advantage.",
+            "The Watcher is limited to automating and verifying the custom games supported by GYMS.LOL. It must not be modified or used to gain an in-game advantage.",
           ],
         },
         {

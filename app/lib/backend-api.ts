@@ -177,7 +177,7 @@ export function isLeaderboardSnapshot(value: unknown): value is LeaderboardSnaps
 export function friendlyError(cause: unknown, fallback: string) {
   const message = cause instanceof Error ? cause.message : fallback;
   if (/API 429|429/.test(message))
-    return "Trop de demandes ont été envoyées. Pinkward réessaiera automatiquement dans quelques secondes.";
+    return "Trop de demandes ont été envoyées. GYMS.LOL réessaiera automatiquement dans quelques secondes.";
   if (/Failed to fetch|NetworkError|fetch failed/i.test(message))
     return "Connexion impossible. Vérifie que le backend local et Docker sont démarrés.";
   if (/401|Connexion requise/i.test(message))

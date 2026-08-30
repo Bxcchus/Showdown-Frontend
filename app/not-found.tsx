@@ -9,7 +9,7 @@ function NotFoundContent() {
       <div className="not-found-shell">
         <header>
           <Link href="/" className="wordmark">
-            PINKWARD
+            GYMS.LOL
           </Link>
         </header>
         <main id="main-content" tabIndex={-1}>

@@ -151,7 +151,7 @@ describe("sécurité de session", () => {
     expect(headers["Referrer-Policy"]).toBe("strict-origin-when-cross-origin");
   });
 
-  it("limite la CSP hébergée aux origines Pinkward attendues", () => {
+  it("limite la CSP hébergée aux origines GYMS.LOL attendues", () => {
     const hostedHeaders = readFileSync("public/_headers", "utf8");
     expect(hostedHeaders).toContain(
       "connect-src 'self' https://api.pinkward.lol wss://api.pinkward.lol http://127.0.0.1:43991",

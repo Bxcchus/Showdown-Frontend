@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import PinkwardApp from "./pinkward-app";
+import GymsLolApp from "./gyms-lol-app";
 import { pageMetadata } from "./lib/i18n-metadata";
 import { getRequestLanguage } from "./lib/i18n-server";
 
@@ -8,5 +8,5 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function Home() {
-  return <PinkwardApp initialPage="home" />;
+  return <GymsLolApp initialPage="home" />;
 }

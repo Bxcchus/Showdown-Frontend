@@ -191,7 +191,7 @@ export function Shell({
     );
     const close = () => {
       setMoreOpen(false);
-      if (window.history.state?.pinkwardMobileMenu) window.history.back();
+      if (window.history.state?.gymsLolMobileMenu) window.history.back();
       window.setTimeout(() => moreTrigger.current?.focus(), 0);
     };
     const closeOnEscape = (event: KeyboardEvent) => {
@@ -237,8 +237,8 @@ export function Shell({
   }, [moreOpen]);
 
   const navigate = (nextPage: Page) => {
-    if (window.history.state?.pinkwardMobileMenu) {
-      const { pinkwardMobileMenu: _menu, ...state } = window.history.state;
+    if (window.history.state?.gymsLolMobileMenu) {
+      const { gymsLolMobileMenu: _menu, ...state } = window.history.state;
       void _menu;
       window.history.replaceState(state, "", window.location.href);
     }
@@ -249,11 +249,11 @@ export function Shell({
   const toggleMore = () => {
     if (moreOpen) {
       setMoreOpen(false);
-      if (window.history.state?.pinkwardMobileMenu) window.history.back();
+      if (window.history.state?.gymsLolMobileMenu) window.history.back();
       return;
     }
     window.history.pushState(
-      { ...(window.history.state ?? {}), pinkwardMobileMenu: true },
+      { ...(window.history.state ?? {}), gymsLolMobileMenu: true },
       "",
       window.location.href,
     );
@@ -262,7 +262,7 @@ export function Shell({
 
   const closeMore = () => {
     setMoreOpen(false);
-    if (window.history.state?.pinkwardMobileMenu) window.history.back();
+    if (window.history.state?.gymsLolMobileMenu) window.history.back();
     window.setTimeout(() => moreTrigger.current?.focus(), 0);
   };
 
@@ -289,7 +289,7 @@ export function Shell({
         </a>
         <header className="topbar">
           <NavLink page="home" current={current} go={navigate}>
-            <span className="wordmark">PINKWARD</span>
+            <span className="wordmark">GYMS.LOL</span>
           </NavLink>
           <nav aria-label="Navigation principale">
             {desktopNavigation.map(([id, label]) => (
@@ -364,13 +364,13 @@ export function Shell({
         <footer className="site-footer">
           <div className="site-footer__inner">
             <div className="site-footer__brand">
-              <strong>PINKWARD</strong>
+              <strong>GYMS.LOL</strong>
               <small>
                 {language === "fr"
                   ? "Matchmaking communautaire · Version de développement"
                   : "Community matchmaking · Development version"}
               </small>
-              <small>© 2026 Pinkward</small>
+              <small>© 2026 GYMS.LOL</small>
             </div>
             <nav aria-label={language === "fr" ? "Liens légaux" : "Legal links"}>
               <NavLink page="legal" current={current} go={navigate}>
@@ -387,8 +387,8 @@ export function Shell({
             </nav>
             <p className="site-footer__disclaimer">
               {language === "fr"
-                ? "Pinkward est un projet communautaire indépendant, non affilié à Riot Games. League of Legends et Riot Games appartiennent à leurs titulaires respectifs."
-                : "Pinkward is an independent community project and is not affiliated with Riot Games. League of Legends and Riot Games belong to their respective owners."}
+                ? "GYMS.LOL est un projet communautaire indépendant, non affilié à Riot Games. League of Legends et Riot Games appartiennent à leurs titulaires respectifs."
+                : "GYMS.LOL is an independent community project and is not affiliated with Riot Games. League of Legends and Riot Games belong to their respective owners."}
             </p>
           </div>
         </footer>

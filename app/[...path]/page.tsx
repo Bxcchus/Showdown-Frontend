@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import PinkwardApp from "../pinkward-app";
+import GymsLolApp from "../gyms-lol-app";
 import { notFound } from "next/navigation";
 import { isKnownPath, pageFromPath } from "../lib/navigation";
 import { pageMetadata } from "../lib/i18n-metadata";
@@ -25,9 +25,9 @@ export async function generateMetadata({
   );
 }
 
-export default async function PinkwardCatchAllPage({ params }: CatchAllProps) {
+export default async function GymsLolCatchAllPage({ params }: CatchAllProps) {
   const { path } = await params;
   const pathname = pathnameFromSegments(path);
   if (!isKnownPath(pathname)) notFound();
-  return <PinkwardApp initialPage={pageFromPath(pathname)} />;
+  return <GymsLolApp initialPage={pageFromPath(pathname)} />;
 }

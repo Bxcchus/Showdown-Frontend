@@ -1,5 +1,5 @@
-import PinkwardApp from "../../pinkward-app";
+import GymsLolApp from "../../gyms-lol-app";
 
 export default function OAuthCallbackPage() {
-  return <PinkwardApp initialPage="home" />;
+  return <GymsLolApp initialPage="home" />;
 }

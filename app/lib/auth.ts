@@ -81,7 +81,7 @@ export function backendOrigin() {
   )
     return "http://localhost:8088";
   throw new Error(
-    "Le domaine HTTPS de l’API Pinkward doit être configuré avant la connexion publique.",
+    "Le domaine HTTPS de l’API GYMS.LOL doit être configuré avant la connexion publique.",
   );
 }
 
@@ -140,7 +140,7 @@ function saveAccessSession(tokens: TokenResponse) {
     accessToken: tokens.access_token,
     expiresAt: Date.now() + tokens.expires_in * 1000,
     playerId: claims.sub,
-    username: claims.preferred_username ?? "Joueur Pinkward",
+    username: claims.preferred_username ?? "Joueur GYMS.LOL",
   };
   // Les jetons ne sont jamais persistés dans un stockage lisible par le DOM.
   // Le rafraîchissement reste dans un cookie HttpOnly géré par le BFF.

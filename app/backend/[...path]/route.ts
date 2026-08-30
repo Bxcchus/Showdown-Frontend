@@ -29,7 +29,7 @@ const route = (methods: string[], path: RegExp): RouteRule => ({
 });
 
 // This BFF is a public browser boundary, not a generic tunnel to the gateway.
-// Every method/path pair below is exercised by the Pinkward frontend.
+// Every method/path pair below is exercised by the GYMS.LOL frontend.
 const PUBLIC_ROUTES: RouteRule[] = [
   route(["GET"], /^\/actuator\/health\/readiness$/),
   route(["GET"], /^\/api\/v2\/players\/directory$/),

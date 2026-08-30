@@ -48,7 +48,7 @@ function securityHeadersPlugin() {
     });
   };
   return {
-    name: "pinkward-security-headers",
+    name: "gyms-lol-security-headers",
     configureServer: install,
     configurePreviewServer: install,
   };

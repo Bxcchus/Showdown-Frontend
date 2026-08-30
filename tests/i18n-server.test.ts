@@ -48,17 +48,17 @@ describe("résolution serveur de la langue", () => {
 
   it("localise les métadonnées du site et des pages", () => {
     expect(siteMetadata("fr").title).toBe(
-      "Pinkward — Matchmaking communautaire",
+      "GYMS.LOL — Matchmaking communautaire",
     );
-    expect(siteMetadata("en").title).toBe("Pinkward — Community Matchmaking");
+    expect(siteMetadata("en").title).toBe("GYMS.LOL — Community Matchmaking");
     expect(pageMetadata("fr", "leaderboard").title).toBe(
-      "Classement · Pinkward",
+      "Classement · GYMS.LOL",
     );
     expect(pageMetadata("en", "leaderboard").title).toBe(
-      "Leaderboard · Pinkward",
+      "Leaderboard · GYMS.LOL",
     );
     expect(pageMetadata("en", "not-found").title).toBe(
-      "Page not found · Pinkward",
+      "Page not found · GYMS.LOL",
     );
   });
 });

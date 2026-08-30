@@ -34,7 +34,7 @@ export function Play({ go }: { go: (page: Page) => void }) {
     if (queryMode === "5v5") return "5V5" as const;
     if (queryMode === "1v1") return "1V1" as const;
     try {
-      return window.localStorage.getItem("pinkward.quick-mode") === "5V5"
+      return window.localStorage.getItem("gyms-lol.quick-mode") === "5V5"
         ? ("5V5" as const)
         : ("1V1" as const);
     } catch {
@@ -49,7 +49,7 @@ export function Play({ go }: { go: (page: Page) => void }) {
   const setMode = (nextMode: PlayMode) => {
     setModeState(nextMode);
     try {
-      window.localStorage.setItem("pinkward.quick-mode", nextMode);
+      window.localStorage.setItem("gyms-lol.quick-mode", nextMode);
     } catch {
       /* URL state remains authoritative. */
     }

@@ -81,7 +81,7 @@ test("la langue anglaise est présente dans le HTML serveur avant hydratation", 
   expect(response.ok()).toBe(true);
   const html = await response.text();
   expect(html).toMatch(/<html[^>]*lang="en"/);
-  expect(html).toContain("<title>Watcher · Pinkward</title>");
+  expect(html).toContain("<title>Watcher · GYMS.LOL</title>");
   expect(html).toMatch(/<h1[^>]*>PREPARING YOUR SESSION<\/h1>/);
   expect(html).not.toMatch(/<h1[^>]*>PRÉPARATION DE TA SESSION<\/h1>/);
 });

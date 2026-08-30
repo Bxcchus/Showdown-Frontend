@@ -241,7 +241,7 @@ export async function installAuthenticatedMock(
     if (path === "/api/v2/players/directory")
       return fulfill(route, [
         { playerId, displayName: "local-player" },
-        { playerId: botId, displayName: "PINKWARD BOT" },
+        { playerId: botId, displayName: "GYMS.LOL BOT" },
       ]);
     if (path === "/api/v2/parties" && request.method() === "POST") {
       state.party = {

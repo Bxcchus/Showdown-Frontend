@@ -114,7 +114,7 @@ export default function LeaderboardPage() {
       <PageTitle
         eyebrow={activeSnapshot?.season ?? "SAISON EN COURS"}
         title="CLASSEMENT"
-        text={`Les meilleurs joueurs Pinkward de la région ${backend.leaderboardRegion}.`}
+        text={`Les meilleurs joueurs GYMS.LOL de la région ${backend.leaderboardRegion}.`}
         action={
           !backend.session ? (
             <Button onClick={() => void backend.login()}>

@@ -14,7 +14,7 @@ export function Home({ go }: { go: (page: Page) => void }) {
   const [quickMode, setQuickMode] = useState<"1V1" | "5V5">(() => {
     if (typeof window === "undefined") return "5V5";
     try {
-      return window.localStorage.getItem("pinkward.quick-mode") === "1V1"
+      return window.localStorage.getItem("gyms-lol.quick-mode") === "1V1"
         ? "1V1"
         : "5V5";
     } catch {
@@ -34,7 +34,7 @@ export function Home({ go }: { go: (page: Page) => void }) {
   const selectQuickMode = (value: "1V1" | "5V5") => {
     setQuickMode(value);
     try {
-      window.localStorage.setItem("pinkward.quick-mode", value);
+      window.localStorage.setItem("gyms-lol.quick-mode", value);
     } catch {
       /* The selection still works when storage is unavailable. */
     }
@@ -75,7 +75,7 @@ export function Home({ go }: { go: (page: Page) => void }) {
     <Localized>
       <div className="page home-page home-dashboard">
         <h1 className="sr-only" tabIndex={-1}>
-          PINKWARD SHOWDOWN
+          GYMS.LOL SHOWDOWN
         </h1>
         <aside className="home-rail" aria-label="Raccourcis de jeu">
           <Card className="quick-play-card">

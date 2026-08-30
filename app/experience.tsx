@@ -24,19 +24,19 @@ import WatcherPage from "./features/watcher-page";
 export { Home } from "./features/home-page";
 export { Play } from "./features/play-page";
 
-export default function PinkwardApp({
+export default function GymsLolApp({
   initialPage = "home",
 }: {
   initialPage?: Page;
 }) {
   return (
     <BackendProvider>
-      <PinkwardExperience initialPage={initialPage} />
+      <GymsLolExperience initialPage={initialPage} />
     </BackendProvider>
   );
 }
 
-function PinkwardExperience({ initialPage }: { initialPage: Page }) {
+function GymsLolExperience({ initialPage }: { initialPage: Page }) {
   const [page, setPage] = useState<Page>(initialPage);
   const backend = useBackend();
   const { t } = useLanguage();
@@ -51,7 +51,7 @@ function PinkwardExperience({ initialPage }: { initialPage: Page }) {
   const navigate = (nextPage: Page) => {
     if (window.location.pathname !== pagePaths[nextPage])
       window.history.pushState(
-        { pinkwardPage: nextPage },
+        { gymsLolPage: nextPage },
         "",
         pagePaths[nextPage],
       );
@@ -64,13 +64,13 @@ function PinkwardExperience({ initialPage }: { initialPage: Page }) {
     return () => window.removeEventListener("popstate", syncFromBrowser);
   }, []);
   useEffect(() => {
-    document.title = t(`${pageTitles[activePage]} · Pinkward`);
+    document.title = t(`${pageTitles[activePage]} · GYMS.LOL`);
     if (
       activePage !== page &&
       window.location.pathname !== pagePaths[activePage]
     )
       window.history.replaceState(
-        { pinkwardPage: activePage },
+        { gymsLolPage: activePage },
         "",
         pagePaths[activePage],
       );
@@ -79,7 +79,7 @@ function PinkwardExperience({ initialPage }: { initialPage: Page }) {
     <Shell page={activePage} setPage={navigate}>
       {backend.sessionStatus === "LOADING" ? (
         <div className="page boot-page" role="status" aria-live="polite">
-          <span className="eyebrow">PINKWARD</span>
+          <span className="eyebrow">GYMS.LOL</span>
           <h1 tabIndex={-1}>PRÉPARATION DE TA SESSION</h1>
           <p>Connexion sécurisée et synchronisation des données en cours…</p>
           <div className="boot-progress" aria-hidden="true">

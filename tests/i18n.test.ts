@@ -10,37 +10,37 @@ describe("traduction anglaise", () => {
   });
 
   it("traduit les contenus dynamiques", () => {
-    expect(translateFrench("12 matchs chargés depuis Pinkward.")).toBe(
-      "12 matches loaded from Pinkward.",
+    expect(translateFrench("12 matchs chargés depuis GYMS.LOL.")).toBe(
+      "12 matches loaded from GYMS.LOL.",
     );
     expect(translateFrench("Page 2 sur 5")).toBe("Page 2 of 5");
   });
 
   it("traduit tous les titres du navigateur", () => {
     const expected = {
-      home: "Home · Pinkward",
-      play: "Play · Pinkward",
-      duels: "Watcher · Pinkward",
-      searching: "Searching · Pinkward",
-      ready: "Ready check · Pinkward",
-      lobby: "Match lobby · Pinkward",
-      matches: "Match history · Pinkward",
-      leaderboard: "Leaderboard · Pinkward",
-      download: "Download · Pinkward",
-      profile: "Profile · Pinkward",
-      settings: "Settings · Pinkward",
-      legal: "Legal notice · Pinkward",
-      privacy: "Privacy · Pinkward",
-      terms: "Terms of use · Pinkward",
+      home: "Home · GYMS.LOL",
+      play: "Play · GYMS.LOL",
+      duels: "Watcher · GYMS.LOL",
+      searching: "Searching · GYMS.LOL",
+      ready: "Ready check · GYMS.LOL",
+      lobby: "Match lobby · GYMS.LOL",
+      matches: "Match history · GYMS.LOL",
+      leaderboard: "Leaderboard · GYMS.LOL",
+      download: "Download · GYMS.LOL",
+      profile: "Profile · GYMS.LOL",
+      settings: "Settings · GYMS.LOL",
+      legal: "Legal notice · GYMS.LOL",
+      privacy: "Privacy · GYMS.LOL",
+      terms: "Terms of use · GYMS.LOL",
     };
 
     for (const [page, title] of Object.entries(pageTitles)) {
-      expect(translateFrench(`${title} · Pinkward`), page).toBe(
+      expect(translateFrench(`${title} · GYMS.LOL`), page).toBe(
         expected[page as keyof typeof expected],
       );
     }
-    expect(translateFrench("Page introuvable · Pinkward")).toBe(
-      "Page not found · Pinkward",
+    expect(translateFrench("Page introuvable · GYMS.LOL")).toBe(
+      "Page not found · GYMS.LOL",
     );
   });
 
@@ -56,13 +56,13 @@ describe("traduction anglaise", () => {
     ["REFUSÉ", "DECLINED"],
     ["CONFIRMÉ", "CONFIRMED"],
     [
-      "12 parties enregistrées par Pinkward.",
-      "12 matches recorded by Pinkward.",
+      "12 parties enregistrées par GYMS.LOL.",
+      "12 matches recorded by GYMS.LOL.",
     ],
     ["Classé 5v5 · TrueSkill", "Ranked 5v5 · TrueSkill"],
     [
-      "Les meilleurs joueurs Pinkward de la région EUW.",
-      "The highest-rated Pinkward players in EUW.",
+      "Les meilleurs joueurs GYMS.LOL de la région EUW.",
+      "The highest-rated GYMS.LOL players in EUW.",
     ],
     ["Joueur 12ab34", "Player 12ab34"],
     ["Retirer local-player2 du groupe", "Remove local-player2 from the party"],
@@ -79,8 +79,8 @@ describe("traduction anglaise", () => {
       "5.3 MB • Portable executable",
     ],
     [
-      "> Prêt à recevoir un duel Pinkward.",
-      "> Ready to receive a Pinkward duel.",
+      "> Prêt à recevoir un duel GYMS.LOL.",
+      "> Ready to receive a GYMS.LOL duel.",
     ],
     ["FIRST BLOOD · victoire", "FIRST BLOOD · victory"],
     ["3 restante(s)", "3 remaining"],
@@ -97,8 +97,8 @@ describe("traduction anglaise", () => {
     expect(translateFrench("2 joueurs")).toBe("2 players");
     expect(translateFrench("1 secondes restantes")).toBe("1 second remaining");
     expect(translateFrench("2 secondes restantes")).toBe("2 seconds remaining");
-    expect(translateFrench("1 parties enregistrées par Pinkward.")).toBe(
-      "1 match recorded by Pinkward.",
+    expect(translateFrench("1 parties enregistrées par GYMS.LOL.")).toBe(
+      "1 match recorded by GYMS.LOL.",
     );
   });
 

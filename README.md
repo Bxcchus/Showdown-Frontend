@@ -1,4 +1,4 @@
-# Pinkward Web
+# GYMS.LOL Web
 
 Interface web SSR de Showdown V2. Le dépôt contient l'expérience joueur,
 l'authentification OAuth 2.1/PKCE via routes de session serveur, l'i18n FR/EN,
@@ -23,5 +23,5 @@ Après création du dépôt distant et premier push sur `main`, rendre la CI
 obligatoire avec :
 
 ~~~powershell
-.\scripts\configure-branch-protection.ps1 -Repository organisation/pinkward-web
+.\scripts\configure-branch-protection.ps1 -Repository organisation/gyms-lol-web
 ~~~

@@ -10,14 +10,14 @@ const siteCopy: Record<
   { title: string; description: string; socialDescription: string }
 > = {
   fr: {
-    title: "Pinkward — Matchmaking communautaire",
+    title: "GYMS.LOL — Matchmaking communautaire",
     description:
       "La plateforme compétitive pour former ton groupe, rejoindre une file et jouer.",
     socialDescription:
       "Forme ton groupe, choisis tes rôles et trouve ton prochain match.",
   },
   en: {
-    title: "Pinkward — Community Matchmaking",
+    title: "GYMS.LOL — Community Matchmaking",
     description:
       "The competitive platform for forming your party, joining a queue and playing.",
     socialDescription:
@@ -109,7 +109,7 @@ export function pageMetadata(
   page: Page | "not-found",
 ): Metadata {
   const copy = siteCopy[language];
-  const title = `${pageNames[language][page]} · Pinkward`;
+  const title = `${pageNames[language][page]} · GYMS.LOL`;
   const path = page === "not-found" ? null : pagePaths[page];
   return {
     title,

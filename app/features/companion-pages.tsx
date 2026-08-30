@@ -13,7 +13,7 @@ export function Download() {
         <PageTitle
           eyebrow="APPLICATION WINDOWS"
           title="SHOWDOWN WATCHER"
-          text="Connecte Pinkward à League et valide automatiquement chaque duel."
+          text="Connecte GYMS.LOL à League et valide automatiquement chaque duel."
         />
         <Card className="download-hero">
           <div className="download-copy">
@@ -28,7 +28,7 @@ export function Download() {
             </h2>
             <p>
               Showdown Watcher accompagne le client League, prépare le lobby du
-              duel et transmet les objectifs à Pinkward en temps réel.
+              duel et transmet les objectifs à GYMS.LOL en temps réel.
             </p>
             <div className="download-actions">
               <span className="button download-cta" aria-disabled="true">
@@ -48,7 +48,7 @@ export function Download() {
             aria-label="Aperçu de la connexion du Watcher"
           >
             <div className="console-bar">
-              <span>PINKWARD / WATCHER</span>
+              <span>GYMS.LOL / WATCHER</span>
               <b>_</b>
               <b>□</b>
               <b>×</b>
@@ -67,7 +67,7 @@ export function Download() {
               <span>
                 <b>DUEL ACTIF</b>EN ATTENTE
               </span>
-              <p>&gt; Prêt à recevoir un duel Pinkward.</p>
+              <p>&gt; Prêt à recevoir un duel GYMS.LOL.</p>
             </div>
           </div>
         </Card>
@@ -121,7 +121,7 @@ export function Download() {
               <b>03</b>
               <span>
                 <strong>LANCER LE WATCHER</strong>
-                <small>Garde-le ouvert pendant tes matchs Pinkward.</small>
+                <small>Garde-le ouvert pendant tes matchs GYMS.LOL.</small>
               </span>
             </li>
           </ol>
@@ -150,7 +150,7 @@ export function Settings({ go }: { go: (page: Page) => void }) {
           <Card className="settings-card">
             <h2>SHOWDOWN WATCHER</h2>
             <p>
-              Passerelle locale entre Pinkward Web et le client League pour
+              Passerelle locale entre GYMS.LOL Web et le client League pour
               vérifier les duels 1v1.
             </p>
             <div className="companion-status">

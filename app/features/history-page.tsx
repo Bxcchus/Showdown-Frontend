@@ -120,8 +120,8 @@ export default function HistoryPage() {
         setDetailLoadingId(null);
         setDetailError(null);
       }
-      const savedScroll = (window.history.state as { pinkwardScrollY?: number })
-        ?.pinkwardScrollY;
+      const savedScroll = (window.history.state as { gymsLolScrollY?: number })
+        ?.gymsLolScrollY;
       if (typeof savedScroll === "number")
         window.requestAnimationFrame(() => window.scrollTo(0, savedScroll));
     };
@@ -131,7 +131,7 @@ export default function HistoryPage() {
   }, [loadDetail, requestHistory, sessionPlayerId]);
   const openDetail = async (matchId: string) => {
     if (detail?.summary.matchId === matchId) {
-      if (window.history.state?.pinkwardHistoryDetail === matchId) {
+      if (window.history.state?.gymsLolHistoryDetail === matchId) {
         window.history.back();
       } else {
         setDetail(null);
@@ -141,7 +141,7 @@ export default function HistoryPage() {
         const url = new URL(window.location.href);
         url.searchParams.delete("match");
         window.history.replaceState(
-          { ...window.history.state, pinkwardHistoryDetail: undefined },
+          { ...window.history.state, gymsLolHistoryDetail: undefined },
           "",
           `${url.pathname}${url.search}`,
         );
@@ -152,15 +152,15 @@ export default function HistoryPage() {
     url.searchParams.set("match", matchId);
     const scrollY = window.scrollY;
     window.history.replaceState(
-      { ...window.history.state, pinkwardScrollY: scrollY },
+      { ...window.history.state, gymsLolScrollY: scrollY },
       "",
       window.location.href,
     );
     window.history.pushState(
       {
         ...window.history.state,
-        pinkwardHistoryDetail: matchId,
-        pinkwardScrollY: scrollY,
+        gymsLolHistoryDetail: matchId,
+        gymsLolScrollY: scrollY,
       },
       "",
       `${url.pathname}${url.search}`,
@@ -207,7 +207,7 @@ export default function HistoryPage() {
         title="HISTORIQUE"
         text={
           backend.session
-            ? `${backend.historyPage?.totalElements ?? backend.history.length} parties enregistrées par Pinkward.`
+            ? `${backend.historyPage?.totalElements ?? backend.history.length} parties enregistrées par GYMS.LOL.`
             : "Connecte-toi pour charger tes parties compétitives."
         }
         action={
@@ -440,7 +440,7 @@ export default function HistoryPage() {
                             <p key={player.playerId}>
                               <strong>
                                 {player.bot
-                                  ? "PINKWARD BOT"
+                                  ? "GYMS.LOL BOT"
                                   : (backend.playerNames[player.playerId] ??
                                     player.playerId.slice(0, 8))}
                               </strong>
@@ -456,7 +456,7 @@ export default function HistoryPage() {
                             <p key={player.playerId}>
                               <strong>
                                 {player.bot
-                                  ? "PINKWARD BOT"
+                                  ? "GYMS.LOL BOT"
                                   : (backend.playerNames[player.playerId] ??
                                     player.playerId.slice(0, 8))}
                               </strong>

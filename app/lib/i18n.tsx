@@ -17,21 +17,21 @@ import { intlLocale, type Language } from "./i18n-shared";
 export type { Language } from "./i18n-shared";
 
 export const englishTranslations: Readonly<Record<string, string>> = {
-  "Accueil · Pinkward": "Home · Pinkward",
-  "Jouer · Pinkward": "Play · Pinkward",
-  "Recherche · Pinkward": "Searching · Pinkward",
-  "Confirmation · Pinkward": "Ready check · Pinkward",
-  "Lobby du match · Pinkward": "Match lobby · Pinkward",
-  "Watcher · Pinkward": "Watcher · Pinkward",
-  "Historique · Pinkward": "Match history · Pinkward",
-  "Classement · Pinkward": "Leaderboard · Pinkward",
-  "Profil · Pinkward": "Profile · Pinkward",
-  "Téléchargement · Pinkward": "Download · Pinkward",
-  "Paramètres · Pinkward": "Settings · Pinkward",
-  "Mentions légales · Pinkward": "Legal notice · Pinkward",
-  "Confidentialité · Pinkward": "Privacy · Pinkward",
-  "Conditions d’utilisation · Pinkward": "Terms of use · Pinkward",
-  "Page introuvable · Pinkward": "Page not found · Pinkward",
+  "Accueil · GYMS.LOL": "Home · GYMS.LOL",
+  "Jouer · GYMS.LOL": "Play · GYMS.LOL",
+  "Recherche · GYMS.LOL": "Searching · GYMS.LOL",
+  "Confirmation · GYMS.LOL": "Ready check · GYMS.LOL",
+  "Lobby du match · GYMS.LOL": "Match lobby · GYMS.LOL",
+  "Watcher · GYMS.LOL": "Watcher · GYMS.LOL",
+  "Historique · GYMS.LOL": "Match history · GYMS.LOL",
+  "Classement · GYMS.LOL": "Leaderboard · GYMS.LOL",
+  "Profil · GYMS.LOL": "Profile · GYMS.LOL",
+  "Téléchargement · GYMS.LOL": "Download · GYMS.LOL",
+  "Paramètres · GYMS.LOL": "Settings · GYMS.LOL",
+  "Mentions légales · GYMS.LOL": "Legal notice · GYMS.LOL",
+  "Confidentialité · GYMS.LOL": "Privacy · GYMS.LOL",
+  "Conditions d’utilisation · GYMS.LOL": "Terms of use · GYMS.LOL",
+  "Page introuvable · GYMS.LOL": "Page not found · GYMS.LOL",
   Accueil: "Home",
   Jouer: "Play",
   Recherche: "Searching",
@@ -234,8 +234,8 @@ export const englishTranslations: Readonly<Record<string, string>> = {
   "AGENT WINDOWS": "WINDOWS AGENT",
   "APPLICATION WINDOWS": "WINDOWS APPLICATION",
   "APPLICATION LOCALE": "LOCAL APPLICATION",
-  "Connecte Pinkward à League et valide automatiquement chaque duel.":
-    "Connect Pinkward to League and automatically verify every duel.",
+  "Connecte GYMS.LOL à League et valide automatiquement chaque duel.":
+    "Connect GYMS.LOL to League and automatically verify every duel.",
   "DERNIÈRE VERSION": "LATEST RELEASE",
   "Exécutable portable": "Portable executable",
   "TÉLÉCHARGER POUR WINDOWS": "DOWNLOAD FOR WINDOWS",
@@ -280,11 +280,11 @@ export const englishTranslations: Readonly<Record<string, string>> = {
   "EN ATTENTE DE RÉSULTATS": "WAITING FOR RESULTS",
   "EN DIRECT": "LIVE",
   "Enregistre l’exécutable Windows.": "Save the Windows executable.",
-  "Prêt à recevoir un duel Pinkward.": "Ready to receive a Pinkward duel.",
+  "Prêt à recevoir un duel GYMS.LOL.": "Ready to receive a GYMS.LOL duel.",
   "FILE ACTIVE": "QUEUE ACTIVE",
   "GROUPE NON PRÊT": "PARTY NOT READY",
-  "Garde-le ouvert pendant tes matchs Pinkward.":
-    "Keep it open during your Pinkward matches.",
+  "Garde-le ouvert pendant tes matchs GYMS.LOL.":
+    "Keep it open during your GYMS.LOL matches.",
   "LIER LE RIOT ID": "LINK RIOT ID",
   "LOBBY DU MATCH": "MATCH LOBBY",
   "LOCAL PAR CONCEPTION": "LOCAL BY DESIGN",
@@ -333,8 +333,8 @@ export const englishTranslations: Readonly<Record<string, string>> = {
   "PASSERELLE LEAGUE LOCALE": "LOCAL LEAGUE BRIDGE",
   "Partie personnalisée 1v1": "Custom 1v1 game",
   "Partie personnalisée 5v5": "Custom 5v5 game",
-  "Passerelle locale entre Pinkward Web et le client League pour vérifier les duels 1v1.":
-    "Local bridge between Pinkward Web and the League Client for verifying 1v1 duels.",
+  "Passerelle locale entre GYMS.LOL Web et le client League pour vérifier les duels 1v1.":
+    "Local bridge between GYMS.LOL Web and the League Client for verifying 1v1 duels.",
   "PROFIL JOUEUR": "PLAYER PROFILE",
   "ENREGISTREMENT…": "SAVING…",
   PRÉCÉDENT: "PREVIOUS",
@@ -345,8 +345,8 @@ export const englishTranslations: Readonly<Record<string, string>> = {
   RECHERCHE: "SEARCHING",
   "RECHERCHE D’UN MATCH": "SEARCHING FOR A MATCH",
   "Recherche en solo": "Solo queue",
-  "Reste sur Pinkward pendant la recherche de joueurs.":
-    "Stay on Pinkward while searching for players.",
+  "Reste sur GYMS.LOL pendant la recherche de joueurs.":
+    "Stay on GYMS.LOL while searching for players.",
   "RÉSULTAT MMR": "MMR RESULT",
   "Résultat détecté": "Result detected",
   "Rôle attribué": "Assigned role",
@@ -360,8 +360,8 @@ export const englishTranslations: Readonly<Record<string, string>> = {
   "SESSION SHOWDOWN": "SHOWDOWN SESSION",
   "SUIVI EN DIRECT": "LIVE MONITOR",
   SUIVANT: "NEXT",
-  "Showdown Watcher accompagne le client League, prépare le lobby du duel et transmet les objectifs à Pinkward en temps réel.":
-    "Showdown Watcher runs alongside the League Client, prepares the duel lobby and reports objectives to Pinkward in real time.",
+  "Showdown Watcher accompagne le client League, prépare le lobby du duel et transmet les objectifs à GYMS.LOL en temps réel.":
+    "Showdown Watcher runs alongside the League Client, prepares the duel lobby and reports objectives to GYMS.LOL in real time.",
   "Synchronisation de la file…": "Synchronizing queue…",
   "TES DUELS.": "YOUR DUELS.",
   TOI: "YOU",
@@ -432,8 +432,8 @@ export const englishTranslations: Readonly<Record<string, string>> = {
     "Your session has expired. Sign in again to continue.",
   "Tous les membres du groupe doivent être prêts.":
     "All party members must be ready.",
-  "Trop de demandes ont été envoyées. Pinkward réessaiera automatiquement dans quelques secondes.":
-    "Too many requests were sent. Pinkward will retry automatically in a few seconds.",
+  "Trop de demandes ont été envoyées. GYMS.LOL réessaiera automatiquement dans quelques secondes.":
+    "Too many requests were sent. GYMS.LOL will retry automatically in a few seconds.",
   "Navigation principale": "Main navigation",
   "Navigation mobile": "Mobile navigation",
   "Navigation supplémentaire": "Additional navigation",
@@ -501,10 +501,10 @@ export const englishTranslations: Readonly<Record<string, string>> = {
   "Backend non configuré.": "Backend not configured.",
   "Échange OAuth2 refusé.": "OAuth2 exchange denied.",
   "Révocation OAuth2 refusée.": "OAuth2 revocation denied.",
-  "Le domaine HTTPS de l’API Pinkward doit être configuré avant la connexion publique.":
-    "The Pinkward API HTTPS domain must be configured before public sign-in.",
+  "Le domaine HTTPS de l’API GYMS.LOL doit être configuré avant la connexion publique.":
+    "The GYMS.LOL API HTTPS domain must be configured before public sign-in.",
   "Jeton d’accès invalide.": "Invalid access token.",
-  "Joueur Pinkward": "Pinkward player",
+  "Joueur GYMS.LOL": "GYMS.LOL player",
   "Portée OAuth2 incomplète.": "Incomplete OAuth2 scope.",
   "Connexion refusée": "Sign-in denied",
   "Réponse OAuth2 incomplète.": "Incomplete OAuth2 response.",
@@ -515,7 +515,7 @@ export const englishTranslations: Readonly<Record<string, string>> = {
   "Session locale du Watcher invalide.": "Invalid local Watcher session.",
   "Session absente.": "No session found.",
   "Route publique inexistante.": "Public route not found.",
-  "> Prêt à recevoir un duel Pinkward.": "> Ready to receive a Pinkward duel.",
+  "> Prêt à recevoir un duel GYMS.LOL.": "> Ready to receive a GYMS.LOL duel.",
   PRÊT: "READY",
   "ERREUR 404": "ERROR 404",
   "PAGE INTROUVABLE": "PAGE NOT FOUND",
@@ -534,9 +534,9 @@ const countLabel = (value: string, singular: string, plural: string) =>
 
 const dynamicTranslations: DynamicTranslation[] = [
   [
-    /^(\d+) matchs? chargés? depuis Pinkward\.$/,
+    /^(\d+) matchs? chargés? depuis GYMS\.LOL\.$/,
     ([, count]) =>
-      `${countLabel(count, "match", "matches")} loaded from Pinkward.`,
+      `${countLabel(count, "match", "matches")} loaded from GYMS.LOL.`,
   ],
   [/^Page (\d+) sur (\d+)$/, ([, page, total]) => `Page ${page} of ${total}`],
   [
@@ -570,13 +570,13 @@ const dynamicTranslations: DynamicTranslation[] = [
     ([, count]) => `${countLabel(count, "second", "seconds")} elapsed`,
   ],
   [
-    /^(\d+) parties enregistrées par Pinkward\.$/,
+    /^(\d+) parties enregistrées par GYMS\.LOL\.$/,
     ([, count]) =>
-      `${countLabel(count, "match", "matches")} recorded by Pinkward.`,
+      `${countLabel(count, "match", "matches")} recorded by GYMS.LOL.`,
   ],
   [
-    /^Les meilleurs joueurs Pinkward de la région (.+)\.$/,
-    ([, region]) => `The highest-rated Pinkward players in ${region}.`,
+    /^Les meilleurs joueurs GYMS\.LOL de la région (.+)\.$/,
+    ([, region]) => `The highest-rated GYMS.LOL players in ${region}.`,
   ],
   [/^Joueur (.+)$/, ([, id]) => `Player ${id}`],
   [

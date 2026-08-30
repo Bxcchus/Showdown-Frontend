@@ -40,7 +40,7 @@ export function Searching({ go }: { go: (page: Page) => void }) {
         <PageTitle
           eyebrow="FILE ACTIVE"
           title="RECHERCHE D’UN MATCH"
-          text="Reste sur Pinkward pendant la recherche de joueurs."
+          text="Reste sur GYMS.LOL pendant la recherche de joueurs."
         />
         <div className="search-grid">
           <Card className="search-card">
@@ -315,7 +315,7 @@ export function Lobby() {
       .map((player, index) => [
         player.assignedRole === "BOT" ? "ADC" : player.assignedRole,
         player.bot
-          ? `PINKWARD BOT ${index + 1}`
+          ? `GYMS.LOL BOT ${index + 1}`
           : (backend.playerNames[player.playerId] ??
             player.playerId.slice(0, 8)),
         player.readyState === "ACCEPTED"
