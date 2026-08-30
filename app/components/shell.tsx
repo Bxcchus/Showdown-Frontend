@@ -148,8 +148,11 @@ export function Shell({
     () => true,
     () => false,
   );
-  const accountName =
-    backend.profile?.displayName ?? backend.session?.username ?? "SE CONNECTER";
+  const accountName = backend.session
+    ? backend.profile?.onboardingComplete
+      ? backend.profile.displayName
+      : "CHOISIR UN PSEUDO"
+    : "SE CONNECTER";
   const realtimeLabel =
     backend.realtimeStatus === "CONNECTED"
       ? "TEMPS RÉEL"
@@ -372,7 +375,9 @@ export function Shell({
               </small>
               <small>© 2026 GYMS.LOL</small>
             </div>
-            <nav aria-label={language === "fr" ? "Liens légaux" : "Legal links"}>
+            <nav
+              aria-label={language === "fr" ? "Liens légaux" : "Legal links"}
+            >
               <NavLink page="legal" current={current} go={navigate}>
                 {language === "fr" ? "Mentions légales" : "Legal notice"}
               </NavLink>

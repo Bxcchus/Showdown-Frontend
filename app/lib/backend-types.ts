@@ -8,6 +8,7 @@ export type PlayerProfile = {
   region: string;
   primaryRole: ApiRole;
   secondaryRole: ApiRole;
+  onboardingComplete: boolean;
   riotId: string | null;
   riotProfileIconId: number | null;
   riotSummonerLevel: number | null;

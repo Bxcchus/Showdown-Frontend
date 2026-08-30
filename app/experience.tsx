@@ -17,6 +17,7 @@ import { Home } from "./features/home-page";
 import LeaderboardPage from "./features/leaderboard-page";
 import LegalPage from "./features/legal-pages";
 import { Lobby, Ready, Searching } from "./features/match-flow-pages";
+import OnboardingPage from "./features/onboarding-page";
 import { Play } from "./features/play-page";
 import ProfilePage from "./features/profile-page";
 import WatcherPage from "./features/watcher-page";
@@ -36,7 +37,7 @@ export default function GymsLolApp({
   );
 }
 
-function GymsLolExperience({ initialPage }: { initialPage: Page }) {
+export function GymsLolExperience({ initialPage }: { initialPage: Page }) {
   const [page, setPage] = useState<Page>(initialPage);
   const backend = useBackend();
   const { t } = useLanguage();
@@ -86,6 +87,10 @@ function GymsLolExperience({ initialPage }: { initialPage: Page }) {
             <i />
           </div>
         </div>
+      ) : backend.session &&
+        backend.profile &&
+        !backend.profile.onboardingComplete ? (
+        <OnboardingPage />
       ) : (
         <>
           {activePage === "home" && <Home go={navigate} />}

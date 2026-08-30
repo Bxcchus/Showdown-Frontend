@@ -3768,6 +3768,77 @@ button:disabled {
 .stack-form .button {
   width: 100%;
 }
+.onboarding-page {
+  min-height: calc(100vh - 270px);
+  display: grid;
+  place-items: center;
+  padding-block: clamp(32px, 7vh, 88px);
+}
+.onboarding-card {
+  width: min(100%, 640px);
+  padding: clamp(28px, 5vw, 52px);
+  border-color: rgba(189, 145, 77, 0.52);
+  background:
+    linear-gradient(135deg, rgba(189, 145, 77, 0.07), transparent 38%),
+    var(--panel);
+}
+.onboarding-card h1 {
+  margin: 12px 0 10px;
+  font-size: clamp(32px, 5vw, 54px);
+  line-height: 0.98;
+}
+.onboarding-intro {
+  max-width: 52ch;
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+.onboarding-privacy {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 14px;
+  align-items: center;
+  margin-top: 26px;
+  padding: 16px 18px;
+  border: 1px solid rgba(76, 190, 143, 0.35);
+  background: rgba(76, 190, 143, 0.055);
+}
+.onboarding-privacy > span {
+  color: var(--green);
+  font-size: 25px;
+}
+.onboarding-privacy p {
+  margin: 0;
+  color: var(--text);
+  line-height: 1.5;
+}
+.onboarding-form {
+  margin-top: 28px;
+}
+.onboarding-name-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: -6px;
+  color: var(--muted);
+  font-size: var(--font-caption);
+}
+.onboarding-form input[aria-invalid="true"] {
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px rgba(192, 74, 85, 0.12);
+}
+@media (max-width: 620px) {
+  .onboarding-page {
+    min-height: auto;
+    padding-block: 20px 36px;
+  }
+  .onboarding-card {
+    padding: 24px 20px;
+  }
+  .onboarding-name-meta {
+    align-items: flex-start;
+  }
+}
 .pagination {
   display: flex;
   align-items: center;

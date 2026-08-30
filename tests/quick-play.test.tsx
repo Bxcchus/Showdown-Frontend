@@ -23,6 +23,7 @@ function backend(overrides: Partial<BackendState> = {}) {
       region: "EUW",
       primaryRole: "JUNGLE",
       secondaryRole: "MID",
+      onboardingComplete: true,
       riotId: "Claude Code#JAVA",
       riotProfileIconId: 1,
       riotSummonerLevel: 100,

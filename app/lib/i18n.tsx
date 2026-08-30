@@ -50,6 +50,7 @@ export const englishTranslations: Readonly<Record<string, string>> = {
   TÉLÉCHARGER: "DOWNLOAD",
   PARAMÈTRES: "SETTINGS",
   "SE CONNECTER": "SIGN IN",
+  "CHOISIR UN PSEUDO": "CHOOSE A NICKNAME",
   DÉCONNEXION: "SIGN OUT",
   "API PRÊTE": "API READY",
   RÉESSAYER: "RETRY",
@@ -178,6 +179,17 @@ export const englishTranslations: Readonly<Record<string, string>> = {
     "Connect the League Client and automatically verify 1v1 objectives.",
   "Connecte-toi pour charger tes parties compétitives.":
     "Sign in to load your competitive matches.",
+  "BIENVENUE SUR GYMS.LOL": "WELCOME TO GYMS.LOL",
+  "CHOISIS TON PSEUDO": "CHOOSE YOUR NICKNAME",
+  "Ce nom sera visible par les autres joueurs dans les groupes, les matchs et le classement.":
+    "This name will be visible to other players in parties, matches and the leaderboard.",
+  "Ton adresse e-mail reste privée et ne sera jamais utilisée comme pseudo public.":
+    "Your email address stays private and will never be used as your public nickname.",
+  "PSEUDO PUBLIC": "PUBLIC NICKNAME",
+  "3 à 24 caractères · lettres, chiffres, espaces, _ . -":
+    "3 to 24 characters · letters, numbers, spaces, _ . -",
+  "Ex. JungleDiff": "E.g. JungleDiff",
+  CONTINUER: "CONTINUE",
   "Aucun match trouvé": "No matches found",
   "Mode de l’historique": "Match history mode",
   "Classé 5v5 · TrueSkill": "Ranked 5v5 · TrueSkill",
