@@ -10,6 +10,8 @@
 
 # testing
 /coverage
+/test-results/
+/playwright-report/
 
 # next.js
 /.next/
@@ -19,6 +21,8 @@
 # misc
 .DS_Store
 *.pem
+*.pdb
+/public/downloads/*.exe
 
 # debug
 npm-debug.log*
@@ -36,3 +40,4 @@ next-env.d.ts
 /.wrangler/
 /outputs/
 /work/
+*.tsbuildinfo

@@ -1,0 +1,221 @@
+/* Navigation et composition responsive communes. */
+@media (max-width: 1180px) {
+  .language-switch {
+    display: none;
+  }
+
+  .mobile-nav {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(82px, 1fr));
+    scrollbar-width: none;
+  }
+  .mobile-nav::-webkit-scrollbar {
+    display: none;
+  }
+  .topbar {
+    height: 72px;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 16px;
+    padding-inline: 20px;
+  }
+  .topbar nav {
+    display: none;
+  }
+  .account-links {
+    justify-content: flex-end;
+  }
+  .app-shell main {
+    padding-bottom: 84px;
+  }
+  .mobile-nav a,
+  .mobile-nav button {
+    min-width: 0;
+    min-height: 68px;
+    display: grid;
+    place-items: center;
+    position: relative;
+    border: 0;
+    border-right: 1px solid rgba(41, 48, 54, 0.55);
+    background: transparent;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: var(--font-caption);
+    font-weight: 600;
+    letter-spacing: 0.03em;
+  }
+  .mobile-nav a.active,
+  .mobile-nav button.active {
+    color: var(--text);
+    background: rgba(189, 145, 77, 0.09);
+  }
+  .mobile-nav a.active::before,
+  .mobile-nav button.active::before {
+    content: "";
+    position: absolute;
+    left: 18px;
+    right: 18px;
+    top: 0;
+    height: 3px;
+    background: var(--gold);
+  }
+  .mobile-more {
+    position: fixed;
+    z-index: 51;
+    left: 12px;
+    right: 12px;
+    bottom: calc(76px + env(safe-area-inset-bottom));
+    display: grid;
+    grid-template-columns: 1fr;
+    max-height: min(620px, calc(100svh - 108px));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 10px;
+    border: 1px solid var(--gold-dark);
+    background: rgba(8, 11, 13, 0.98);
+    box-shadow: 0 -14px 40px rgba(0, 0, 0, 0.5);
+  }
+  .mobile-more-backdrop {
+    position: fixed;
+    z-index: 50;
+    inset: 0;
+    border: 0;
+    background: rgba(0, 0, 0, 0.62);
+    backdrop-filter: blur(2px);
+  }
+  .mobile-more-backdrop[hidden],
+  .mobile-more[hidden] {
+    display: none;
+  }
+  .mobile-more nav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .mobile-more a {
+    min-height: 52px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    border: 1px solid transparent;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: var(--font-meta);
+  }
+  .mobile-more a.active {
+    border-color: var(--gold-dark);
+    color: var(--text);
+    background: rgba(189, 145, 77, 0.08);
+  }
+  .mobile-more-session {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+    padding: 12px 6px;
+    border-top: 1px solid var(--line);
+  }
+  .mobile-more-session span {
+    min-width: 0;
+    display: grid;
+    gap: 4px;
+  }
+  .mobile-more-session small {
+    color: var(--muted);
+    font-size: var(--font-caption);
+    letter-spacing: 0.08em;
+  }
+  .mobile-more-session strong {
+    overflow: hidden;
+    color: var(--text);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .mobile-more-session button {
+    min-height: 46px;
+    padding-inline: 16px;
+    border: 1px solid var(--gold-dark);
+    background: transparent;
+    color: var(--gold);
+    font-weight: 700;
+  }
+  .mobile-more-session .mobile-logout {
+    border-color: color-mix(in srgb, var(--red) 65%, var(--line));
+    color: var(--red);
+  }
+  .play-config {
+    height: calc(100svh - 154px);
+    min-height: 520px;
+    max-height: 760px;
+  }
+  .play-side {
+    height: auto;
+    min-height: 0;
+    max-height: none;
+  }
+  .queue-mode-content {
+    max-height: none;
+  }
+  .profile-layout {
+    grid-template-columns: 1fr;
+  }
+  .profile-sidebar {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    padding: 0 0 18px;
+  }
+}
+
+@media (max-width: 620px) {
+  .topbar > a:first-child {
+    min-height: 48px;
+  }
+  .topbar nav {
+    display: none;
+  }
+  .mobile-nav a,
+  .mobile-nav button {
+    min-height: 68px;
+    font-size: var(--font-meta);
+  }
+  .mobile-more {
+    left: 8px;
+    right: 8px;
+    bottom: calc(72px + env(safe-area-inset-bottom));
+  }
+  .play-page {
+    padding-inline: 12px;
+  }
+  .play-config {
+    height: calc(100svh - 154px);
+    min-height: 520px;
+    padding: 22px 18px 10px;
+  }
+  .play-config-head {
+    padding-bottom: 16px;
+  }
+  .central-mode-picker {
+    margin-top: 14px;
+  }
+  .queue-mode-content {
+    padding-top: 18px;
+  }
+  .play-actions {
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
+  }
+  .queue-settings {
+    min-width: 52px;
+    min-height: 52px;
+  }
+  .empty-state {
+    min-height: 230px;
+    padding: 24px 18px;
+  }
+  .history-entry-main {
+    min-height: 124px;
+  }
+  .settings-grid--single .settings-card {
+    min-height: 0;
+  }
+}

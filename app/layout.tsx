@@ -1,31 +1,31 @@
-import type { Metadata } from 'next';
-import './globals.css';
+import type { Metadata } from "next";
+import { LanguageProvider } from "./lib/i18n";
+import { siteMetadata } from "./lib/i18n-metadata";
+import { getRequestLanguage } from "./lib/i18n-server";
+import "./globals.css";
+import "./design-system.css";
+import "./responsive.css";
+import "./feature-pages.css";
+import "./ergonomics.css";
+import "./legal.css";
 
-export const metadata: Metadata = {
-  metadataBase: new URL('https://pinkward-showdown.guy-alexis60.chatgpt.site'),
-  title: 'Pinkward — Matchmaking communautaire',
-  description: 'La plateforme compétitive pour trouver votre groupe, rejoindre une file et jouer.',
-  openGraph: {
-    title: 'Pinkward — Matchmaking communautaire',
-    description: 'Formez votre groupe, choisissez vos rôles et trouvez votre prochain match.',
-    images: [{ url: 'https://pinkward-showdown.guy-alexis60.chatgpt.site/og.png', width: 1200, height: 630, alt: 'Pinkward — Matchmaking communautaire' }],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Pinkward — Matchmaking communautaire',
-    description: 'Formez votre groupe, choisissez vos rôles et trouvez votre prochain match.',
-    images: ['https://pinkward-showdown.guy-alexis60.chatgpt.site/og.png'],
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return siteMetadata(await getRequestLanguage());
+}
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const language = await getRequestLanguage();
   return (
-    <html lang="fr">
-      <body>{children}</body>
+    <html lang={language}>
+      <body>
+        <LanguageProvider initialLanguage={language}>
+          {children}
+        </LanguageProvider>
+      </body>
     </html>
   );
 }

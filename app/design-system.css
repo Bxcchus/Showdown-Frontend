@@ -1,0 +1,226 @@
+/* Couche d'ergonomie finale. Elle centralise les états, les cibles tactiles et
+   les composants partagés sans réintroduire des sélecteurs spécifiques aux pages. */
+:root {
+  --status-success: #57d997;
+  --status-warning: #d6aa5b;
+  --status-danger: #ef6677;
+  --status-neutral: #8d969d;
+  --focus-ring: #f0c66f;
+}
+
+.topbar > a:first-child,
+.topbar nav a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: var(--font-meta);
+  letter-spacing: 0.035em;
+}
+
+.topbar > a:first-child {
+  color: var(--text);
+}
+.topbar nav a:hover,
+.topbar nav a.active {
+  color: var(--text);
+}
+.topbar nav a.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -14px;
+  height: 2px;
+  background: var(--gold);
+}
+
+.account-links button {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 6px;
+}
+
+.button:disabled {
+  opacity: 0.48;
+  cursor: not-allowed;
+}
+
+.empty-state {
+  min-height: 190px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 10px;
+  color: var(--muted);
+}
+.empty-state > span {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--gold-dark);
+  color: var(--gold);
+  font-size: 24px;
+  transform: rotate(45deg);
+}
+.empty-state h2 {
+  margin: 8px 0 0;
+  color: var(--text);
+  font-family: Beaufort, serif;
+  font-size: 17px;
+}
+.empty-state p {
+  max-width: 520px;
+  margin: 0 0 8px;
+  line-height: 1.6;
+}
+.empty-state .button {
+  margin-top: 8px;
+}
+.auth-empty-card {
+  min-height: 420px;
+}
+
+.status-text,
+.status-pill {
+  color: var(--status-neutral);
+}
+.status-success {
+  color: var(--status-success);
+}
+.status-warning {
+  color: var(--status-warning);
+}
+.status-danger {
+  color: var(--status-danger);
+}
+.status-neutral {
+  color: var(--status-neutral);
+}
+.status-pill {
+  min-width: 120px;
+  padding: 7px 11px;
+  border: 1px solid currentColor;
+  text-align: center;
+  font-style: normal;
+}
+.status-panel {
+  border-left: 3px solid currentColor;
+  background: rgba(255, 255, 255, 0.018);
+}
+.watcher-queue-status.status-danger {
+  border-color: rgba(239, 102, 119, 0.52);
+}
+.watcher-queue-status.status-warning {
+  border-color: rgba(214, 170, 91, 0.5);
+}
+
+.backend-toast {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  max-width: min(560px, calc(100vw - 40px));
+}
+.backend-toast button {
+  min-width: 44px;
+  min-height: 44px;
+  flex: none;
+  border: 1px solid currentColor;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.play-config {
+  height: min(820px, calc(100svh - 164px));
+  min-height: 540px;
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  overflow: hidden;
+}
+.queue-mode-content {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold-dark) transparent;
+  padding: 28px 4px 20px;
+}
+.play-actions {
+  position: relative;
+  z-index: 3;
+  margin-top: 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--line-soft);
+  background: var(--surface);
+}
+.play-actions .button {
+  min-height: 52px;
+}
+.play-side {
+  height: min(820px, calc(100svh - 164px));
+  min-height: 540px;
+}
+
+.settings-grid--single {
+  display: block;
+  max-width: 980px;
+}
+.settings-grid--single .settings-card {
+  min-height: 460px;
+}
+
+.profile-sidebar {
+  min-width: 0;
+}
+.profile-layout {
+  grid-template-columns: 210px minmax(0, 1fr);
+}
+.history-empty .empty-state,
+.leaderboard-table > .empty-state {
+  min-height: 330px;
+}
+
+.mobile-more {
+  display: none;
+}
+
+.language-switch {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  border: 1px solid var(--line);
+  padding: 2px;
+}
+
+.language-switch button {
+  min-width: 38px;
+  min-height: 38px;
+  color: var(--muted);
+  font-size: var(--font-meta);
+  font-weight: 800;
+}
+
+.language-switch button.active,
+.language-switch button[aria-pressed="true"] {
+  color: #080b0d;
+  background: var(--gold);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto;
+    transition-duration: 0.01ms;
+    animation-duration: 0.01ms;
+  }
+}
