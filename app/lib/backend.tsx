@@ -753,6 +753,7 @@ export function BackendProvider({ children }: { children: ReactNode }) {
     let disposed = false;
     const startWatcher = async () => {
       if (teamWatcherStarted.current === lobby.matchId) return;
+      teamWatcherStarted.current = lobby.matchId;
       try {
         const tokenResponse = await authenticatedFetch(
           `/api/v2/matches/${lobby.matchId}/watcher-token`,
@@ -778,7 +779,6 @@ export function BackendProvider({ children }: { children: ReactNode }) {
         if (!response.ok && response.status !== 409)
           throw new Error(`Watcher ${response.status}`);
         if (!disposed) {
-          teamWatcherStarted.current = lobby.matchId;
           setError((current) =>
             current ===
             "Lance GYMS.LOL Watcher pour vérifier les joueurs et suivre ce match 5v5."
@@ -787,6 +787,8 @@ export function BackendProvider({ children }: { children: ReactNode }) {
           );
         }
       } catch {
+        if (teamWatcherStarted.current === lobby.matchId)
+          teamWatcherStarted.current = null;
         if (!disposed)
           setError(
             "Lance GYMS.LOL Watcher pour vérifier les joueurs et suivre ce match 5v5.",
