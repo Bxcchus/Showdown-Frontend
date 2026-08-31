@@ -351,9 +351,10 @@ button {
       rgba(5, 9, 12, 0.22) 72%,
       rgba(5, 9, 12, 0.08) 100%
     ),
-    url("/season-arena-v2.webp");
-  background-size: cover;
-  background-position: center;
+    url("/season-trophy-v3.png");
+  background-size: cover, auto 100%;
+  background-position: center, right center;
+  background-repeat: no-repeat;
 }
 .season-card:after {
   content: "";
@@ -3942,6 +3943,6 @@ button:disabled {
       rgba(6, 9, 11, 0.86) 50%,
       rgba(6, 9, 11, 0.98)
     ),
-    url("/season-arena-v2.webp") center/cover;
+    url("/season-trophy-v3.png") center/cover;
   opacity: 0.4;
 }
