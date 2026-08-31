@@ -72,8 +72,13 @@ describe("sécurité de session", () => {
   it("échange le code OAuth avec le callback HTTPS public derrière Docker", async () => {
     vi.stubEnv("SHOWDOWN_WEB_ORIGIN", "https://gyms.lol");
     vi.stubEnv("PINKWARD_BACKEND_ORIGIN", "https://api.gyms.lol");
+    vi.stubEnv("WEB_CLIENT_SECRET", "s".repeat(43));
     const fetchMock = vi.fn().mockResolvedValue(
-      Response.json({ access_token: "access-token", expires_in: 3600 }),
+      Response.json({
+        access_token: "access-token",
+        refresh_token: "refresh-token",
+        expires_in: 3600,
+      }),
     );
     vi.stubGlobal("fetch", fetchMock);
     const response = await exchangeAuthorizationCode(
@@ -114,6 +119,7 @@ describe("sécurité de session", () => {
 
   it("révoque le refresh token distant et détruit toujours le cookie", async () => {
     vi.stubEnv("PINKWARD_BACKEND_ORIGIN", "http://identity.test");
+    vi.stubEnv("WEB_CLIENT_SECRET", "s".repeat(43));
     const fetchMock = vi
       .fn()
       .mockResolvedValue(new Response(null, { status: 200 }));

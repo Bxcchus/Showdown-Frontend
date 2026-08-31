@@ -73,12 +73,13 @@ export async function POST(request: Request) {
         redirect_uri: body.redirectUri,
       }),
     );
+    if (!tokens.refresh_token)
+      throw new OAuthExchangeError(502, null);
     const headers: Record<string, string> = {};
-    if (tokens.refresh_token)
-      headers["Set-Cookie"] = cookieHeader(
-        tokens.refresh_token,
-        60 * 60 * 24 * 30,
-      );
+    headers["Set-Cookie"] = cookieHeader(
+      tokens.refresh_token,
+      60 * 60 * 24 * 14,
+    );
     return accessResponse(tokens, headers);
   } catch (error) {
     if (error instanceof Response)

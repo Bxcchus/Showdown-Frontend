@@ -2,6 +2,7 @@ const CLIENT_ID = "pinkward-web";
 const REFRESH_COOKIE = "pinkward_refresh";
 const MAX_TOKEN_LENGTH = 16 * 1024;
 const MAX_ACCESS_TOKEN_LIFETIME_SECONDS = 24 * 60 * 60;
+const MIN_CLIENT_SECRET_LENGTH = 32;
 
 export type OAuthTokenSet = {
   access_token: string;
@@ -20,6 +21,16 @@ export class OAuthExchangeError extends Error {
 }
 
 const refreshExchanges = new Map<string, Promise<OAuthTokenSet>>();
+
+function clientAuthorizationHeader() {
+  const secret = (process.env.WEB_CLIENT_SECRET ?? "").trim();
+  if (
+    secret.length < MIN_CLIENT_SECRET_LENGTH ||
+    !/^[A-Za-z0-9_-]+$/.test(secret)
+  )
+    throw new Response("Client OAuth2 non configuré.", { status: 503 });
+  return `Basic ${btoa(`${CLIENT_ID}:${secret}`)}`;
+}
 
 export function publicRequestOrigin(request: Request) {
   const configured = (process.env.SHOWDOWN_WEB_ORIGIN ?? "").trim();
@@ -84,7 +95,10 @@ export async function exchangeToken(parameters: URLSearchParams) {
   if (!origin) throw new Response("Backend non configuré.", { status: 503 });
   const response = await fetch(`${origin}/oauth2/token`, {
     method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    headers: {
+      Authorization: clientAuthorizationHeader(),
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
     body: parameters,
   });
   if (!response.ok)
@@ -149,9 +163,11 @@ export async function revokeRefreshToken(token: string) {
   if (!origin) throw new Response("Backend non configuré.", { status: 503 });
   const response = await fetch(`${origin}/oauth2/revoke`, {
     method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    headers: {
+      Authorization: clientAuthorizationHeader(),
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
     body: new URLSearchParams({
-      client_id: CLIENT_ID,
       token,
       token_type_hint: "refresh_token",
     }),
@@ -163,7 +179,7 @@ export async function revokeRefreshToken(token: string) {
 }
 
 export function tokenParameters(values: Record<string, string>) {
-  return new URLSearchParams({ client_id: CLIENT_ID, ...values });
+  return new URLSearchParams(values);
 }
 
 export function refreshCookie(request: Request) {

@@ -60,6 +60,7 @@ describe("route BFF d’échange OAuth2", () => {
 
   it("refuse une réponse OAuth2 amont mal formée", async () => {
     vi.stubEnv("PINKWARD_BACKEND_ORIGIN", "http://identity.test");
+    vi.stubEnv("WEB_CLIENT_SECRET", "s".repeat(43));
     vi.stubGlobal(
       "fetch",
       vi
@@ -80,6 +81,7 @@ describe("route BFF d’échange OAuth2", () => {
 
   it("échange un code valide sans exposer le refresh token au DOM", async () => {
     vi.stubEnv("PINKWARD_BACKEND_ORIGIN", "http://identity.test");
+    vi.stubEnv("WEB_CLIENT_SECRET", "s".repeat(43));
     const fetchMock = vi.fn().mockResolvedValue(
       Response.json({
         access_token: "access",
@@ -101,5 +103,27 @@ describe("route BFF d’échange OAuth2", () => {
     const [url, init] = fetchMock.mock.calls[0] as [string, RequestInit];
     expect(url).toBe("http://identity.test/oauth2/token");
     expect(String(init.body)).toContain("code_verifier=");
+    expect(new Headers(init.headers).get("authorization")).toBe(
+      `Basic ${btoa(`pinkward-web:${"s".repeat(43)}`)}`,
+    );
+    expect(String(init.body)).not.toContain("client_id=");
+  });
+
+  it("refuse une connexion sans refresh token persistant", async () => {
+    vi.stubEnv("PINKWARD_BACKEND_ORIGIN", "http://identity.test");
+    vi.stubEnv("WEB_CLIENT_SECRET", "s".repeat(43));
+    vi.stubGlobal(
+      "fetch",
+      vi
+        .fn()
+        .mockResolvedValue(
+          Response.json({ access_token: "access", expires_in: 300 }),
+        ),
+    );
+
+    const response = await POST(request());
+
+    expect(response.status).toBe(502);
+    expect(response.headers.get("set-cookie")).toBeNull();
   });
 });

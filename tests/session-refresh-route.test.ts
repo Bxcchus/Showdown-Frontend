@@ -19,6 +19,7 @@ describe("route BFF de refresh", () => {
 
   it("ne réalise qu’un échange pour deux requêtes simultanées avec le même cookie", async () => {
     vi.stubEnv("PINKWARD_BACKEND_ORIGIN", "http://identity.test");
+    vi.stubEnv("WEB_CLIENT_SECRET", "s".repeat(43));
     let release!: (response: Response) => void;
     const upstream = new Promise<Response>((resolve) => {
       release = resolve;
@@ -54,6 +55,7 @@ describe("route BFF de refresh", () => {
 
   it("détruit le cookie uniquement lorsque le refresh est définitivement invalide", async () => {
     vi.stubEnv("PINKWARD_BACKEND_ORIGIN", "http://identity.test");
+    vi.stubEnv("WEB_CLIENT_SECRET", "s".repeat(43));
     vi.stubGlobal(
       "fetch",
       vi.fn().mockResolvedValue(new Response(null, { status: 400 })),
@@ -67,6 +69,7 @@ describe("route BFF de refresh", () => {
 
   it("préserve le cookie et Retry-After lors d’une saturation temporaire", async () => {
     vi.stubEnv("PINKWARD_BACKEND_ORIGIN", "http://identity.test");
+    vi.stubEnv("WEB_CLIENT_SECRET", "s".repeat(43));
     vi.stubGlobal(
       "fetch",
       vi
