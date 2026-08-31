@@ -378,7 +378,9 @@ describe("refresh OAuth mutualisé", () => {
 
     vi.resetModules();
     const reloaded = await import("../app/lib/auth");
-    expect(await reloaded.completeLogin()).toBeNull();
+    const completion = reloaded.completeLogin();
+    expect(completion).toBeInstanceOf(Promise);
+    expect(await completion).toBeNull();
     expect(refreshCalls).toBe(1);
   });
 });

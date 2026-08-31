@@ -99,6 +99,9 @@ export function siteMetadata(language: Language): Metadata {
     metadataBase: new URL(SITE_URL),
     title: copy.title,
     description: copy.description,
+    icons: {
+      icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+    },
     alternates: { canonical: SITE_URL },
     ...socialMetadata(language, copy.title),
   };

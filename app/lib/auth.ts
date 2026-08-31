@@ -274,7 +274,10 @@ async function completeAuthorizationCode(): Promise<UserSession | null> {
 
 export function completeLogin(): Promise<UserSession | null> {
   if (window.location.pathname !== "/oauth/callback") {
-    if (logoutRequested()) return null;
+    // Keep the public contract stable even when a previous logout marker is
+    // present. BackendProvider chains this result with `.then(...)`; returning
+    // a bare null here caused the application to crash during anonymous boot.
+    if (logoutRequested()) return Promise.resolve(null);
     return Promise.resolve(readSession()).then(
       (session) => session ?? refreshSession(),
     );
