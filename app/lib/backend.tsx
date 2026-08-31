@@ -777,7 +777,15 @@ export function BackendProvider({ children }: { children: ReactNode }) {
         );
         if (!response.ok && response.status !== 409)
           throw new Error(`Watcher ${response.status}`);
-        if (!disposed) teamWatcherStarted.current = lobby.matchId;
+        if (!disposed) {
+          teamWatcherStarted.current = lobby.matchId;
+          setError((current) =>
+            current ===
+            "Lance GYMS.LOL Watcher pour vérifier les joueurs et suivre ce match 5v5."
+              ? null
+              : current,
+          );
+        }
       } catch {
         if (!disposed)
           setError(

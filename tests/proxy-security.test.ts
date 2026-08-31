@@ -120,6 +120,39 @@ describe("proxy public", () => {
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
+  it("transmet la création du jeton Watcher 5v5 au gateway", async () => {
+    vi.stubEnv("PINKWARD_BACKEND_ORIGIN", "http://gateway.test");
+    const fetchMock = vi.fn().mockResolvedValue(
+      Response.json({ token: "watcher-token" }),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+    const response = await POST(
+      new Request(
+        "http://localhost:3000/backend/api/v2/matches/match-1/watcher-token",
+        {
+          method: "POST",
+          headers: { Authorization: "Bearer user-token" },
+        },
+      ),
+      {
+        params: Promise.resolve({
+          path: ["api", "v2", "matches", "match-1", "watcher-token"],
+        }),
+      },
+    );
+
+    expect(response.status).toBe(200);
+    expect(await response.json()).toEqual({ token: "watcher-token" });
+    expect(fetchMock).toHaveBeenCalledWith(
+      "http://gateway.test/api/v2/matches/match-1/watcher-token",
+      expect.objectContaining({ method: "POST", redirect: "manual" }),
+    );
+    const [, init] = fetchMock.mock.calls[0] as [string, RequestInit];
+    expect(new Headers(init.headers).get("authorization")).toBe(
+      "Bearer user-token",
+    );
+  });
+
   it("ne transmet jamais l’écriture manuelle d’un résultat", async () => {
     const fetchMock = vi.fn();
     vi.stubGlobal("fetch", fetchMock);

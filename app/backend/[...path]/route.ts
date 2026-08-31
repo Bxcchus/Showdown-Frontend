@@ -53,6 +53,10 @@ const PUBLIC_ROUTES: RouteRule[] = [
   route(["GET"], /^\/api\/v2\/matches\/duel\/leaderboard$/),
   route(["GET"], /^\/api\/v2\/matches\/seasons$/),
   route(["POST"], new RegExp(`^/api/v2/matches/${RESOURCE_ID}/ready$`)),
+  route(
+    ["POST"],
+    new RegExp(`^/api/v2/matches/${RESOURCE_ID}/watcher-token$`),
+  ),
   route(["POST"], /^\/api\/v2\/parties$/),
   route(["GET", "DELETE"], /^\/api\/v2\/parties\/current$/),
   route(["POST", "DELETE"], /^\/api\/v2\/parties\/current\/search$/),
