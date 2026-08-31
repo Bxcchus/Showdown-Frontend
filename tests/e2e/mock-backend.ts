@@ -6,7 +6,8 @@ const matchId = "33333333-3333-4333-8333-333333333333";
 
 const profile = {
   playerId,
-  displayName: "local-player",
+  displayName: "TestPlayer",
+  onboardingComplete: true,
   region: "EUW",
   primaryRole: "MID",
   secondaryRole: "JUNGLE",
@@ -99,6 +100,7 @@ export type MockState = {
   leaderboardRequests: string[];
   riotLinkRequest: Record<string, unknown> | null;
   botResultRequests: number;
+  teamWatcherStarts: number;
   watcherOutcome: "VICTORY" | "DEFEAT" | null;
   readyAccepted: boolean;
   party: {
@@ -159,6 +161,7 @@ export async function installAuthenticatedMock(
     leaderboardRequests: [],
     riotLinkRequest: null,
     botResultRequests: 0,
+    teamWatcherStarts: 0,
     watcherOutcome: null,
     readyAccepted: false,
     party: null,
@@ -205,6 +208,10 @@ export async function installAuthenticatedMock(
     if (path === "/v1/session")
       return fulfill(route, { token: "local-test-token" });
     if (path === "/v1/bot-duels/start") return fulfill(route, {}, 202);
+    if (path === "/v1/matches/start") {
+      state.teamWatcherStarts += 1;
+      return fulfill(route, {}, 202);
+    }
     return fulfill(route, {});
   });
 
@@ -240,7 +247,7 @@ export async function installAuthenticatedMock(
     }
     if (path === "/api/v2/players/directory")
       return fulfill(route, [
-        { playerId, displayName: "local-player" },
+        { playerId, displayName: "TestPlayer" },
         { playerId: botId, displayName: "GYMS.LOL BOT" },
       ]);
     if (path === "/api/v2/parties" && request.method() === "POST") {
@@ -254,7 +261,7 @@ export async function installAuthenticatedMock(
         members: [
           {
             playerId,
-            displayName: "local-player",
+            displayName: "TestPlayer",
             primaryRole: "MID",
             secondaryRole: "JUNGLE",
             ready: false,
@@ -458,6 +465,16 @@ export async function installAuthenticatedMock(
       state.botResultRequests += 1;
       return fulfill(route, { error: "Service scope required" }, 403);
     }
+    if (
+      path === `/api/v2/matches/${matchId}/watcher-token` &&
+      request.method() === "POST"
+    )
+      return fulfill(route, {
+        token: "team-watcher-token",
+        matchId,
+        role: "HOST",
+        expiresAt: "2099-08-28T05:00:00Z",
+      });
     return fulfill(route, { error: `Unhandled mock route: ${path}` }, 404);
   });
   return state;

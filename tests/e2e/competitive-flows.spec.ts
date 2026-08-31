@@ -66,4 +66,14 @@ test("parcours 5v5 : le rôle principal est transmis en priorité", async ({
     primaryRole: "JUNGLE",
     secondaryRole: "MID",
   });
+
+  state.phase = "ready";
+  await page.reload();
+  await expect(page).toHaveURL(/\/ready-check$/);
+  await page.getByRole("button", { name: "ACCEPTER" }).click();
+  await expect(page).toHaveURL(/\/lobby$/);
+  await expect.poll(() => state.teamWatcherStarts).toBe(1);
+  await expect(
+    page.getByText(/vérifie les joueurs, suit le lancement/i),
+  ).toBeVisible();
 });

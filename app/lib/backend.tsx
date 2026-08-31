@@ -127,6 +127,7 @@ export function BackendProvider({ children }: { children: ReactNode }) {
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const botWatcherStarted = useRef<string | null>(null);
+  const teamWatcherStarted = useRef<string | null>(null);
   const historyRequestSequence = useRef(0);
   const historyAbort = useRef<AbortController | null>(null);
   const historyQuery = useRef<{ page: number; filters: HistoryRequest } | null>(
@@ -179,6 +180,7 @@ export function BackendProvider({ children }: { children: ReactNode }) {
     setPlayerNames({});
     setWatcherJob(null);
     botWatcherStarted.current = null;
+    teamWatcherStarted.current = null;
     queueCommand.current = null;
     clearWatcherSession();
     setBusy(false);
@@ -740,6 +742,72 @@ export function BackendProvider({ children }: { children: ReactNode }) {
     return () => window.clearInterval(timer);
   }, [lobby, refresh, refreshWatcher, session]);
 
+  useEffect(() => {
+    if (
+      !session ||
+      lobby?.mode !== "FIVE_V_FIVE" ||
+      lobby.status !== "CONFIRMED"
+    )
+      return;
+
+    let disposed = false;
+    const startWatcher = async () => {
+      if (teamWatcherStarted.current === lobby.matchId) return;
+      try {
+        const tokenResponse = await authenticatedFetch(
+          `/api/v2/matches/${lobby.matchId}/watcher-token`,
+          { method: "POST" },
+        );
+        if (!tokenResponse.ok)
+          throw new Error(`API ${tokenResponse.status}`);
+        const issued = (await tokenResponse.json()) as { token?: string };
+        if (!issued.token) throw new Error("Jeton Watcher absent.");
+
+        const response = await watcherFetch(
+          "/v1/matches/start",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              matchId: lobby.matchId,
+              watcherToken: issued.token,
+            }),
+          },
+          true,
+        );
+        if (!response.ok && response.status !== 409)
+          throw new Error(`Watcher ${response.status}`);
+        if (!disposed) teamWatcherStarted.current = lobby.matchId;
+      } catch {
+        if (!disposed)
+          setError(
+            "Lance GYMS.LOL Watcher pour vérifier les joueurs et suivre ce match 5v5.",
+          );
+      }
+    };
+
+    void startWatcher();
+    const timer = window.setInterval(async () => {
+      await refreshWatcher();
+      try {
+        const status = await watcherFetch("/v1/duels/status", {}, true);
+        if (!status.ok) return;
+        const job = (await status.json()) as WatcherJob;
+        if (job.matchId !== lobby.matchId || !job.outcome) return;
+        window.clearInterval(timer);
+        teamWatcherStarted.current = null;
+        await refresh();
+      } catch {
+        /* retry until the match disappears */
+      }
+    }, 1500);
+
+    return () => {
+      disposed = true;
+      window.clearInterval(timer);
+    };
+  }, [lobby, refresh, refreshWatcher, session]);
+
   const execute = useCallback(
     async <T,>(
       operation: () => Promise<T>,
@@ -953,8 +1021,9 @@ export function BackendProvider({ children }: { children: ReactNode }) {
               throw new Error(
                 await errorMessage(response, "Réponse au ready-check refusée."),
               );
-            setMatch((await response.json()) as CurrentMatch);
-            await loadLive();
+            const updatedMatch = (await response.json()) as CurrentMatch;
+            setMatch(updatedMatch);
+            if (updatedMatch.status !== "READY_CHECK") await loadLive();
             return true;
           },
           "Réponse impossible.",

@@ -18,7 +18,7 @@ export default function WatcherPage({ go }: { go: (page: Page) => void }) {
       <PageTitle
         eyebrow="PASSERELLE LEAGUE LOCALE"
         title="CENTRE DE CONTRÔLE DU WATCHER"
-        text="Connecte le client League et vérifie automatiquement les objectifs des duels 1v1."
+        text="Connecte le client League, vérifie les duels 1v1 et accompagne les matchs 5v5."
         action={
           !backend.session ? (
             <Button onClick={() => void backend.login()}>SE CONNECTER</Button>
@@ -173,7 +173,7 @@ export default function WatcherPage({ go }: { go: (page: Page) => void }) {
               </dd>
             </div>
             <div>
-              <dt>ÉTAT DU DUEL</dt>
+              <dt>ÉTAT DU MATCH</dt>
               <dd className={`status-text status-${watcher.tone}`}>
                 {watcher.label}
               </dd>
@@ -205,6 +205,12 @@ export default function WatcherPage({ go }: { go: (page: Page) => void }) {
               <span>PREMIER SANG</span>
               <span>100 CS EN PREMIER</span>
               <span>PREMIÈRE TOURELLE</span>
+            </div>
+            <small>SUIVI 5V5</small>
+            <div>
+              <span>JOUEURS VÉRIFIÉS</span>
+              <span>LANCEMENT SUIVI</span>
+              <span>RÉSULTAT TRANSMIS</span>
             </div>
           </div>
         </Card>

@@ -390,8 +390,9 @@ export function Lobby() {
               ACTUALISER LE WATCHER
             </Button>
             <p className="verified-result-note">
-              Le résultat est envoyé automatiquement par le Watcher après le
-              premier sang, 100 CS ou la première tourelle.
+              {lobby?.mode === "ONE_V_ONE"
+                ? "Le résultat est envoyé automatiquement par le Watcher après le premier sang, 100 CS ou la première tourelle."
+                : "Le Watcher vérifie les joueurs, suit le lancement et transmet le résultat final du match 5v5."}
             </p>
           </aside>
         </div>

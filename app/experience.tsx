@@ -66,10 +66,7 @@ export function GymsLolExperience({ initialPage }: { initialPage: Page }) {
   }, []);
   useEffect(() => {
     document.title = t(`${pageTitles[activePage]} · GYMS.LOL`);
-    if (
-      activePage !== page &&
-      window.location.pathname !== pagePaths[activePage]
-    )
+    if (window.location.pathname !== pagePaths[activePage])
       window.history.replaceState(
         { gymsLolPage: activePage },
         "",

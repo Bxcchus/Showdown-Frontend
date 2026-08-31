@@ -147,6 +147,8 @@ export const englishTranslations: Readonly<Record<string, string>> = {
   "Équipes et rôles attribués": "Assigned teams and roles",
   "Le résultat est envoyé automatiquement par le Watcher après le premier sang, 100 CS ou la première tourelle.":
     "The Watcher automatically submits the result after first blood, 100 CS or first turret.",
+  "Le Watcher vérifie les joueurs, suit le lancement et transmet le résultat final du match 5v5.":
+    "The Watcher verifies the players, follows game launch and submits the final 5v5 result.",
   "ÉQUIPE BLEUE": "BLUE TEAM",
   "ÉQUIPE ROUGE": "RED TEAM",
   "NOM DU LOBBY": "LOBBY NAME",
@@ -175,8 +177,15 @@ export const englishTranslations: Readonly<Record<string, string>> = {
   "DERNIER OBJECTIF": "LAST OBJECTIVE",
   "DERNIER RÉSULTAT": "LAST OUTCOME",
   "OBJECTIFS 1V1 SURVEILLÉS": "MONITORED 1V1 OBJECTIVES",
+  "ÉTAT DU MATCH": "MATCH STATUS",
+  "SUIVI 5V5": "5V5 MONITORING",
+  "JOUEURS VÉRIFIÉS": "PLAYERS VERIFIED",
+  "LANCEMENT SUIVI": "LAUNCH MONITORED",
+  "RÉSULTAT TRANSMIS": "RESULT SUBMITTED",
   "Connecte le client League et vérifie automatiquement les objectifs des duels 1v1.":
     "Connect the League Client and automatically verify 1v1 objectives.",
+  "Connecte le client League, vérifie les duels 1v1 et accompagne les matchs 5v5.":
+    "Connect the League Client, verify 1v1 duels and support 5v5 matches.",
   "Connecte-toi pour charger tes parties compétitives.":
     "Sign in to load your competitive matches.",
   "BIENVENUE SUR GYMS.LOL": "WELCOME TO GYMS.LOL",
