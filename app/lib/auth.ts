@@ -81,16 +81,12 @@ class SessionRequestTimeoutError extends Error {
 
 async function sessionFetch(input: RequestInfo | URL, init: RequestInit = {}) {
   const controller = new AbortController();
+  let timer: number | undefined;
   const timeout = new Promise<never>((_, reject) => {
-    const timer = window.setTimeout(() => {
+    timer = window.setTimeout(() => {
       controller.abort();
       reject(new SessionRequestTimeoutError());
     }, SESSION_REQUEST_TIMEOUT_MS);
-    controller.signal.addEventListener(
-      "abort",
-      () => window.clearTimeout(timer),
-      { once: true },
-    );
   });
   try {
     return await Promise.race([
@@ -98,7 +94,10 @@ async function sessionFetch(input: RequestInfo | URL, init: RequestInit = {}) {
       timeout,
     ]);
   } finally {
-    controller.abort();
+    // A fetch resolves as soon as the response headers are available. Aborting
+    // here also cancels its still-unread body, so the following response.json()
+    // failed in browsers with "The user aborted a request" despite HTTP 200.
+    if (timer !== undefined) window.clearTimeout(timer);
   }
 }
 

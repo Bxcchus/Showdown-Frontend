@@ -71,6 +71,49 @@ describe("refresh OAuth mutualisé", () => {
     expect(sessionStorage.getItem("pinkward.oauth.flow")).toBeNull();
   });
 
+  it("conserve le corps de la réponse OAuth lisible après la réception des en-têtes", async () => {
+    let requestSignal: AbortSignal | null = null;
+    const fetchMock = vi.fn(
+      async (_input: RequestInfo | URL, init?: RequestInit) => {
+        requestSignal = init?.signal ?? null;
+        return {
+          ok: true,
+          json: async () => {
+            if (requestSignal?.aborted)
+              throw new DOMException(
+                "The user aborted a request.",
+                "AbortError",
+              );
+            return {
+              access_token: accessToken("readable-response"),
+              expires_in: 3600,
+            };
+          },
+        } as Response;
+      },
+    );
+    vi.stubGlobal("fetch", fetchMock);
+    sessionStorage.setItem(
+      "pinkward.oauth.flow",
+      JSON.stringify({
+        state: "readable-state",
+        verifier: "a".repeat(64),
+        redirectUri: "https://gyms.lol/oauth/callback",
+      }),
+    );
+    window.history.replaceState(
+      {},
+      "",
+      "/oauth/callback?code=readable-code&state=readable-state",
+    );
+    const auth = await import("../app/lib/auth");
+
+    await expect(auth.completeLogin()).resolves.toMatchObject({
+      username: "readable-response",
+    });
+    expect(requestSignal?.aborted).toBe(false);
+  });
+
   it("abandonne proprement un échange OAuth bloqué au lieu de préparer la session indéfiniment", async () => {
     vi.useFakeTimers();
     try {
