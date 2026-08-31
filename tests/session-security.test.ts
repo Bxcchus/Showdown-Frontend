@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import {
   assertSameOrigin,
   cookieHeader,
+  REFRESH_COOKIE_MAX_AGE_SECONDS,
   refreshCookie,
 } from "../app/api/session/_shared";
 import { POST as logout } from "../app/api/session/logout/route";
@@ -28,6 +29,53 @@ describe("sécurité de session", () => {
     expect(header).toContain("HttpOnly");
     expect(header).toContain("SameSite=Strict");
     expect(header).toContain("Path=/api/session");
+  });
+
+  it("limite le cookie de rafraîchissement à quatorze jours", () => {
+    expect(cookieHeader("secret", REFRESH_COOKIE_MAX_AGE_SECONDS)).toContain(
+      "Max-Age=1209600",
+    );
+  });
+
+  it("autorise uniquement le proxy Docker HTTP pour une origine locale", async () => {
+    vi.stubEnv("NODE_ENV", "production");
+    vi.stubEnv("SHOWDOWN_WEB_ORIGIN", "http://localhost:8088");
+    vi.stubEnv("PINKWARD_BACKEND_ORIGIN", "http://caddy:8088");
+    vi.stubEnv("WEB_CLIENT_SECRET", "s".repeat(43));
+    const fetchMock = vi.fn().mockResolvedValue(
+      Response.json({ access_token: "access-token", expires_in: 3600 }),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+    const response = await logout(
+      new Request("http://web-app:3000/api/session/logout", {
+        method: "POST",
+        headers: {
+          Origin: "http://localhost:8088",
+          "Sec-Fetch-Site": "same-origin",
+          Cookie: "pinkward_refresh=local-secret",
+        },
+      }),
+    );
+    expect(response.status).toBe(204);
+    expect(fetchMock.mock.calls[0]?.[0]).toBe("http://caddy:8088/oauth2/revoke");
+  });
+
+  it("refuse un backend HTTP distant en production", async () => {
+    vi.stubEnv("NODE_ENV", "production");
+    vi.stubEnv("SHOWDOWN_WEB_ORIGIN", "https://gyms.lol");
+    vi.stubEnv("PINKWARD_BACKEND_ORIGIN", "http://api.gyms.lol");
+    vi.stubEnv("WEB_CLIENT_SECRET", "s".repeat(43));
+    const response = await logout(
+      new Request("http://web-app:3000/api/session/logout", {
+        method: "POST",
+        headers: {
+          Origin: "https://gyms.lol",
+          "Sec-Fetch-Site": "same-origin",
+          Cookie: "pinkward_refresh=remote-secret",
+        },
+      }),
+    );
+    expect(response.status).toBe(503);
   });
 
   it("refuse une origine différente pour les mutations de session", () => {

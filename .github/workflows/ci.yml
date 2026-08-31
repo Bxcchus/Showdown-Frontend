@@ -1,4 +1,4 @@
-name: Pinkward Web CI
+name: GYMS.LOL Web CI
 
 on:
   push:
@@ -11,7 +11,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: pinkward-web-${{ github.ref }}
+  group: gyms-lol-web-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -20,10 +20,16 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
       - name: Reject committed secrets
-        run: >-
-          docker run --rm -v "$PWD:/repo" zricethezav/gitleaks:v8.30.0
-          detect --source=/repo --no-git --config=/repo/.gitleaks.toml --redact --exit-code=1
+        run: |
+          docker run --rm -v "$PWD:/repo" \
+            -e GIT_CONFIG_COUNT=1 \
+            -e GIT_CONFIG_KEY_0=safe.directory \
+            -e GIT_CONFIG_VALUE_0=/repo \
+            zricethezav/gitleaks:v8.30.0@sha256:691af3c7c5a48b16f187ce3446d5f194838f91238f27270ed36eef6359a574d9 \
+            git /repo --config=/repo/.gitleaks.toml --redact --exit-code=1
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: "24"
@@ -39,3 +45,31 @@ jobs:
         run: |
           npx playwright install --with-deps chromium
           npm run test:e2e
+
+  docker-image:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - name: Build the production frontend image
+        run: >-
+          docker build
+          --build-arg PINKWARD_BACKEND_ORIGIN=https://api.gyms.lol
+          --build-arg NEXT_PUBLIC_PINKWARD_IDENTITY_ORIGIN=https://api.gyms.lol
+          --build-arg NEXT_PUBLIC_PINKWARD_WEBSOCKET_ORIGIN=wss://api.gyms.lol
+          --build-arg SHOWDOWN_WEB_ORIGIN=https://gyms.lol
+          --tag gyms-lol/frontend:${{ github.sha }} .
+      - name: Verify the runtime user and reject sensitive build artifacts
+        run: |
+          test "$(docker image inspect gyms-lol/frontend:${{ github.sha }} --format '{{.Config.User}}')" = "node"
+          docker run --rm --entrypoint sh gyms-lol/frontend:${{ github.sha }} -ec \
+            '! find /app -type f \( -name ".env" -o -name ".env.*" -o -name "*.dump" -o -name "*.sql" -o -name "*.pdb" -o -name "showdown-watcher.exe" \) | grep -q .'
+      - name: Scan the final image with Trivy
+        run: >-
+          docker run --rm
+          -v /var/run/docker.sock:/var/run/docker.sock
+          -v showdown-trivy-cache:/root/.cache/trivy
+          ghcr.io/aquasecurity/trivy:0.74.0@sha256:ee940acbf1f58ebadb42d01434ce4609530bf1b52536afbd1eee66cd7123c5c9
+          image --scanners vuln --exit-code 1 --severity HIGH,CRITICAL
+          --ignore-unfixed --no-progress --skip-version-check
+          gyms-lol/frontend:${{ github.sha }}

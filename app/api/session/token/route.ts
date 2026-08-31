@@ -5,6 +5,7 @@ import {
   exchangeToken,
   OAuthExchangeError,
   publicRequestOrigin,
+  REFRESH_COOKIE_MAX_AGE_SECONDS,
   sessionErrorResponse,
   tokenParameters,
 } from "../_shared";
@@ -78,7 +79,7 @@ export async function POST(request: Request) {
     const headers: Record<string, string> = {};
     headers["Set-Cookie"] = cookieHeader(
       tokens.refresh_token,
-      60 * 60 * 24 * 14,
+      REFRESH_COOKIE_MAX_AGE_SECONDS,
     );
     return accessResponse(tokens, headers);
   } catch (error) {

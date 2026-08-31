@@ -3,6 +3,22 @@ const REFRESH_COOKIE = "pinkward_refresh";
 const MAX_TOKEN_LENGTH = 16 * 1024;
 const MAX_ACCESS_TOKEN_LIFETIME_SECONDS = 24 * 60 * 60;
 const MIN_CLIENT_SECRET_LENGTH = 32;
+export const REFRESH_COOKIE_MAX_AGE_SECONDS = 14 * 24 * 60 * 60;
+
+function isLoopbackHostname(hostname: string) {
+  return hostname === "localhost" || hostname === "127.0.0.1" || hostname === "[::1]";
+}
+
+function isLocalPublicOrigin() {
+  const configured = (process.env.SHOWDOWN_WEB_ORIGIN ?? "").trim();
+  if (!configured) return false;
+  try {
+    const parsed = new URL(configured);
+    return parsed.protocol === "http:" && isLoopbackHostname(parsed.hostname);
+  } catch {
+    return false;
+  }
+}
 
 export type OAuthTokenSet = {
   access_token: string;
@@ -47,7 +63,9 @@ export function publicRequestOrigin(request: Request) {
     parsed.pathname !== "/" ||
     parsed.search ||
     parsed.hash ||
-    (process.env.NODE_ENV === "production" && parsed.protocol !== "https:") ||
+    (process.env.NODE_ENV === "production" &&
+      parsed.protocol !== "https:" &&
+      !(parsed.protocol === "http:" && isLoopbackHostname(parsed.hostname))) ||
     !["http:", "https:"].includes(parsed.protocol)
   )
     throw new Response("Origine publique non configurée.", { status: 503 });
@@ -73,7 +91,13 @@ function backendOrigin() {
     parsed.search ||
     parsed.hash ||
     !["http:", "https:"].includes(parsed.protocol) ||
-    (process.env.NODE_ENV === "production" && parsed.protocol !== "https:")
+    (process.env.NODE_ENV === "production" &&
+      parsed.protocol !== "https:" &&
+      !(
+        parsed.protocol === "http:" &&
+        isLocalPublicOrigin() &&
+        (isLoopbackHostname(parsed.hostname) || parsed.hostname === "caddy")
+      ))
   )
     throw new Response("Backend non configuré.", { status: 503 });
   return parsed.origin;

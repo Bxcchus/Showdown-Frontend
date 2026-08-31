@@ -4,6 +4,7 @@ import {
   cookieHeader,
   exchangeRefreshToken,
   OAuthExchangeError,
+  REFRESH_COOKIE_MAX_AGE_SECONDS,
   refreshCookie,
   sessionErrorResponse,
 } from "../_shared";
@@ -18,7 +19,7 @@ export async function POST(request: Request) {
     if (tokens.refresh_token)
       headers["Set-Cookie"] = cookieHeader(
         tokens.refresh_token,
-        60 * 60 * 24 * 30,
+        REFRESH_COOKIE_MAX_AGE_SECONDS,
       );
     return accessResponse(tokens, headers);
   } catch (error) {
