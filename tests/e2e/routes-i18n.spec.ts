@@ -44,7 +44,9 @@ test("l’interface anglaise couvre les écrans principaux et les données Riot/
   await expect(page.getByText("WATCHER PROCESS")).toBeVisible();
 
   await page.goto("/profile");
-  await expect(page.getByRole("heading", { name: "PROFILE" })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "PROFILE", exact: true }),
+  ).toBeVisible();
   await expect(page.getByAltText("Riot profile icon")).toHaveAttribute(
     "src",
     /profileicon%2F29\.png|profileicon\/29\.png/,
@@ -53,7 +55,7 @@ test("l’interface anglaise couvre les écrans principaux et les données Riot/
 
   await page.goto("/leaderboard");
   await expect(
-    page.getByRole("heading", { name: "LEADERBOARD" }),
+    page.getByRole("heading", { name: "LEADERBOARD", exact: true }),
   ).toBeVisible();
   await expect(page.getByText("PARTIAL RESET:")).toBeVisible();
   await page.locator(".leaderboard-region-select select").selectOption("NA");
