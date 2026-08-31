@@ -101,6 +101,7 @@ export type MockState = {
   riotLinkRequest: Record<string, unknown> | null;
   botResultRequests: number;
   teamWatcherStarts: number;
+  tokenRequests: number;
   watcherOutcome: "VICTORY" | "DEFEAT" | null;
   readyAccepted: boolean;
   party: {
@@ -162,6 +163,7 @@ export async function installAuthenticatedMock(
     riotLinkRequest: null,
     botResultRequests: 0,
     teamWatcherStarts: 0,
+    tokenRequests: 0,
     watcherOutcome: null,
     readyAccepted: false,
     party: null,
@@ -184,6 +186,11 @@ export async function installAuthenticatedMock(
       ? fulfill(route, { error: "Session absente." }, 401)
       : fulfill(route, { access_token: accessToken, expires_in: 3600 }),
   );
+
+  await page.route("**/api/session/token", (route) => {
+    state.tokenRequests += 1;
+    return fulfill(route, { access_token: accessToken, expires_in: 3600 });
+  });
 
   await page.route("http://127.0.0.1:43991/**", async (route) => {
     const path = new URL(route.request().url()).pathname;

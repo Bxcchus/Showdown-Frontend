@@ -66,13 +66,21 @@ export function GymsLolExperience({ initialPage }: { initialPage: Page }) {
   }, []);
   useEffect(() => {
     document.title = t(`${pageTitles[activePage]} · GYMS.LOL`);
+    // The OAuth callback owns its URL until the authorization code has been
+    // exchanged. Replacing it during the loading phase makes completeLogin()
+    // fall back to a refresh request before the refresh cookie exists.
+    if (
+      backend.sessionStatus === "LOADING" &&
+      window.location.pathname === "/oauth/callback"
+    )
+      return;
     if (window.location.pathname !== pagePaths[activePage])
       window.history.replaceState(
         { gymsLolPage: activePage },
         "",
         pagePaths[activePage],
       );
-  }, [activePage, page, t]);
+  }, [activePage, backend.sessionStatus, page, t]);
   return (
     <Shell page={activePage} setPage={navigate}>
       {backend.sessionStatus === "LOADING" ? (

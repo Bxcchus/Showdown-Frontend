@@ -1,6 +1,31 @@
 import { expect, test } from "@playwright/test";
 import { installAuthenticatedMock } from "./mock-backend";
 
+test("le callback OAuth échange le code avant de normaliser son URL", async ({
+  page,
+}) => {
+  const state = await installAuthenticatedMock(page);
+  await page.addInitScript(() => {
+    sessionStorage.setItem(
+      "pinkward.oauth.flow",
+      JSON.stringify({
+        state: "callback-state",
+        verifier: "a".repeat(64),
+        redirectUri: "http://127.0.0.1:3100/oauth/callback",
+      }),
+    );
+  });
+
+  await page.goto("/oauth/callback?code=one-time-code&state=callback-state");
+
+  await expect(page.locator(".app-shell")).toHaveAttribute(
+    "data-session-status",
+    "authenticated",
+  );
+  await expect(page).toHaveURL("http://127.0.0.1:3100/");
+  expect(state.tokenRequests).toBe(1);
+});
+
 test("les routes de flux orphelines reviennent à Jouer et une route inconnue répond 404", async ({
   page,
 }) => {
