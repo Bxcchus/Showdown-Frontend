@@ -229,7 +229,7 @@ describe("navigation accessible", () => {
     expect(
       screen.getAllByRole("link", { name: "HOME" }).length,
     ).toBeGreaterThan(0);
-    const english = screen.getAllByRole("button", { name: "EN" })[0];
+    const english = screen.getAllByRole("button", { name: "English" })[0];
     expect(english).toHaveAttribute("name", "locale");
     expect(english).toHaveAttribute("value", "en");
     expect(english).toHaveAttribute("aria-pressed", "true");
@@ -256,7 +256,7 @@ describe("navigation accessible", () => {
         </LanguageProvider>,
       );
 
-      fireEvent.click(screen.getAllByRole("button", { name: "EN" })[0]);
+      fireEvent.click(screen.getAllByRole("button", { name: "English" })[0]);
 
       await waitFor(() =>
         expect(

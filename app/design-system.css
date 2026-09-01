@@ -204,15 +204,36 @@
 .language-switch button {
   min-width: 38px;
   min-height: 38px;
+  display: grid;
+  place-items: center;
   color: var(--muted);
   font-size: var(--font-meta);
   font-weight: 800;
+}
+
+.language-flag {
+  display: block;
+  width: 24px;
+  height: 16px;
+  border: 1px solid rgb(255 255 255 / 24%);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 35%);
+  opacity: 0.62;
+  filter: saturate(0.55);
+  transition:
+    opacity 120ms ease,
+    filter 120ms ease;
 }
 
 .language-switch button.active,
 .language-switch button[aria-pressed="true"] {
   color: #080b0d;
   background: var(--gold);
+}
+
+.language-switch button.active .language-flag,
+.language-switch button[aria-pressed="true"] .language-flag {
+  opacity: 1;
+  filter: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

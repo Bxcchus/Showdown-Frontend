@@ -15,7 +15,7 @@ test("navigation mobile sans chevauchement et changement de langue", async ({
     name: "Navigation supplémentaire",
   });
   await expect(more).toBeVisible();
-  await dialog.getByRole("button", { name: "EN" }).click();
+  await dialog.getByRole("button", { name: "English" }).click();
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
   await expect(
     page.getByRole("navigation", { name: "Mobile navigation" }),

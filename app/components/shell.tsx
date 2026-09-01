@@ -31,6 +31,39 @@ const mobileMore: Array<[Page, string]> = [
 ];
 const subscribeToHydration = () => () => undefined;
 
+function LanguageFlag({ language }: { language: "fr" | "en" }) {
+  if (language === "fr") {
+    return (
+      <svg
+        className="language-flag"
+        viewBox="0 0 60 40"
+        role="img"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <rect width="20" height="40" fill="#0055a4" />
+        <rect x="20" width="20" height="40" fill="#fff" />
+        <rect x="40" width="20" height="40" fill="#ef4135" />
+      </svg>
+    );
+  }
+  return (
+    <svg
+      className="language-flag"
+      viewBox="0 0 60 40"
+      role="img"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <rect width="60" height="40" fill="#012169" />
+      <path d="M0 0 60 40M60 0 0 40" stroke="#fff" strokeWidth="9" />
+      <path d="M0 0 60 40M60 0 0 40" stroke="#c8102e" strokeWidth="4" />
+      <path d="M30 0v40M0 20h60" stroke="#fff" strokeWidth="13" />
+      <path d="M30 0v40M0 20h60" stroke="#c8102e" strokeWidth="7" />
+    </svg>
+  );
+}
+
 function NavLink({
   page,
   current,
@@ -108,9 +141,11 @@ function LanguageSwitch({ className }: { className: string }) {
         value="fr"
         className={language === "fr" ? "active" : ""}
         aria-pressed={language === "fr"}
+        aria-label="Français"
+        title="Français"
         disabled={Boolean(pendingLanguage)}
       >
-        FR
+        <LanguageFlag language="fr" />
       </button>
       <button
         type="submit"
@@ -118,9 +153,11 @@ function LanguageSwitch({ className }: { className: string }) {
         value="en"
         className={language === "en" ? "active" : ""}
         aria-pressed={language === "en"}
+        aria-label="English"
+        title="English"
         disabled={Boolean(pendingLanguage)}
       >
-        EN
+        <LanguageFlag language="en" />
       </button>
     </form>
   );
