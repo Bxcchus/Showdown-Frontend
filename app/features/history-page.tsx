@@ -17,6 +17,7 @@ import {
   type HistorySearchFilters,
 } from "../lib/flow";
 import { Localized, useLanguage } from "../lib/i18n";
+import { championIconUrl } from "../lib/presentation";
 
 function writeHistoryUrl(
   next: HistorySearchFilters,
@@ -334,6 +335,7 @@ export default function HistoryPage() {
               backend.history.map((entry) => {
                 const won = entry.outcome === "VICTORY";
                 const played = new Date(entry.playedAt);
+                const championIcon = championIconUrl(entry.championName);
                 const selected =
                   detail?.summary.matchId === entry.matchId ||
                   detailLoadingId === entry.matchId;
@@ -357,10 +359,25 @@ export default function HistoryPage() {
                     >
                       <span className="history-role-emblem">
                         <Image
-                          src={roleIcon(entry.role)}
-                          alt={entry.role === "BOT" ? "ADC" : entry.role}
-                          width={46}
-                          height={46}
+                          className={
+                            championIcon
+                              ? "history-champion-icon"
+                              : "history-mode-icon"
+                          }
+                          src={
+                            championIcon ??
+                            (entry.mode === "ONE_V_ONE"
+                              ? "/mode-icons/aram-active.png"
+                              : "/mode-icons/summoners-rift-active.png")
+                          }
+                          unoptimized={Boolean(championIcon)}
+                          alt={
+                            entry.championName
+                              ? `Champion joué : ${entry.championName}`
+                              : "Champion non enregistré"
+                          }
+                          width={70}
+                          height={70}
                         />
                         <span>{entry.newMmr}</span>
                       </span>

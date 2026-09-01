@@ -172,6 +172,12 @@ describe("historique fiable", () => {
       screen.getByRole("group", { name: "Filtres de l’historique" }),
     ).toBeInTheDocument();
     expect(container.querySelector(".history-entry-main > div")).toBeNull();
+    expect(
+      screen.getByRole("img", { name: "Champion joué : Draven" }),
+    ).toHaveAttribute(
+      "src",
+      "https://ddragon.leagueoflegends.com/cdn/16.16.1/img/champion/Draven.png",
+    );
   });
 
   it("ignore le détail lent d’un ancien clic", async () => {
