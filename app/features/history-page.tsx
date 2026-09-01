@@ -65,6 +65,7 @@ export default function HistoryPage() {
   const displayRoles: ApiRole[] = ["TOP", "JUNGLE", "MID", "BOT", "SUPPORT"];
   const roleIcon = (role: ApiRole) =>
     `/role-icons/${role === "BOT" ? "adc" : role.toLowerCase()}.svg`;
+  const roleLabel = (role: ApiRole) => (role === "BOT" ? "ADC" : role);
   const requestHistory = useCallback(
     async (next: HistorySearchFilters) => {
       const result = await loadHistory(next.page - 1, {
@@ -416,21 +417,21 @@ export default function HistoryPage() {
                           <strong>{entry.newMmr}</strong>
                         </span>
                       </span>
-                      <span className="history-role-strip" aria-hidden="true">
-                        {displayRoles.map((role) => (
-                          <span
-                            className={role === entry.role ? "selected" : ""}
-                            key={role}
-                          >
-                            <Image
-                              src={roleIcon(role)}
-                              alt=""
-                              aria-hidden="true"
-                              width={24}
-                              height={24}
-                            />
-                          </span>
-                        ))}
+                      <span className="history-map-icon">
+                        <Image
+                          src={
+                            entry.mode === "ONE_V_ONE"
+                              ? "/mode-icons/aram-active.png"
+                              : "/mode-icons/summoners-rift-active.png"
+                          }
+                          alt={
+                            entry.mode === "ONE_V_ONE"
+                              ? "Carte : Abîme hurlant"
+                              : "Carte : Faille de l’invocateur"
+                          }
+                          width={48}
+                          height={48}
+                        />
                       </span>
                       <time className="history-when" dateTime={entry.playedAt}>
                         <strong>{formatDate(played)}</strong>
@@ -461,8 +462,13 @@ export default function HistoryPage() {
                                   : (backend.playerNames[player.playerId] ??
                                     player.playerId.slice(0, 8))}
                               </strong>
-                              <span>
-                                {player.role === "BOT" ? "ADC" : player.role}
+                              <span className="history-detail-role">
+                                <Image
+                                  src={roleIcon(player.role)}
+                                  alt={`Rôle : ${roleLabel(player.role)}`}
+                                  width={24}
+                                  height={24}
+                                />
                               </span>
                             </p>
                           ))}
@@ -477,8 +483,13 @@ export default function HistoryPage() {
                                   : (backend.playerNames[player.playerId] ??
                                     player.playerId.slice(0, 8))}
                               </strong>
-                              <span>
-                                {player.role === "BOT" ? "ADC" : player.role}
+                              <span className="history-detail-role">
+                                <Image
+                                  src={roleIcon(player.role)}
+                                  alt={`Rôle : ${roleLabel(player.role)}`}
+                                  width={24}
+                                  height={24}
+                                />
                               </span>
                             </p>
                           ))}

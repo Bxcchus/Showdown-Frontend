@@ -178,6 +178,47 @@ describe("historique fiable", () => {
       "src",
       "https://ddragon.leagueoflegends.com/cdn/16.16.1/img/champion/Draven.png",
     );
+    expect(
+      screen.getByRole("img", { name: "Carte : Abîme hurlant" }),
+    ).toHaveAttribute("src", expect.stringContaining("aram-active.png"));
+  });
+
+  it("utilise les icônes de rôle dans le détail du match", async () => {
+    const entry = historyEntry("match-role-icons");
+    const loadMatchDetail = vi.fn().mockResolvedValue({
+      summary: entry,
+      teammates: [
+        { playerId, team: "BLUE", role: "MID", bot: false, self: true },
+      ],
+      opponents: [
+        {
+          playerId: "bot-player",
+          team: "RED",
+          role: "BOT",
+          bot: true,
+          self: false,
+        },
+      ],
+    });
+    const { container } = view(
+      backend({
+        history: [entry],
+        historyPage: page(0, [entry]),
+        loadMatchDetail,
+      }),
+    );
+
+    fireEvent.click(
+      container.querySelector<HTMLButtonElement>(".history-entry-main")!,
+    );
+
+    expect(
+      await screen.findByRole("img", { name: "Rôle : MID" }),
+    ).toHaveAttribute("src", "/role-icons/mid.svg");
+    expect(screen.getByRole("img", { name: "Rôle : ADC" })).toHaveAttribute(
+      "src",
+      "/role-icons/adc.svg",
+    );
   });
 
   it("ignore le détail lent d’un ancien clic", async () => {
