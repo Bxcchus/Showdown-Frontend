@@ -191,6 +191,14 @@ describe("Partie rapide", () => {
     expect(screen.queryByText("101 LP")).not.toBeInTheDocument();
   });
 
+  it("sépare les classements actuels 5v5 et 1v1 sur l’accueil", () => {
+    renderPage(<Home go={vi.fn()} />, backend());
+
+    expect(screen.getByText("CLASSEMENT ACTUEL 5V5")).toBeInTheDocument();
+    expect(screen.getByText("CLASSEMENT ACTUEL 1V1")).toBeInTheDocument();
+    expect(screen.queryByText("VOIR LE CLASSEMENT")).not.toBeInTheDocument();
+  });
+
   it("affiche les rôles du lobby avec leurs icônes", () => {
     renderPage(
       <Lobby />,

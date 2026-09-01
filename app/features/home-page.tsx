@@ -8,14 +8,15 @@ import { Localized, useLanguage } from "../lib/i18n";
 import type { Page } from "../lib/navigation";
 import {
   championIconUrl,
+  duelRankPresentation,
   fiveRankPresentation,
-  rankIcon,
 } from "../lib/presentation";
 
 export function Home({ go }: { go: (page: Page) => void }) {
   const backend = useBackend();
   const { formatDate } = useLanguage();
   const fiveRank = fiveRankPresentation(backend.statistics);
+  const duelRank = duelRankPresentation(backend.duelStatistics);
   const [quickMode, setQuickMode] = useState<"1V1" | "5V5">(() => {
     if (typeof window === "undefined") return "5V5";
     try {
@@ -197,31 +198,58 @@ export function Home({ go }: { go: (page: Page) => void }) {
                 </b>
               </div>
             </Card>
-            <Card className="home-rank-card">
-              <span className="eyebrow">CLASSEMENT ACTUEL</span>
-              <Image
-                src={rankIcon(
-                  backend.statistics?.rank,
-                  backend.statistics?.games,
-                )}
-                alt="Classement actuel"
-                width={94}
-                height={94}
-              />
-              <h2>{fiveRank.label}</h2>
-              <b>{fiveRank.detail}</b>
-              <strong>
-                {Math.round(backend.statistics?.winRate ?? 0)}%{" "}
-                <small>VICTOIRES</small>
-              </strong>
-              <p>
-                {backend.statistics?.wins ?? 0}W —{" "}
-                {backend.statistics?.losses ?? 0}L
-              </p>
-              <Button kind="outline" onClick={() => go("leaderboard")}>
-                VOIR LE CLASSEMENT
-              </Button>
-            </Card>
+            <div className="home-rank-stack">
+              <Card className="home-rank-card">
+                <span className="eyebrow">CLASSEMENT ACTUEL 5V5</span>
+                <div className="home-rank-summary">
+                  <Image
+                    src={fiveRank.icon}
+                    alt="Classement actuel 5v5"
+                    width={64}
+                    height={64}
+                  />
+                  <span>
+                    <h2>{fiveRank.label}</h2>
+                    <b>{fiveRank.detail}</b>
+                  </span>
+                </div>
+                <div className="home-rank-results">
+                  <strong>
+                    {Math.round(backend.statistics?.winRate ?? 0)}%{" "}
+                    <small>VICTOIRES</small>
+                  </strong>
+                  <p>
+                    {backend.statistics?.wins ?? 0}W —{" "}
+                    {backend.statistics?.losses ?? 0}L
+                  </p>
+                </div>
+              </Card>
+              <Card className="home-rank-card">
+                <span className="eyebrow">CLASSEMENT ACTUEL 1V1</span>
+                <div className="home-rank-summary">
+                  <Image
+                    src={duelRank.icon}
+                    alt="Classement actuel 1v1"
+                    width={64}
+                    height={64}
+                  />
+                  <span>
+                    <h2>{duelRank.label}</h2>
+                    <b>{duelRank.detail}</b>
+                  </span>
+                </div>
+                <div className="home-rank-results">
+                  <strong>
+                    {Math.round(backend.duelStatistics?.winRate ?? 0)}%{" "}
+                    <small>VICTOIRES</small>
+                  </strong>
+                  <p>
+                    {backend.duelStatistics?.wins ?? 0}W —{" "}
+                    {backend.duelStatistics?.losses ?? 0}L
+                  </p>
+                </div>
+              </Card>
+            </div>
           </div>
           <div className="home-activity-row">
             <Card className="home-recent-card">

@@ -390,47 +390,64 @@ button {
   color: var(--gold);
   font-size: var(--font-caption);
 }
+.home-rank-stack {
+  display: grid;
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  min-width: 0;
+}
 .home-rank-card {
-  padding: 22px;
+  min-height: 0;
+  padding: 14px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
-.home-rank-card > img {
-  align-self: center;
+.home-rank-card > .eyebrow {
+  font-size: 10px;
+}
+.home-rank-summary {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+.home-rank-summary > img {
+  flex: none;
   object-fit: contain;
-  margin: 4px 0 -4px;
+}
+.home-rank-summary > span {
+  min-width: 0;
 }
 .home-rank-card h2 {
   font-family: Beaufort, serif;
-  font-size: 20px;
-  margin: 0 0 4px;
+  font-size: 17px;
+  margin: 0 0 2px;
 }
-.home-rank-card > b {
+.home-rank-card b {
   color: var(--gold);
-  font-size: var(--font-caption);
+  font-size: 10px;
 }
-.home-rank-card > strong {
+.home-rank-results {
+  width: 100%;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-top: auto;
+}
+.home-rank-results strong {
   font-family: Beaufort, serif;
-  font-size: 26px;
-  margin-top: 17px;
+  font-size: 18px;
 }
-.home-rank-card > strong small {
+.home-rank-results strong small {
   color: var(--muted);
   font-family: Spiegel, sans-serif;
-  font-size: var(--font-caption);
+  font-size: 9px;
 }
-.home-rank-card p {
-  font-size: var(--font-caption);
-  margin-top: 3px;
-}
-.home-rank-card .button {
-  width: 100%;
-  min-width: 0;
-  height: 42px;
-  margin-top: auto;
-  padding: 0 8px;
-  font-size: var(--font-caption);
+.home-rank-results p {
+  font-size: 10px;
+  margin: 0;
 }
 .home-activity-row {
   display: grid;
@@ -1958,7 +1975,7 @@ button {
     padding: 24px;
   }
   .home-rank-card {
-    min-height: 280px;
+    min-height: 0;
   }
   .home-activity-line {
     grid-template-columns: 36px 62px minmax(70px, 1fr) 46px;
@@ -2218,21 +2235,17 @@ button {
     font-size: var(--font-meta);
   }
   .home-rank-card {
-    padding: 26px;
+    padding: 16px;
   }
   .home-rank-card h2 {
-    font-size: 23px;
+    font-size: 18px;
   }
-  .home-rank-card > strong {
-    font-size: 30px;
+  .home-rank-results strong {
+    font-size: 20px;
   }
-  .home-rank-card p,
-  .home-rank-card > b {
-    font-size: var(--font-meta);
-  }
-  .home-rank-card .button {
-    height: 46px;
-    font-size: var(--font-meta);
+  .home-rank-results p,
+  .home-rank-card b {
+    font-size: var(--font-caption);
   }
   .home-activity-row {
     grid-template-columns: minmax(0, 1fr);

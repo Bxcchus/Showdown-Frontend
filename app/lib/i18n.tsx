@@ -73,6 +73,8 @@ export const englishTranslations: Readonly<Record<string, string>> = {
   "CRÉER UN GROUPE": "CREATE PARTY",
   "GÉRER LE GROUPE": "MANAGE PARTY",
   "CLASSEMENT ACTUEL": "CURRENT RANK",
+  "CLASSEMENT ACTUEL 5V5": "CURRENT 5V5 RANK",
+  "CLASSEMENT ACTUEL 1V1": "CURRENT 1V1 RANK",
   "Classement actuel": "Current rank",
   "Classement 5v5": "5v5 rank",
   "Classement 1v1": "1v1 rank",
