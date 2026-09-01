@@ -15,6 +15,7 @@ import {
 export function Home({ go }: { go: (page: Page) => void }) {
   const backend = useBackend();
   const { formatDate } = useLanguage();
+  const fiveRank = fiveRankPresentation(backend.statistics);
   const [quickMode, setQuickMode] = useState<"1V1" | "5V5">(() => {
     if (typeof window === "undefined") return "5V5";
     try {
@@ -207,8 +208,8 @@ export function Home({ go }: { go: (page: Page) => void }) {
                 width={94}
                 height={94}
               />
-              <h2>{fiveRankPresentation(backend.statistics).label}</h2>
-              <b>{backend.statistics?.progression ?? 0} LP</b>
+              <h2>{fiveRank.label}</h2>
+              <b>{fiveRank.detail}</b>
               <strong>
                 {Math.round(backend.statistics?.winRate ?? 0)}%{" "}
                 <small>VICTOIRES</small>

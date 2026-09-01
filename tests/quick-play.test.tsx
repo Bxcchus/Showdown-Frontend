@@ -93,6 +93,24 @@ function renderPage(content: React.ReactNode, state: BackendState) {
   );
 }
 
+const placementStatistics = {
+  mmr: 1301,
+  peakMmr: 1301,
+  skillMean: 25,
+  skillDeviation: 7,
+  season: "S2026",
+  region: "EUW",
+  placementGamesRemaining: 4,
+  progression: 101,
+  rank: "PLACEMENT",
+  games: 1,
+  wins: 1,
+  losses: 0,
+  winRate: 100,
+  gamesByRole: { BOT: 1 },
+  recentForm: ["VICTORY"],
+} as const;
+
 describe("Partie rapide", () => {
   beforeEach(() => {
     window.localStorage.clear();
@@ -155,6 +173,16 @@ describe("Partie rapide", () => {
     );
   });
 
+  it("affiche les placements restants au lieu de présenter la progression comme des LP", () => {
+    renderPage(
+      <Home go={vi.fn()} />,
+      backend({ statistics: placementStatistics }),
+    );
+
+    expect(screen.getByText("4 restante(s)")).toBeInTheDocument();
+    expect(screen.queryByText("101 LP")).not.toBeInTheDocument();
+  });
+
   it("affiche les rôles du lobby avec leurs icônes", () => {
     renderPage(
       <Lobby />,
@@ -207,6 +235,17 @@ describe("Partie rapide", () => {
       screen.getByRole("heading", { level: 1, name: "SUMMONER'S RIFT" }),
     ).toBeInTheDocument();
     expect(screen.getByRole("radio", { name: /5V5/ })).toHaveClass("selected");
+  });
+
+  it("conserve aussi l’état des placements sur la page Jouer", () => {
+    window.history.replaceState({}, "", "/play?mode=5v5");
+    renderPage(
+      <Play go={vi.fn()} />,
+      backend({ statistics: placementStatistics }),
+    );
+
+    expect(screen.getByText("4 restante(s)")).toBeInTheDocument();
+    expect(screen.queryByText("101 LP")).not.toBeInTheDocument();
   });
 
   it("expose les modes et rôles comme des choix exclusifs au clavier", () => {

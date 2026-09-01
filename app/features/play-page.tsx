@@ -184,16 +184,12 @@ export function Play({ go }: { go: (page: Page) => void }) {
       text="Crée un groupe pour inviter des joueurs et lancer une recherche commune."
     />
   );
-  const fiveRank = fiveRankPresentation(backend.statistics).label;
+  const fiveRank = fiveRankPresentation(backend.statistics);
   const duelRank = duelRankPresentation(backend.duelStatistics).label;
-  const selectedRank = mode === "1V1" ? duelRank : fiveRank;
+  const selectedRank = mode === "1V1" ? duelRank : fiveRank.label;
   const selectedMmr =
     mode === "1V1" ? backend.duelStatistics?.mmr : backend.statistics?.mmr;
   const selectedMmrLabel = selectedMmr == null ? "—" : `${selectedMmr} MMR`;
-  const selectedProgression =
-    mode === "1V1"
-      ? (backend.duelStatistics?.progression ?? 0)
-      : (backend.statistics?.progression ?? 0);
   const selectedGames =
     mode === "1V1"
       ? (backend.duelStatistics?.games ?? 0)
@@ -539,7 +535,7 @@ export function Play({ go }: { go: (page: Page) => void }) {
                 <b>
                   {mode === "1V1"
                     ? selectedMmrLabel
-                    : `${selectedProgression} LP`}
+                    : fiveRank.detail}
                 </b>
               </span>
             </div>
