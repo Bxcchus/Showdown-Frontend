@@ -127,6 +127,7 @@ export function BackendProvider({ children }: { children: ReactNode }) {
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const botWatcherStarted = useRef<string | null>(null);
+  const duelWatcherStarted = useRef<string | null>(null);
   const teamWatcherStarted = useRef<string | null>(null);
   const historyRequestSequence = useRef(0);
   const historyAbort = useRef<AbortController | null>(null);
@@ -180,6 +181,7 @@ export function BackendProvider({ children }: { children: ReactNode }) {
     setPlayerNames({});
     setWatcherJob(null);
     botWatcherStarted.current = null;
+    duelWatcherStarted.current = null;
     teamWatcherStarted.current = null;
     queueCommand.current = null;
     clearWatcherSession();
@@ -747,6 +749,83 @@ export function BackendProvider({ children }: { children: ReactNode }) {
       }
     }, 1500);
     return () => window.clearInterval(timer);
+  }, [lobby, refresh, refreshWatcher, session]);
+
+  useEffect(() => {
+    if (
+      !session ||
+      lobby?.mode !== "ONE_V_ONE" ||
+      lobby.status !== "CONFIRMED" ||
+      isBotDuel(lobby)
+    )
+      return;
+
+    let disposed = false;
+    const startWatcher = async () => {
+      if (duelWatcherStarted.current === lobby.matchId) return;
+      duelWatcherStarted.current = lobby.matchId;
+      try {
+        const tokenResponse = await authenticatedFetch(
+          `/api/v2/matches/duels/${lobby.matchId}/watcher-token`,
+          { method: "POST" },
+        );
+        if (!tokenResponse.ok)
+          throw new Error(`API ${tokenResponse.status}`);
+        const issued = (await tokenResponse.json()) as { token?: string };
+        if (!issued.token) throw new Error("Jeton Watcher absent.");
+
+        const response = await watcherFetch(
+          "/v1/duels/start",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              matchId: lobby.matchId,
+              watcherToken: issued.token,
+            }),
+          },
+          true,
+        );
+        if (!response.ok && response.status !== 409)
+          throw new Error(`Watcher ${response.status}`);
+        if (!disposed) setError(null);
+      } catch {
+        if (duelWatcherStarted.current === lobby.matchId)
+          duelWatcherStarted.current = null;
+        if (!disposed)
+          setError(
+            "Lance GYMS.LOL Watcher pour créer ou rejoindre automatiquement ce duel.",
+          );
+      }
+    };
+
+    void startWatcher();
+    const timer = window.setInterval(async () => {
+      await refreshWatcher();
+      try {
+        const status = await watcherFetch("/v1/duels/status", {}, true);
+        if (!status.ok) return;
+        const job = (await status.json()) as WatcherJob;
+        if (job.matchId !== lobby.matchId) return;
+        if (job.state === "CANCELLED") {
+          window.clearInterval(timer);
+          duelWatcherStarted.current = null;
+          await refresh();
+          return;
+        }
+        if (!job.outcome) return;
+        window.clearInterval(timer);
+        duelWatcherStarted.current = null;
+        await refresh();
+      } catch {
+        /* retry until the duel disappears */
+      }
+    }, 1500);
+
+    return () => {
+      disposed = true;
+      window.clearInterval(timer);
+    };
   }, [lobby, refresh, refreshWatcher, session]);
 
   useEffect(() => {
