@@ -8,6 +8,7 @@ import {
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { Home, Play } from "../app/experience";
 import { Lobby } from "../app/features/match-flow-pages";
+import ProfilePage from "../app/features/profile-page";
 import { BackendContext } from "../app/lib/backend-context";
 import type { BackendState } from "../app/lib/backend-types";
 import { LanguageProvider } from "../app/lib/i18n";
@@ -253,6 +254,46 @@ describe("Partie rapide", () => {
 
     expect(screen.getByText("4 restante(s)")).toBeInTheDocument();
     expect(screen.queryByText("101 LP")).not.toBeInTheDocument();
+  });
+
+  it("distingue clairement le classé 5v5 du duel classé 1v1 sur le profil", () => {
+    renderPage(
+      <ProfilePage />,
+      backend({
+        statistics: placementStatistics,
+        duelStatistics: {
+          mmr: 1510,
+          peakMmr: 1510,
+          rating: 1500,
+          ratingDeviation: 180,
+          volatility: 0.06,
+          algorithm: "GLICKO_2",
+          season: "S2026",
+          region: "EUW",
+          placementGamesRemaining: 1,
+          provisional: true,
+          games: 4,
+          wins: 3,
+          losses: 1,
+          winRate: 75,
+          progression: 10,
+        },
+      }),
+    );
+
+    expect(screen.getByText("CLASSÉ 5V5")).toBeInTheDocument();
+    expect(screen.getByText("DUEL CLASSÉ 1V1")).toBeInTheDocument();
+    expect(
+      screen.getByRole("img", {
+        name: "Mode classé 5v5 : Faille de l'invocateur",
+      }),
+    ).toHaveAttribute(
+      "src",
+      expect.stringContaining("summoners-rift-active.png"),
+    );
+    expect(
+      screen.getByRole("img", { name: "Mode duel 1v1 : Abîme hurlant" }),
+    ).toHaveAttribute("src", expect.stringContaining("aram-active.png"));
   });
 
   it("expose les modes et rôles comme des choix exclusifs au clavier", () => {

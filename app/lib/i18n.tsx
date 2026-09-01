@@ -76,6 +76,8 @@ export const englishTranslations: Readonly<Record<string, string>> = {
   "Classement actuel": "Current rank",
   "Classement 5v5": "5v5 rank",
   "Classement 1v1": "1v1 rank",
+  "CLASSÉ 5V5": "RANKED 5V5",
+  "DUEL CLASSÉ 1V1": "RANKED 1V1 DUEL",
   "CLASSEMENT ACTIF": "ACTIVE LADDER",
   "SERVICES EN LIGNE": "SERVICES ONLINE",
   "CONNEXION…": "CONNECTING…",

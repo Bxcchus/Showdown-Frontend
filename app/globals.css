@@ -1220,6 +1220,12 @@ button {
   gap: 14px;
   overflow: hidden;
 }
+.rank-overview--five {
+  background: linear-gradient(110deg, rgba(20, 125, 145, 0.08), transparent 72%);
+}
+.rank-overview--duel {
+  background: linear-gradient(110deg, rgba(189, 145, 77, 0.08), transparent 72%);
+}
 .rank-overview > div,
 .rank-number {
   display: flex;
@@ -1237,6 +1243,21 @@ button {
   width: 86px;
   height: 86px;
   object-fit: contain;
+}
+.rank-mode-emblem img {
+  width: 72px;
+  height: 72px;
+}
+.rank-mode-progress {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  white-space: nowrap;
+}
+.rank-mode-progress em {
+  color: var(--muted);
+  font-size: var(--font-caption);
+  font-style: normal;
 }
 .profile-ranks small {
   color: var(--muted);

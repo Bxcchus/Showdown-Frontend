@@ -122,38 +122,44 @@ export default function ProfilePage() {
             </aside>
             <div className="profile-main">
               <Card className="profile-ranks">
-                <div className="rank-overview">
-                  <span className="rank-emblem">
+                <div className="rank-overview rank-overview--five">
+                  <span className="rank-emblem rank-mode-emblem">
                     <Image
-                      src={fiveRank.icon}
-                      alt="Classement 5v5"
+                      src="/mode-icons/summoners-rift-active.png"
+                      alt="Mode classé 5v5 : Faille de l'invocateur"
                       width={132}
                       height={132}
                     />
                   </span>
                   <div>
-                    <small>5V5 TRUESKILL</small>
-                    <strong>{fiveRank.label}</strong>
-                    <b>
-                      {backend.statistics?.games
-                        ? `${backend.statistics.mmr} MMR`
-                        : fiveRank.detail}
-                    </b>
+                    <small>FAILLE DE L'INVOCATEUR · TRUESKILL</small>
+                    <strong>CLASSÉ 5V5</strong>
+                    <span className="rank-mode-progress">
+                      <b>{fiveRank.label}</b>
+                      <em>
+                        {backend.statistics?.games
+                          ? `${backend.statistics.mmr} MMR`
+                          : fiveRank.detail}
+                      </em>
+                    </span>
                   </div>
                 </div>
-                <div className="rank-overview">
-                  <span className="rank-emblem">
+                <div className="rank-overview rank-overview--duel">
+                  <span className="rank-emblem rank-mode-emblem">
                     <Image
-                      src={duelRank.icon}
-                      alt="Classement 1v1"
+                      src="/mode-icons/aram-active.png"
+                      alt="Mode duel 1v1 : Abîme hurlant"
                       width={132}
                       height={132}
                     />
                   </span>
                   <div>
-                    <small>1V1 GLICKO-2</small>
-                    <strong>{duelRank.label}</strong>
-                    <b>{duelRank.detail}</b>
+                    <small>ABÎME HURLANT · GLICKO-2</small>
+                    <strong>DUEL CLASSÉ 1V1</strong>
+                    <span className="rank-mode-progress">
+                      <b>{duelRank.label}</b>
+                      <em>{duelRank.detail}</em>
+                    </span>
                   </div>
                 </div>
                 <div className="rank-number">
