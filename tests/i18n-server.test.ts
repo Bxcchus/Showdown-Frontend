@@ -60,6 +60,9 @@ describe("résolution serveur de la langue", () => {
     expect(pageMetadata("en", "not-found").title).toBe(
       "Page not found · GYMS.LOL",
     );
+    expect(siteMetadata("fr")).not.toHaveProperty("openGraph.images");
+    expect(siteMetadata("fr")).not.toHaveProperty("twitter.images");
+    expect(siteMetadata("fr")).toHaveProperty("twitter.card", "summary");
   });
 });
 

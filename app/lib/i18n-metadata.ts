@@ -3,7 +3,6 @@ import { pagePaths, type Page } from "./navigation";
 import type { Language } from "./i18n-shared";
 
 const SITE_URL = "https://gyms.lol";
-const SOCIAL_IMAGE = `${SITE_URL}/og.png`;
 
 const siteCopy: Record<
   Language,
@@ -70,23 +69,14 @@ function socialMetadata(
     openGraph: {
       title,
       description: copy.socialDescription,
-      images: [
-        {
-          url: SOCIAL_IMAGE,
-          width: 1200,
-          height: 630,
-          alt: copy.title,
-        },
-      ],
       locale: language === "en" ? "en_GB" : "fr_FR",
       type: "website",
       url: `${SITE_URL}${path}`,
     },
     twitter: {
-      card: "summary_large_image",
+      card: "summary",
       title,
       description: copy.socialDescription,
-      images: [SOCIAL_IMAGE],
     },
   };
 }
