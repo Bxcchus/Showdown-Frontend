@@ -122,66 +122,103 @@ export default function ProfilePage() {
             </aside>
             <div className="profile-main">
               <Card className="profile-ranks">
-                <div className="rank-overview rank-overview--five">
-                  <span className="rank-emblem rank-mode-emblem">
-                    <Image
-                      src="/mode-icons/summoners-rift-active.png"
-                      alt="Mode classé 5v5 : Faille de l'invocateur"
-                      width={132}
-                      height={132}
-                    />
-                  </span>
-                  <div>
-                    <small>FAILLE DE L'INVOCATEUR · TRUESKILL</small>
-                    <strong>CLASSÉ 5V5</strong>
-                    <span className="rank-mode-progress">
-                      <b>{fiveRank.label}</b>
-                      <em>
+                <div
+                  className="rank-overview rank-overview--five"
+                  role="group"
+                  aria-label="Classement 5v5"
+                >
+                  <div className="rank-mode-summary">
+                    <span className="rank-emblem rank-mode-emblem">
+                      <Image
+                        src="/mode-icons/summoners-rift-active.png"
+                        alt="Mode classé 5v5 : Faille de l'invocateur"
+                        width={132}
+                        height={132}
+                      />
+                    </span>
+                    <div className="rank-overview-copy">
+                      <small>FAILLE DE L'INVOCATEUR · TRUESKILL</small>
+                      <strong>CLASSÉ 5V5</strong>
+                      <span className="rank-mode-progress">
+                        <b>{fiveRank.label}</b>
+                        <em>{fiveRank.detail}</em>
+                      </span>
+                    </div>
+                  </div>
+                  <dl className="rank-mode-metrics">
+                    <div>
+                      <dt>MMR ACTUEL</dt>
+                      <dd>{backend.statistics?.games ? backend.statistics.mmr : "—"}</dd>
+                    </div>
+                    <div>
+                      <dt>PIC MMR</dt>
+                      <dd>
                         {backend.statistics?.games
-                          ? `${backend.statistics.mmr} MMR`
-                          : fiveRank.detail}
-                      </em>
+                          ? backend.statistics.peakMmr
+                          : "—"}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>TAUX DE VICTOIRE</dt>
+                      <dd>{Math.round(backend.statistics?.winRate ?? 0)}%</dd>
+                      <small>
+                        {backend.statistics?.wins ?? 0} {language === "en" ? "W" : "V"} —{" "}
+                        {backend.statistics?.losses ?? 0} {language === "en" ? "L" : "D"}
+                      </small>
+                    </div>
+                  </dl>
+                </div>
+                <div
+                  className="rank-overview rank-overview--duel"
+                  role="group"
+                  aria-label="Classement 1v1"
+                >
+                  <div className="rank-mode-summary">
+                    <span className="rank-emblem rank-mode-emblem">
+                      <Image
+                        src="/mode-icons/aram-active.png"
+                        alt="Mode duel 1v1 : Abîme hurlant"
+                        width={132}
+                        height={132}
+                      />
                     </span>
+                    <div className="rank-overview-copy">
+                      <small>ABÎME HURLANT · GLICKO-2</small>
+                      <strong>DUEL CLASSÉ 1V1</strong>
+                      <span className="rank-mode-progress">
+                        <b>{duelRank.label}</b>
+                        <em>{duelRank.detail}</em>
+                      </span>
+                    </div>
                   </div>
-                </div>
-                <div className="rank-overview rank-overview--duel">
-                  <span className="rank-emblem rank-mode-emblem">
-                    <Image
-                      src="/mode-icons/aram-active.png"
-                      alt="Mode duel 1v1 : Abîme hurlant"
-                      width={132}
-                      height={132}
-                    />
-                  </span>
-                  <div>
-                    <small>ABÎME HURLANT · GLICKO-2</small>
-                    <strong>DUEL CLASSÉ 1V1</strong>
-                    <span className="rank-mode-progress">
-                      <b>{duelRank.label}</b>
-                      <em>{duelRank.detail}</em>
-                    </span>
-                  </div>
-                </div>
-                <div className="rank-number">
-                  <small>TAUX DE VICTOIRE</small>
-                  <strong>
-                    {Math.round(backend.statistics?.winRate ?? 0)}%
-                  </strong>
-                  <b>
-                    {backend.statistics?.wins ?? 0}{" "}
-                    {language === "en" ? "W" : "V"} —{" "}
-                    {backend.statistics?.losses ?? 0}{" "}
-                    {language === "en" ? "L" : "D"}
-                  </b>
-                </div>
-                <div className="rank-number">
-                  <small>MEILLEUR MMR</small>
-                  <strong>
-                    {backend.statistics?.games
-                      ? backend.statistics.peakMmr
-                      : "—"}
-                  </strong>
-                  <b>{backend.statistics?.season ?? "SAISON EN COURS"}</b>
+                  <dl className="rank-mode-metrics">
+                    <div>
+                      <dt>MMR ACTUEL</dt>
+                      <dd>
+                        {backend.duelStatistics?.games
+                          ? backend.duelStatistics.mmr
+                          : "—"}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>PIC MMR</dt>
+                      <dd>
+                        {backend.duelStatistics?.games
+                          ? backend.duelStatistics.peakMmr
+                          : "—"}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>TAUX DE VICTOIRE</dt>
+                      <dd>
+                        {Math.round(backend.duelStatistics?.winRate ?? 0)}%
+                      </dd>
+                      <small>
+                        {backend.duelStatistics?.wins ?? 0} {language === "en" ? "W" : "V"} —{" "}
+                        {backend.duelStatistics?.losses ?? 0} {language === "en" ? "L" : "D"}
+                      </small>
+                    </div>
+                  </dl>
                 </div>
               </Card>
               <div className="profile-content">

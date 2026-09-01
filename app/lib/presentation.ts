@@ -78,7 +78,7 @@ export function fiveRankPresentation(statistics: MatchStatistics | null) {
   ) {
     return {
       label: "PLACEMENTS",
-      detail: `${statistics.placementGamesRemaining} restante(s)`,
+      detail: placementGamesLabel(statistics.placementGamesRemaining),
       icon: "/rank-icons/unranked.png",
     };
   }
@@ -99,7 +99,7 @@ export function duelRankPresentation(statistics: DuelStatistics | null) {
   if (statistics.provisional || statistics.placementGamesRemaining > 0) {
     return {
       label: "PLACEMENTS",
-      detail: `${statistics.placementGamesRemaining} restante(s)`,
+      detail: placementGamesLabel(statistics.placementGamesRemaining),
       icon: "/rank-icons/unranked.png",
     };
   }
@@ -108,6 +108,12 @@ export function duelRankPresentation(statistics: DuelStatistics | null) {
     detail: `${statistics.mmr} MMR`,
     icon: "/rank-icons/diamond.png",
   };
+}
+
+function placementGamesLabel(remaining: number) {
+  return remaining === 1
+    ? "1 MATCH DE PLACEMENT RESTANT"
+    : `${remaining} MATCHS DE PLACEMENT RESTANTS`;
 }
 
 export function rankIcon(rank?: string | null, games = 0) {

@@ -1203,9 +1203,9 @@ button {
   gap: 18px;
 }
 .profile-ranks {
-  min-height: 146px;
+  min-height: 220px;
   display: grid;
-  grid-template-columns: 1.2fr 1.2fr 0.8fr 0.8fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 .profile-ranks > div {
   padding: 27px 24px;
@@ -1216,8 +1216,9 @@ button {
 }
 .rank-overview {
   display: flex;
-  align-items: center;
-  gap: 14px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 18px;
   overflow: hidden;
 }
 .rank-overview--five {
@@ -1226,7 +1227,12 @@ button {
 .rank-overview--duel {
   background: linear-gradient(110deg, rgba(189, 145, 77, 0.08), transparent 72%);
 }
-.rank-overview > div,
+.rank-mode-summary {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.rank-overview-copy,
 .rank-number {
   display: flex;
   flex-direction: column;
@@ -1258,6 +1264,40 @@ button {
   color: var(--muted);
   font-size: var(--font-caption);
   font-style: normal;
+}
+.rank-mode-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--line-soft);
+}
+.rank-mode-metrics > div {
+  min-width: 0;
+  padding: 0 12px;
+  border-right: 1px solid var(--line-soft);
+}
+.rank-mode-metrics > div:first-child {
+  padding-left: 0;
+}
+.rank-mode-metrics > div:last-child {
+  padding-right: 0;
+  border-right: 0;
+}
+.rank-mode-metrics dt {
+  color: var(--muted);
+  font-size: var(--font-caption);
+}
+.rank-mode-metrics dd {
+  margin: 5px 0 0;
+  font-family: Beaufort, serif;
+  font-size: 24px;
+  font-weight: 700;
+}
+.rank-mode-metrics small {
+  display: block;
+  margin-top: 3px;
+  color: var(--gold);
 }
 .profile-ranks small {
   color: var(--muted);
@@ -1852,9 +1892,6 @@ button {
   }
   .profile-ranks > div:nth-child(2) {
     border-right: 0;
-  }
-  .profile-ranks > div:nth-child(-n + 2) {
-    border-bottom: 1px solid var(--line-soft);
   }
   .profile-content {
     grid-template-columns: 1fr;

@@ -187,7 +187,7 @@ describe("Partie rapide", () => {
       backend({ statistics: placementStatistics }),
     );
 
-    expect(screen.getByText("4 restante(s)")).toBeInTheDocument();
+    expect(screen.getByText("4 MATCHS DE PLACEMENT RESTANTS")).toBeInTheDocument();
     expect(screen.queryByText("101 LP")).not.toBeInTheDocument();
   });
 
@@ -252,7 +252,7 @@ describe("Partie rapide", () => {
       backend({ statistics: placementStatistics }),
     );
 
-    expect(screen.getByText("4 restante(s)")).toBeInTheDocument();
+    expect(screen.getByText("4 MATCHS DE PLACEMENT RESTANTS")).toBeInTheDocument();
     expect(screen.queryByText("101 LP")).not.toBeInTheDocument();
   });
 
@@ -294,6 +294,14 @@ describe("Partie rapide", () => {
     expect(
       screen.getByRole("img", { name: "Mode duel 1v1 : Abîme hurlant" }),
     ).toHaveAttribute("src", expect.stringContaining("aram-active.png"));
+
+    const fiveRankCard = screen.getByRole("group", { name: "Classement 5v5" });
+    const duelRankCard = screen.getByRole("group", { name: "Classement 1v1" });
+    expect(within(fiveRankCard).getAllByText("1301")).toHaveLength(2);
+    expect(within(fiveRankCard).getByText("100%")).toBeInTheDocument();
+    expect(within(duelRankCard).getAllByText("1510")).toHaveLength(2);
+    expect(within(duelRankCard).getByText("75%")).toBeInTheDocument();
+    expect(within(duelRankCard).getByText("1 MATCH DE PLACEMENT RESTANT")).toBeInTheDocument();
   });
 
   it("expose les modes et rôles comme des choix exclusifs au clavier", () => {
