@@ -28,7 +28,6 @@ export function Home({ go }: { go: (page: Page) => void }) {
     "sylas",
     "orianna",
   ] as const;
-  const recentPortraits = ["sylas", "zed", "akali", "orianna"] as const;
   const liveMatches = backend.recentHistory.slice(0, 4);
   const members = backend.party?.members ?? [];
   const selectQuickMode = (value: "1V1" | "5V5") => {
@@ -229,7 +228,7 @@ export function Home({ go }: { go: (page: Page) => void }) {
               </header>
               <div>
                 {liveMatches.length ? (
-                  liveMatches.map((match, index) => (
+                  liveMatches.map((match) => (
                     <button
                       type="button"
                       className="home-activity-line"
@@ -237,7 +236,11 @@ export function Home({ go }: { go: (page: Page) => void }) {
                       onClick={() => go("matches")}
                     >
                       <Image
-                        src={`/champion-icons/${recentPortraits[index % recentPortraits.length]}.png`}
+                        src={
+                          backend.profile?.riotProfileIconId
+                            ? `https://ddragon.leagueoflegends.com/cdn/16.16.1/img/profileicon/${backend.profile.riotProfileIconId}.png`
+                            : "/champion-icons/akali.png"
+                        }
                         alt=""
                         aria-hidden="true"
                         width={34}
