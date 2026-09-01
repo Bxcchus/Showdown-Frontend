@@ -47,6 +47,7 @@ function entry(matchId: string): HistoryEntry {
     outcome: "VICTORY",
     team: "BLUE",
     role: "MID",
+    championName: "Draven",
     playedAt: "2026-08-28T12:00:00Z",
     previousMmr: 1500,
     mmrDelta: 20,

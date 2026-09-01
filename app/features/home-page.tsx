@@ -6,7 +6,11 @@ import { Button, Card, EmptyState } from "../components/ui";
 import { useBackend } from "../lib/backend";
 import { Localized, useLanguage } from "../lib/i18n";
 import type { Page } from "../lib/navigation";
-import { fiveRankPresentation, rankIcon } from "../lib/presentation";
+import {
+  championIconUrl,
+  fiveRankPresentation,
+  rankIcon,
+} from "../lib/presentation";
 
 export function Home({ go }: { go: (page: Page) => void }) {
   const backend = useBackend();
@@ -228,8 +232,10 @@ export function Home({ go }: { go: (page: Page) => void }) {
               </header>
               <div>
                 {liveMatches.length ? (
-                  liveMatches.map((match) => (
-                    <button
+                  liveMatches.map((match) => {
+                    const championIcon = championIconUrl(match.championName);
+                    return (
+                      <button
                       type="button"
                       className="home-activity-line"
                       key={match.matchId}
@@ -237,13 +243,12 @@ export function Home({ go }: { go: (page: Page) => void }) {
                     >
                       <Image
                         src={
-                          backend.profile?.riotProfileIconId
-                            ? `https://ddragon.leagueoflegends.com/cdn/16.16.1/img/profileicon/${backend.profile.riotProfileIconId}.png`
-                            : "/champion-icons/akali.png"
+                          championIcon ??
+                          (match.mode === "ONE_V_ONE"
+                            ? "/mode-icons/aram-active.png"
+                            : "/mode-icons/summoners-rift-active.png")
                         }
-                        unoptimized={Boolean(
-                          backend.profile?.riotProfileIconId,
-                        )}
+                        unoptimized={Boolean(championIcon)}
                         alt=""
                         aria-hidden="true"
                         width={34}
@@ -273,8 +278,9 @@ export function Home({ go }: { go: (page: Page) => void }) {
                         {match.mmrDelta}
                       </b>
                       <small>{formatDate(match.playedAt)}</small>
-                    </button>
-                  ))
+                      </button>
+                    );
+                  })
                 ) : (
                   <EmptyState
                     title="Aucun match enregistré"

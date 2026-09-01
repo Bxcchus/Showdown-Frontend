@@ -85,6 +85,7 @@ export type HistoryEntry = {
   outcome: "VICTORY" | "DEFEAT";
   team: "BLUE" | "RED";
   role: ApiRole;
+  championName: string | null;
   playedAt: string;
   previousMmr: number;
   mmrDelta: number;

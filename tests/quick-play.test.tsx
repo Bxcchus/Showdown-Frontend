@@ -126,7 +126,7 @@ describe("Partie rapide", () => {
     expect(joinQueue).not.toHaveBeenCalled();
   });
 
-  it("charge directement l’icône Riot dans l’activité récente", () => {
+  it("affiche le champion réellement joué dans l’activité récente", () => {
     const { container } = renderPage(
       <Home go={vi.fn()} />,
       backend({
@@ -138,6 +138,7 @@ describe("Partie rapide", () => {
             outcome: "VICTORY",
             team: "BLUE",
             role: "MID",
+            championName: "Draven",
             playedAt: "2026-08-31T12:00:00Z",
             previousMmr: 1500,
             mmrDelta: 20,
@@ -149,7 +150,7 @@ describe("Partie rapide", () => {
 
     expect(container.querySelector(".home-activity-line img")).toHaveAttribute(
       "src",
-      "https://ddragon.leagueoflegends.com/cdn/16.16.1/img/profileicon/1.png",
+      "https://ddragon.leagueoflegends.com/cdn/16.16.1/img/champion/Draven.png",
     );
   });
 

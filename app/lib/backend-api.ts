@@ -89,6 +89,7 @@ function isHistoryEntry(value: unknown): value is HistoryEntry {
     ["VICTORY", "DEFEAT"].includes(String(item.outcome)) &&
     ["BLUE", "RED"].includes(String(item.team)) &&
     ["TOP", "JUNGLE", "MID", "BOT", "SUPPORT"].includes(String(item.role)) &&
+    (item.championName == null || typeof item.championName === "string") &&
     typeof item.playedAt === "string" &&
     Number.isFinite(Date.parse(item.playedAt)) &&
     typeof item.previousMmr === "number" &&

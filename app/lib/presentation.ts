@@ -136,3 +136,35 @@ export function roleLabel(role?: ApiRole | "ADC" | null) {
 export function modeLabel(mode?: ApiMode | null) {
   return mode === "ONE_V_ONE" ? "1V1 · Glicko-2" : "5V5 · TrueSkill";
 }
+
+const championDataDragonIds: Record<string, string> = {
+  "Aurelion Sol": "AurelionSol",
+  "Bel'Veth": "Belveth",
+  "Cho'Gath": "Chogath",
+  "Dr. Mundo": "DrMundo",
+  "Jarvan IV": "JarvanIV",
+  "Kai'Sa": "Kaisa",
+  "Kha'Zix": "Khazix",
+  "Kog'Maw": "KogMaw",
+  "K'Sante": "KSante",
+  LeBlanc: "Leblanc",
+  "Lee Sin": "LeeSin",
+  "Master Yi": "MasterYi",
+  "Miss Fortune": "MissFortune",
+  "Nunu & Willump": "Nunu",
+  "Rek'Sai": "RekSai",
+  "Renata Glasc": "Renata",
+  "Tahm Kench": "TahmKench",
+  "Twisted Fate": "TwistedFate",
+  "Vel'Koz": "Velkoz",
+  Wukong: "MonkeyKing",
+  "Xin Zhao": "XinZhao",
+};
+
+export function championIconUrl(championName?: string | null) {
+  const normalized = championName?.trim();
+  if (!normalized) return null;
+  const dataDragonId =
+    championDataDragonIds[normalized] ?? normalized.replace(/[^a-z0-9]/gi, "");
+  return `https://ddragon.leagueoflegends.com/cdn/16.16.1/img/champion/${encodeURIComponent(dataDragonId)}.png`;
+}
