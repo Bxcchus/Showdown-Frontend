@@ -241,6 +241,9 @@ export function Home({ go }: { go: (page: Page) => void }) {
                             ? `https://ddragon.leagueoflegends.com/cdn/16.16.1/img/profileicon/${backend.profile.riotProfileIconId}.png`
                             : "/champion-icons/akali.png"
                         }
+                        unoptimized={Boolean(
+                          backend.profile?.riotProfileIconId,
+                        )}
                         alt=""
                         aria-hidden="true"
                         width={34}

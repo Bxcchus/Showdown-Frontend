@@ -126,6 +126,33 @@ describe("Partie rapide", () => {
     expect(joinQueue).not.toHaveBeenCalled();
   });
 
+  it("charge directement l’icône Riot dans l’activité récente", () => {
+    const { container } = renderPage(
+      <Home go={vi.fn()} />,
+      backend({
+        recentHistory: [
+          {
+            matchId: "22222222-2222-4222-8222-222222222222",
+            region: "EUW",
+            mode: "ONE_V_ONE",
+            outcome: "VICTORY",
+            team: "BLUE",
+            role: "MID",
+            playedAt: "2026-08-31T12:00:00Z",
+            previousMmr: 1500,
+            mmrDelta: 20,
+            newMmr: 1520,
+          },
+        ],
+      }),
+    );
+
+    expect(container.querySelector(".home-activity-line img")).toHaveAttribute(
+      "src",
+      "https://ddragon.leagueoflegends.com/cdn/16.16.1/img/profileicon/1.png",
+    );
+  });
+
   it("restaure le mode 5v5 demandé dans l’URL de la page Jouer", () => {
     window.history.replaceState({}, "", "/play?mode=5v5");
     renderPage(<Play go={vi.fn()} />, backend());

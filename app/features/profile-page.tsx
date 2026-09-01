@@ -102,6 +102,9 @@ export default function ProfilePage() {
                         ? `https://ddragon.leagueoflegends.com/cdn/16.16.1/img/profileicon/${backend.profile.riotProfileIconId}.png`
                         : "/champion-icons/akali.png"
                     }
+                    unoptimized={Boolean(
+                      backend.profile.riotProfileIconId,
+                    )}
                     alt="Icône du profil Riot"
                     width={112}
                     height={112}
