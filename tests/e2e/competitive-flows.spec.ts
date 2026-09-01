@@ -76,4 +76,11 @@ test("parcours 5v5 : le rôle principal est transmis en priorité", async ({
   await expect(
     page.getByText(/vérifie les joueurs, suit le lancement/i),
   ).toBeVisible();
+
+  state.phase = "idle";
+  state.watcherState = "CANCELLED";
+  await expect(page).toHaveURL(/\/play$/, { timeout: 5_000 });
+  await expect(
+    page.getByRole("heading", { name: "SUMMONER'S RIFT" }),
+  ).toBeVisible();
 });

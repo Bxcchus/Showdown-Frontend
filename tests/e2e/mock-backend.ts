@@ -103,6 +103,7 @@ export type MockState = {
   teamWatcherStarts: number;
   tokenRequests: number;
   watcherOutcome: "VICTORY" | "DEFEAT" | null;
+  watcherState: "IN_GAME" | "CANCELLED";
   readyAccepted: boolean;
   party: {
     partyId: string;
@@ -165,6 +166,7 @@ export async function installAuthenticatedMock(
     teamWatcherStarts: 0,
     tokenRequests: 0,
     watcherOutcome: null,
+    watcherState: "IN_GAME",
     readyAccepted: false,
     party: null,
     webSockets: [],
@@ -197,8 +199,16 @@ export async function installAuthenticatedMock(
     if (path === "/health") return fulfill(route, { status: "UP" });
     if (path === "/v1/duels/status")
       return fulfill(route, {
-        matchId: state.phase === "lobby" ? matchId : null,
-        state: state.phase === "lobby" ? "IN_GAME" : "IDLE",
+        matchId:
+          state.phase === "lobby" || state.watcherState === "CANCELLED"
+            ? matchId
+            : null,
+        state:
+          state.watcherState === "CANCELLED"
+            ? "CANCELLED"
+            : state.phase === "lobby"
+              ? "IN_GAME"
+              : "IDLE",
         detail: null,
         outcome: state.watcherOutcome,
         objective: state.watcherOutcome ? "FIRST_BLOOD" : null,

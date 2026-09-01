@@ -803,7 +803,14 @@ export function BackendProvider({ children }: { children: ReactNode }) {
         const status = await watcherFetch("/v1/duels/status", {}, true);
         if (!status.ok) return;
         const job = (await status.json()) as WatcherJob;
-        if (job.matchId !== lobby.matchId || !job.outcome) return;
+        if (job.matchId !== lobby.matchId) return;
+        if (job.state === "CANCELLED") {
+          window.clearInterval(timer);
+          teamWatcherStarted.current = null;
+          await refresh();
+          return;
+        }
+        if (!job.outcome) return;
         window.clearInterval(timer);
         teamWatcherStarted.current = null;
         await refresh();
@@ -1292,7 +1299,7 @@ export function BackendProvider({ children }: { children: ReactNode }) {
     watcherJob &&
     watcherJob.matchId &&
     ![match?.matchId, lobby?.matchId].includes(watcherJob.matchId) &&
-    ["COMPLETED", "ERROR"].includes(watcherJob.state)
+    ["COMPLETED", "CANCELLED", "ERROR"].includes(watcherJob.state)
       ? null
       : watcherJob;
 
