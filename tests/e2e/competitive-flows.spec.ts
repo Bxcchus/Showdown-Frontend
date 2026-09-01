@@ -44,6 +44,21 @@ test("parcours 1v1 : recherche, ready-check et lobby vérifié", async ({
   expect(state.botResultRequests).toBe(0);
 });
 
+test("parcours 1v1 bot : quitter la sélection vide la room", async ({
+  page,
+}) => {
+  const state = await installAuthenticatedMock(page);
+  state.phase = "lobby";
+  await page.goto("/lobby");
+  await expect(page.getByText("SWD-E2E")).toBeVisible();
+
+  state.phase = "idle";
+  state.watcherState = "CANCELLED";
+
+  await expect(page).toHaveURL(/\/play$/, { timeout: 5_000 });
+  await expect(page.getByRole("heading", { name: "HOWLING ABYSS" })).toBeVisible();
+});
+
 test("parcours 5v5 : le rôle principal est transmis en priorité", async ({
   page,
 }) => {

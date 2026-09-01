@@ -731,7 +731,14 @@ export function BackendProvider({ children }: { children: ReactNode }) {
         const status = await watcherFetch("/v1/duels/status", {}, true);
         if (!status.ok) return;
         const job = (await status.json()) as WatcherJob;
-        if (job.matchId !== lobby.matchId || !job.outcome) return;
+        if (job.matchId !== lobby.matchId) return;
+        if (job.state === "CANCELLED") {
+          window.clearInterval(timer);
+          botWatcherStarted.current = null;
+          await refresh();
+          return;
+        }
+        if (!job.outcome) return;
         window.clearInterval(timer);
         botWatcherStarted.current = null;
         await refresh();
