@@ -989,6 +989,14 @@ button {
   color: var(--gold);
   font-size: var(--font-meta);
 }
+.team-row > .team-role-icon {
+  display: grid;
+  place-items: center start;
+}
+.team-role-icon img {
+  width: 28px;
+  height: 28px;
+}
 .team-row strong {
   min-width: 0;
   overflow: hidden;

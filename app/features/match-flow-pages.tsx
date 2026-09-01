@@ -1,8 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Button, Card, PageTitle } from "../components/ui";
-import { useBackend } from "../lib/backend";
+import { useBackend, type ApiRole } from "../lib/backend";
 import { Localized } from "../lib/i18n";
 import type { Page } from "../lib/navigation";
 import { watcherPresentation } from "../lib/presentation";
@@ -288,17 +289,38 @@ export function Ready({ go }: { go: (page: Page) => void }) {
   );
 }
 
-function Team({ title, players }: { title: string; players: string[][] }) {
+type TeamRow = {
+  role: ApiRole;
+  name: string;
+  status: string;
+};
+
+function roleIcon(role: ApiRole) {
+  return `/role-icons/${role === "BOT" ? "adc" : role.toLowerCase()}.svg`;
+}
+
+function roleLabel(role: ApiRole) {
+  return role === "BOT" ? "ADC" : role;
+}
+
+function Team({ title, players }: { title: string; players: TeamRow[] }) {
   return (
     <Card className="team-card">
       <h2>{title}</h2>
       <ul className="team-list">
-        {players.map(([role, name, status]) => (
-          <li className="team-row" key={name}>
-            <b>{role}</b>
-            <strong>{name}</strong>
-            <span className={status === "PRÊT" ? "positive" : ""}>
-              {status}
+        {players.map((player) => (
+          <li className="team-row" key={player.name}>
+            <b className="team-role-icon">
+              <Image
+                src={roleIcon(player.role)}
+                alt={`Rôle : ${roleLabel(player.role)}`}
+                width={28}
+                height={28}
+              />
+            </b>
+            <strong>{player.name}</strong>
+            <span className={player.status === "PRÊT" ? "positive" : ""}>
+              {player.status}
             </span>
           </li>
         ))}
@@ -312,18 +334,19 @@ export function Lobby() {
   const toRows = (team: "BLUE" | "RED") =>
     lobby?.players
       .filter((player) => player.team === team)
-      .map((player, index) => [
-        player.assignedRole === "BOT" ? "ADC" : player.assignedRole,
-        player.bot
+      .map((player, index) => ({
+        role: player.assignedRole,
+        name: player.bot
           ? `GYMS.LOL BOT ${index + 1}`
           : (backend.playerNames[player.playerId] ??
             player.playerId.slice(0, 8)),
-        player.readyState === "ACCEPTED"
-          ? "PRÊT"
-          : player.readyState === "DECLINED"
-            ? "REFUSÉ"
-            : "EN ATTENTE",
-      ]) ?? [];
+        status:
+          player.readyState === "ACCEPTED"
+            ? "PRÊT"
+            : player.readyState === "DECLINED"
+              ? "REFUSÉ"
+              : "EN ATTENTE",
+      })) ?? [];
   const ready =
     lobby?.players.filter((player) => player.readyState === "ACCEPTED")
       .length ?? 0;

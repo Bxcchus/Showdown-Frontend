@@ -7,6 +7,7 @@ import {
 } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { Home, Play } from "../app/experience";
+import { Lobby } from "../app/features/match-flow-pages";
 import { BackendContext } from "../app/lib/backend-context";
 import type { BackendState } from "../app/lib/backend-types";
 import { LanguageProvider } from "../app/lib/i18n";
@@ -151,6 +152,50 @@ describe("Partie rapide", () => {
     expect(container.querySelector(".home-activity-line img")).toHaveAttribute(
       "src",
       "https://ddragon.leagueoflegends.com/cdn/16.16.1/img/champion/Draven.png",
+    );
+  });
+
+  it("affiche les rôles du lobby avec leurs icônes", () => {
+    renderPage(
+      <Lobby />,
+      backend({
+        lobby: {
+          matchId: "22222222-2222-4222-8222-222222222222",
+          region: "EUW",
+          mode: "FIVE_V_FIVE",
+          status: "CONFIRMED",
+          createdAt: "2026-09-01T12:00:00Z",
+          readyDeadline: "2026-09-01T12:01:00Z",
+          lobbyName: "SWD-TEST",
+          lobbyPassword: "TEST1234",
+          winningTeam: null,
+          players: [
+            {
+              playerId,
+              team: "BLUE",
+              readyState: "ACCEPTED",
+              bot: false,
+              assignedRole: "MID",
+            },
+            {
+              playerId: "bot-player",
+              team: "RED",
+              readyState: "ACCEPTED",
+              bot: true,
+              assignedRole: "BOT",
+            },
+          ],
+        },
+      }),
+    );
+
+    expect(screen.getByRole("img", { name: "Rôle : MID" })).toHaveAttribute(
+      "src",
+      "/role-icons/mid.svg",
+    );
+    expect(screen.getByRole("img", { name: "Rôle : ADC" })).toHaveAttribute(
+      "src",
+      "/role-icons/adc.svg",
     );
   });
 
