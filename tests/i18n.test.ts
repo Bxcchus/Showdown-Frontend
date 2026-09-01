@@ -28,7 +28,6 @@ describe("traduction anglaise", () => {
       leaderboard: "Leaderboard · GYMS.LOL",
       download: "Download · GYMS.LOL",
       profile: "Profile · GYMS.LOL",
-      settings: "Settings · GYMS.LOL",
       legal: "Legal notice · GYMS.LOL",
       privacy: "Privacy · GYMS.LOL",
       terms: "Terms of use · GYMS.LOL",

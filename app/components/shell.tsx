@@ -27,7 +27,6 @@ const mobileMore: Array<[Page, string]> = [
   ["duels", "WATCHER"],
   ["profile", "PROFIL"],
   ["download", "TÉLÉCHARGER"],
-  ["settings", "PARAMÈTRES"],
 ];
 const subscribeToHydration = () => () => undefined;
 
@@ -359,7 +358,7 @@ export function Shell({
                     : "pending"
               }
               onClick={() =>
-                backend.session ? navigate("settings") : void backend.login()
+                backend.session ? navigate("duels") : void backend.login()
               }
             >
               {backend.profile?.region ?? "EUW"} ·{" "}

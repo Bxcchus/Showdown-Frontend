@@ -11,7 +11,7 @@ import {
   pageTitles,
   type Page,
 } from "./lib/navigation";
-import { Download, Settings } from "./features/companion-pages";
+import { Download } from "./features/companion-pages";
 import HistoryPage from "./features/history-page";
 import { Home } from "./features/home-page";
 import LeaderboardPage from "./features/leaderboard-page";
@@ -108,7 +108,6 @@ export function GymsLolExperience({ initialPage }: { initialPage: Page }) {
           {activePage === "leaderboard" && <LeaderboardPage />}
           {activePage === "download" && <Download />}
           {activePage === "profile" && <ProfilePage />}
-          {activePage === "settings" && <Settings go={navigate} />}
           {activePage === "legal" && <LegalPage document="legal" />}
           {activePage === "privacy" && <LegalPage document="privacy" />}
           {activePage === "terms" && <LegalPage document="terms" />}

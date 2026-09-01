@@ -9,7 +9,6 @@ export type Page =
   | "leaderboard"
   | "download"
   | "profile"
-  | "settings"
   | "legal"
   | "privacy"
   | "terms";
@@ -25,7 +24,6 @@ export const pagePaths: Record<Page, string> = {
   leaderboard: "/leaderboard",
   download: "/download",
   profile: "/profile",
-  settings: "/settings",
   legal: "/legal",
   privacy: "/privacy",
   terms: "/terms",
@@ -42,7 +40,6 @@ export const pageTitles: Record<Page, string> = {
   leaderboard: "Classement",
   download: "Téléchargement",
   profile: "Profil",
-  settings: "Paramètres",
   legal: "Mentions légales",
   privacy: "Confidentialité",
   terms: "Conditions d’utilisation",

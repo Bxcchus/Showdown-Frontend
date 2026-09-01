@@ -170,14 +170,6 @@
   min-height: 540px;
 }
 
-.settings-grid--single {
-  display: block;
-  max-width: 980px;
-}
-.settings-grid--single .settings-card {
-  min-height: 460px;
-}
-
 .profile-sidebar {
   min-width: 0;
 }

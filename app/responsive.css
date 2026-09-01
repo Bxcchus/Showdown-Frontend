@@ -204,18 +204,11 @@
   .play-actions {
     padding-bottom: max(8px, env(safe-area-inset-bottom));
   }
-  .queue-settings {
-    min-width: 52px;
-    min-height: 52px;
-  }
   .empty-state {
     min-height: 230px;
     padding: 24px 18px;
   }
   .history-entry-main {
     min-height: 124px;
-  }
-  .settings-grid--single .settings-card {
-    min-height: 0;
   }
 }

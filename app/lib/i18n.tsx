@@ -125,7 +125,6 @@ export const englishTranslations: Readonly<Record<string, string>> = {
   "Détruire la première tourelle ennemie.": "Destroy the first enemy turret.",
   "SE CONNECTER POUR JOUER": "SIGN IN TO PLAY",
   "LIER TON RIOT ID": "LINK YOUR RIOT ID",
-  "Paramètres de la file": "Queue settings",
   PRINCIPAL: "PRIMARY",
   AVANT: "BEFORE",
   ANNULER: "CANCEL",
@@ -162,8 +161,6 @@ export const englishTranslations: Readonly<Record<string, string>> = {
   "OUVRIR LEAGUE": "OPEN LEAGUE",
   "CENTRE DE CONTRÔLE DU WATCHER": "WATCHER CONTROL CENTER",
   "PROCESSUS WATCHER": "WATCHER PROCESS",
-  "Connexion locale, identité Riot et sécurité du compagnon Windows.":
-    "Local connection, Riot identity and Windows companion security.",
   "ACTUALISER L’ÉTAT": "REFRESH STATUS",
   "WATCHER LOCAL": "LOCAL WATCHER",
   "COMPTE SHOWDOWN": "SHOWDOWN ACCOUNT",
@@ -260,7 +257,6 @@ export const englishTranslations: Readonly<Record<string, string>> = {
   BILAN: "RECORD",
   "AGENT WINDOWS": "WINDOWS AGENT",
   "APPLICATION WINDOWS": "WINDOWS APPLICATION",
-  "APPLICATION LOCALE": "LOCAL APPLICATION",
   "Connecte GYMS.LOL à League et valide automatiquement chaque duel.":
     "Connect GYMS.LOL to League and automatically verify every duel.",
   "DERNIÈRE VERSION": "LATEST RELEASE",
@@ -282,7 +278,6 @@ export const englishTranslations: Readonly<Record<string, string>> = {
   "PRÊT EN TROIS ÉTAPES": "READY IN THREE STEPS",
   "TÉLÉCHARGER LE WATCHER": "DOWNLOAD THE WATCHER",
   "LANCER LE WATCHER": "RUN THE WATCHER",
-  "PARAMÈTRES DU WATCHER": "WATCHER SETTINGS",
   "Télécharge puis lance le Watcher Windows.":
     "Download and run the Windows Watcher.",
   "Connecte-toi à ton compte web.": "Sign in to your web account.",
@@ -360,8 +355,6 @@ export const englishTranslations: Readonly<Record<string, string>> = {
   "PASSERELLE LEAGUE LOCALE": "LOCAL LEAGUE BRIDGE",
   "Partie personnalisée 1v1": "Custom 1v1 game",
   "Partie personnalisée 5v5": "Custom 5v5 game",
-  "Passerelle locale entre GYMS.LOL Web et le client League pour vérifier les duels 1v1.":
-    "Local bridge between GYMS.LOL Web and the League Client for verifying 1v1 duels.",
   "PROFIL JOUEUR": "PLAYER PROFILE",
   "ENREGISTREMENT…": "SAVING…",
   PRÉCÉDENT: "PREVIOUS",
@@ -403,7 +396,6 @@ export const englishTranslations: Readonly<Record<string, string>> = {
   "WATCHER EN LIGNE": "WATCHER ONLINE",
   "ÉTAT DU CLASSEMENT": "LEADERBOARD STATUS",
   "ÉTAT DU DUEL": "DUEL STATUS",
-  "État du duel League": "League duel status",
   "Hors ligne": "Offline",
   Prêt: "Ready",
   "0 partie": "0 matches",

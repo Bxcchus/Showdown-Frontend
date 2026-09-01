@@ -359,14 +359,6 @@ export function Play({ go }: { go: (page: Page) => void }) {
                               : "TROUVER UN MATCH"
                     : "SE CONNECTER POUR JOUER"}
               </Button>
-              <button
-                className="queue-settings"
-                type="button"
-                aria-label="Paramètres de la file"
-                onClick={() => go("settings")}
-              >
-                ⚙
-              </button>
             </div>
           </Card>
           <Card className="play-side">

@@ -1,10 +1,7 @@
 "use client";
 
-import { Button, Card, PageTitle } from "../components/ui";
-import { useBackend } from "../lib/backend";
+import { Card, PageTitle } from "../components/ui";
 import { Localized } from "../lib/i18n";
-import type { Page } from "../lib/navigation";
-import { watcherPresentation } from "../lib/presentation";
 
 export function Download() {
   return (
@@ -127,76 +124,6 @@ export function Download() {
           </ol>
           <p>Aucun exécutable non signé n’est distribué depuis le site.</p>
         </Card>
-      </div>
-    </Localized>
-  );
-}
-
-export function Settings({ go }: { go: (page: Page) => void }) {
-  const backend = useBackend();
-  const watcher = watcherPresentation(
-    backend.watcherOnline,
-    backend.watcherJob,
-  );
-  return (
-    <Localized>
-      <div className="page settings-page">
-        <PageTitle
-          eyebrow="APPLICATION LOCALE"
-          title="PARAMÈTRES DU WATCHER"
-          text="Connexion locale, identité Riot et sécurité du compagnon Windows."
-        />
-        <div className="settings-grid settings-grid--single">
-          <Card className="settings-card">
-            <h2>SHOWDOWN WATCHER</h2>
-            <p>
-              Passerelle locale entre GYMS.LOL Web et le client League pour
-              vérifier les duels 1v1.
-            </p>
-            <div className="companion-status">
-              <span>
-                <small>PROCESSUS WATCHER</small>
-                <strong
-                  className={backend.watcherOnline ? "positive" : "negative"}
-                >
-                  {backend.watcherOnline ? "CONNECTÉ" : "HORS LIGNE"}
-                </strong>
-              </span>
-              <b>127.0.0.1:43991 · v0.1.0</b>
-            </div>
-            <div className="setting-row">
-              <span>État du duel League</span>
-              <i className={`status-pill status-${watcher.tone}`}>
-                {watcher.label}
-              </i>
-            </div>
-            <div className="setting-row">
-              <span>Riot ID</span>
-              <i>{backend.profile?.riotId ?? "NON LIÉ"}</i>
-            </div>
-            <p className={`watcher-detail status-panel status-${watcher.tone}`}>
-              {watcher.description}
-            </p>
-            <div className="settings-actions">
-              <Button
-                kind="outline"
-                onClick={() => void backend.refreshWatcher()}
-              >
-                ACTUALISER
-              </Button>
-              <Button
-                kind="outline"
-                onClick={() => void backend.linkRiotId()}
-                disabled={!backend.session}
-              >
-                LIER LE RIOT ID
-              </Button>
-              <Button onClick={() => go("download")}>
-                TÉLÉCHARGER POUR WINDOWS
-              </Button>
-            </div>
-          </Card>
-        </div>
       </div>
     </Localized>
   );

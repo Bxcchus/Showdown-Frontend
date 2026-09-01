@@ -98,7 +98,6 @@ test("the complete authenticated interface is available in English", async ({
     "/leaderboard",
     "/profile",
     "/download",
-    "/settings",
   ]) {
     await page.goto(path);
     await waitForSession(page, "authenticated");
@@ -164,7 +163,6 @@ test("anonymous and not-found states are fully translated", async ({
     "/leaderboard",
     "/profile",
     "/download",
-    "/settings",
   ]) {
     await page.goto(path);
     await waitForSession(page, "anonymous");

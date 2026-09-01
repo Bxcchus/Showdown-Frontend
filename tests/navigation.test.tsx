@@ -10,6 +10,7 @@ import type { BackendState } from "../app/lib/backend";
 import { BackendContext } from "../app/lib/backend-context";
 import { Shell } from "../app/components/shell";
 import { LanguageProvider } from "../app/lib/i18n";
+import { isKnownPath } from "../app/lib/navigation";
 
 function backend(overrides: Partial<BackendState> = {}) {
   return {
@@ -61,6 +62,10 @@ function backend(overrides: Partial<BackendState> = {}) {
 }
 
 describe("navigation accessible", () => {
+  it("retire complètement la route des paramètres", () => {
+    expect(isKnownPath("/settings")).toBe(false);
+  });
+
   it("propose cinq cibles mobiles et place les pages secondaires dans Plus", () => {
     render(
       <LanguageProvider initialLanguage="fr">
@@ -86,8 +91,8 @@ describe("navigation accessible", () => {
       "/watcher",
     );
     expect(
-      within(more).getByRole("link", { name: "PARAMÈTRES" }),
-    ).toHaveAttribute("href", "/settings");
+      within(more).queryByRole("link", { name: "PARAMÈTRES" }),
+    ).not.toBeInTheDocument();
   });
 
   it("gère le focus, Escape et le fond du menu mobile", async () => {
