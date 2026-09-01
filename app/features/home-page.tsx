@@ -295,55 +295,6 @@ export function Home({ go }: { go: (page: Page) => void }) {
                 )}
               </div>
             </Card>
-            <Card className="home-queue-card">
-              <header>
-                <h2>ÉTAT EN DIRECT</h2>
-                <span aria-hidden="true">›</span>
-              </header>
-              <div className="queue-status">
-                <Image
-                  src="/mode-icons/summoners-rift-active.png"
-                  alt=""
-                  aria-hidden="true"
-                  width={48}
-                  height={48}
-                />
-                <span>
-                  <strong>
-                    {backend.lobby
-                      ? "LOBBY PRÊT"
-                      : backend.match
-                        ? "CONFIRMATION"
-                        : backend.queue
-                          ? "RECHERCHE EN COURS"
-                          : "HORS FILE"}
-                  </strong>
-                  <small>
-                    {backend.queue
-                      ? `${backend.queue.mode === "ONE_V_ONE" ? "1V1" : "5V5"} · ${backend.queue.region}`
-                      : "Choisis un mode pour commencer."}
-                  </small>
-                </span>
-              </div>
-              <Button
-                kind="outline"
-                onClick={() =>
-                  go(
-                    backend.lobby
-                      ? "lobby"
-                      : backend.match
-                        ? "ready"
-                        : backend.queue
-                          ? "searching"
-                          : "play",
-                  )
-                }
-              >
-                {backend.queue || backend.match || backend.lobby
-                  ? "OUVRIR LE MATCH"
-                  : "TROUVER UN MATCH"}
-              </Button>
-            </Card>
           </div>
         </section>
       </div>

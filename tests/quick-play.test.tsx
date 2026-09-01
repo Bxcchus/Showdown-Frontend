@@ -173,6 +173,13 @@ describe("Partie rapide", () => {
     );
   });
 
+  it("ne montre plus le bloc d’état en direct sur l’accueil", () => {
+    renderPage(<Home go={vi.fn()} />, backend());
+
+    expect(screen.queryByText("ÉTAT EN DIRECT")).not.toBeInTheDocument();
+    expect(screen.queryByText("HORS FILE")).not.toBeInTheDocument();
+  });
+
   it("affiche les placements restants au lieu de présenter la progression comme des LP", () => {
     renderPage(
       <Home go={vi.fn()} />,

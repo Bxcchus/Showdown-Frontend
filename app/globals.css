@@ -434,7 +434,7 @@ button {
 }
 .home-activity-row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 260px;
+  grid-template-columns: minmax(0, 1fr);
   gap: 18px;
   min-height: 300px;
 }
@@ -2177,7 +2177,7 @@ button {
     font-size: var(--font-meta);
   }
   .home-activity-row {
-    grid-template-columns: minmax(0, 1fr) 290px;
+    grid-template-columns: minmax(0, 1fr);
     gap: 22px;
     min-height: 330px;
   }
@@ -3059,7 +3059,7 @@ button {
     font-size: 13px;
   }
   .home-activity-row {
-    grid-template-columns: minmax(0, 1fr) 340px;
+    grid-template-columns: minmax(0, 1fr);
     gap: 28px;
     min-height: 430px;
   }
