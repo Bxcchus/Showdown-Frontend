@@ -38,7 +38,10 @@
   background: transparent;
   color: var(--text);
   display: grid;
-  grid-template-columns: 82px minmax(170px, 1fr) 245px 220px 150px 48px;
+  grid-template-columns: 82px minmax(170px, 1fr) 245px minmax(
+      310px,
+      0.9fr
+    ) 150px 48px;
   gap: 18px;
   align-items: center;
   padding: 11px 18px 11px 30px;
@@ -133,14 +136,47 @@
   font-family: Beaufort, serif;
   font-size: 17px;
 }
-.history-map-icon {
+.history-performance {
+  min-width: 0;
   display: grid;
-  place-items: center;
+  grid-template-columns: 42px auto 1fr;
+  align-items: center;
+  gap: 12px;
 }
-.history-map-icon img {
-  width: 48px;
-  height: 48px;
+.history-performance-map {
+  width: 42px;
+  height: 42px;
   object-fit: contain;
+}
+.history-kda {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  white-space: nowrap;
+}
+.history-kda small {
+  color: var(--muted);
+  font-size: var(--font-caption);
+}
+.history-kda strong {
+  font-family: Beaufort, serif;
+  font-size: 14px;
+}
+.history-items,
+.history-detail-performance > div {
+  display: grid;
+  grid-template-columns: repeat(7, 28px);
+  gap: 3px;
+}
+.history-items img,
+.history-items i,
+.history-detail-performance img,
+.history-detail-performance i {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--line-soft);
+  background: #080d10;
+  object-fit: cover;
 }
 .history-when {
   display: flex;
@@ -226,6 +262,23 @@
   font-size: var(--font-caption);
   line-height: 1.45;
 }
+.history-detail-performance {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.history-detail-performance > strong {
+  font-size: 16px;
+}
+.history-detail-performance > div {
+  grid-template-columns: repeat(7, 30px);
+}
+.history-detail-performance img,
+.history-detail-performance i {
+  width: 30px;
+  height: 30px;
+}
 .history-empty {
   min-height: 180px;
   display: grid;
@@ -238,7 +291,7 @@
   .history-entry-main {
     grid-template-columns: 76px minmax(160px, 1fr) 220px 150px 44px;
   }
-  .history-map-icon {
+  .history-performance {
     display: none;
   }
   .history-detail {

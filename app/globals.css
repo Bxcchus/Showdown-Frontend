@@ -352,8 +352,12 @@ button {
       rgba(5, 9, 12, 0.08) 100%
     ),
     url("/season-trophy-v3.png");
-  background-size: cover, auto 100%;
-  background-position: center, right center;
+  background-size:
+    cover,
+    auto 100%;
+  background-position:
+    center,
+    right center;
   background-repeat: no-repeat;
 }
 .season-card:after {
@@ -784,6 +788,52 @@ button {
 }
 .play-side .party-row span {
   text-align: right;
+}
+.play-recent-form {
+  border-top: 1px solid var(--line-soft);
+  margin-top: auto;
+  padding-top: 16px;
+}
+.play-recent-form header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.play-recent-form header small {
+  color: var(--muted);
+  font-size: var(--font-caption);
+  letter-spacing: 0.07em;
+}
+.play-recent-form header b {
+  font-size: var(--font-caption);
+  color: var(--gold);
+}
+.play-recent-form > div {
+  display: flex;
+  gap: 7px;
+  margin-top: 11px;
+}
+.play-recent-form > div span {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--line);
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  font-size: var(--font-caption);
+}
+.play-recent-form > div .win {
+  border-color: rgba(61, 220, 151, 0.35);
+  background: rgba(61, 220, 151, 0.08);
+  color: var(--green);
+}
+.play-recent-form > div .loss {
+  border-color: rgba(255, 70, 95, 0.35);
+  background: rgba(255, 70, 95, 0.08);
+  color: var(--red);
+}
+.play-recent-form + .play-rank {
+  margin-top: 16px;
 }
 .play-rank {
   border-top: 1px solid var(--line-soft);
@@ -1232,10 +1282,18 @@ button {
   overflow: hidden;
 }
 .rank-overview--five {
-  background: linear-gradient(110deg, rgba(20, 125, 145, 0.08), transparent 72%);
+  background: linear-gradient(
+    110deg,
+    rgba(20, 125, 145, 0.08),
+    transparent 72%
+  );
 }
 .rank-overview--duel {
-  background: linear-gradient(110deg, rgba(189, 145, 77, 0.08), transparent 72%);
+  background: linear-gradient(
+    110deg,
+    rgba(189, 145, 77, 0.08),
+    transparent 72%
+  );
 }
 .rank-mode-summary {
   display: flex;
@@ -1640,8 +1698,12 @@ button {
   font-size: var(--font-caption);
 }
 .console-bar b {
+  height: 100%;
+  display: grid;
+  place-items: center;
   font-weight: 400;
   text-align: center;
+  line-height: 1;
 }
 .console-body {
   padding: 28px;
@@ -2266,6 +2328,10 @@ button {
   .play-side .party-row span {
     font-size: var(--font-meta);
   }
+  .play-recent-form > div span {
+    width: 31px;
+    height: 31px;
+  }
   .play-rank {
     grid-template-columns: 88px 1fr;
   }
@@ -2566,52 +2632,6 @@ button {
   width: 100%;
   min-width: 0;
 }
-.play-recent-form {
-  border-top: 1px solid var(--line-soft);
-  margin-top: auto;
-  padding-top: 16px;
-}
-.play-recent-form header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.play-recent-form header small {
-  color: var(--muted);
-  font-size: var(--font-caption);
-  letter-spacing: 0.07em;
-}
-.play-recent-form header b {
-  font-size: var(--font-caption);
-  color: var(--gold);
-}
-.play-recent-form > div {
-  display: flex;
-  gap: 7px;
-  margin-top: 11px;
-}
-.play-recent-form > div span {
-  width: 28px;
-  height: 28px;
-  border: 1px solid var(--line);
-  display: grid;
-  place-items: center;
-  color: var(--muted);
-  font-size: var(--font-caption);
-}
-.play-recent-form > div .win {
-  border-color: rgba(61, 220, 151, 0.35);
-  background: rgba(61, 220, 151, 0.08);
-  color: var(--green);
-}
-.play-recent-form > div .loss {
-  border-color: rgba(255, 70, 95, 0.35);
-  background: rgba(255, 70, 95, 0.08);
-  color: var(--red);
-}
-.play-recent-form + .play-rank {
-  margin-top: 16px;
-}
 .play-party-section .inline-form {
   margin-top: 12px;
 }
@@ -2634,10 +2654,6 @@ button {
   }
   .watcher-queue-status {
     min-height: 62px;
-  }
-  .play-recent-form > div span {
-    width: 31px;
-    height: 31px;
   }
 }
 @media (max-width: 1180px) {

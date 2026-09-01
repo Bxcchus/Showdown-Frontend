@@ -46,7 +46,7 @@ export function Download() {
           >
             <div className="console-bar">
               <span>GYMS.LOL / WATCHER</span>
-              <b>_</b>
+              <b>−</b>
               <b>□</b>
               <b>×</b>
             </div>

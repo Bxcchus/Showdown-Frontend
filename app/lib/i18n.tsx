@@ -131,6 +131,7 @@ export const englishTranslations: Readonly<Record<string, string>> = {
   "Crée un groupe pour inviter des joueurs et lancer une recherche commune.":
     "Create a party to invite players and queue together.",
   "FORME RÉCENTE": "RECENT FORM",
+  "DERNIERS RÉSULTATS": "LATEST RESULTS",
   "AUCUN MATCH": "NO MATCHES",
   "NON CLASSÉ": "UNRANKED",
   "RÔLE PRINCIPAL": "PRIMARY ROLE",
@@ -607,7 +608,8 @@ const dynamicTranslations: DynamicTranslation[] = [
   [/^(\d+) restante\(s\)$/, ([, count]) => `${count} remaining`],
   [
     /^(\d+) MATCHS? DE PLACEMENT RESTANTS?$/,
-    ([, count]) => `${countLabel(count, "placement match", "placement matches")} remaining`,
+    ([, count]) =>
+      `${countLabel(count, "placement match", "placement matches")} remaining`,
   ],
   [/^(\d+) partie$/, ([, count]) => countLabel(count, "match", "matches")],
   [/^(.+) · victoire$/, ([, objective]) => `${objective} · victory`],

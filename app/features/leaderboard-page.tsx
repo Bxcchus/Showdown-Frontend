@@ -164,11 +164,7 @@ export default function LeaderboardPage() {
         </Card>
         <Card className="leaderboard-stats">
           <span>
-            <small>
-              {category === "1V1 GLICKO-2"
-                ? "ÉVALUATION ACTUELLE"
-                : "NIVEAU ACTUEL"}
-            </small>
+            <small>MMR ACTUEL</small>
             <strong>{myEntry?.rating ?? "—"}</strong>
             <b>EN DIRECT</b>
           </span>
@@ -240,9 +236,7 @@ export default function LeaderboardPage() {
                 <tr className="leaderboard-head">
                   <th scope="col">#</th>
                   <th scope="col">JOUEUR</th>
-                  <th scope="col">
-                    {category === "1V1 GLICKO-2" ? "ÉVALUATION" : "NIVEAU"}
-                  </th>
+                  <th scope="col">MMR</th>
                   <th scope="col">BILAN</th>
                   <th scope="col">VICTOIRES</th>
                 </tr>

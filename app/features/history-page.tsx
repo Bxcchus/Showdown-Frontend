@@ -47,6 +47,10 @@ function historyTabId(mode: HistoryFilter) {
   return `history-tab-${mode.toLowerCase().replaceAll(/[^a-z0-9]+/g, "-")}`;
 }
 
+function itemIconUrl(itemId: number) {
+  return `https://ddragon.leagueoflegends.com/cdn/16.16.1/img/item/${itemId}.png`;
+}
+
 export default function HistoryPage() {
   const backend = useBackend();
   const loadHistory = backend.loadHistory;
@@ -337,6 +341,10 @@ export default function HistoryPage() {
                 const won = entry.outcome === "VICTORY";
                 const played = new Date(entry.playedAt);
                 const championIcon = championIconUrl(entry.championName);
+                const hasKda = [entry.kills, entry.deaths, entry.assists].every(
+                  (value) => Number.isInteger(value),
+                );
+                const itemIds = (entry.itemIds ?? []).slice(0, 7);
                 const selected =
                   detail?.summary.matchId === entry.matchId ||
                   detailLoadingId === entry.matchId;
@@ -417,8 +425,9 @@ export default function HistoryPage() {
                           <strong>{entry.newMmr}</strong>
                         </span>
                       </span>
-                      <span className="history-map-icon">
+                      <span className="history-performance">
                         <Image
+                          className="history-performance-map"
                           src={
                             entry.mode === "ONE_V_ONE"
                               ? "/mode-icons/aram-active.png"
@@ -429,9 +438,37 @@ export default function HistoryPage() {
                               ? "Carte : Abîme hurlant"
                               : "Carte : Faille de l’invocateur"
                           }
-                          width={48}
-                          height={48}
+                          width={42}
+                          height={42}
                         />
+                        <span className="history-kda">
+                          <small>KDA</small>
+                          <strong>
+                            {hasKda
+                              ? `${entry.kills} / ${entry.deaths} / ${entry.assists}`
+                              : "— / — / —"}
+                          </strong>
+                        </span>
+                        <span
+                          className="history-items"
+                          aria-label="Objets achetés en jeu"
+                        >
+                          {Array.from({ length: 7 }, (_, index) => {
+                            const itemId = itemIds[index];
+                            return itemId ? (
+                              <Image
+                                key={`${itemId}-${index}`}
+                                src={itemIconUrl(itemId)}
+                                unoptimized
+                                alt={`Objet ${itemId}`}
+                                width={28}
+                                height={28}
+                              />
+                            ) : (
+                              <i key={`empty-${index}`} aria-hidden="true" />
+                            );
+                          })}
+                        </span>
                       </span>
                       <time className="history-when" dateTime={entry.playedAt}>
                         <strong>{formatDate(played)}</strong>
@@ -507,10 +544,40 @@ export default function HistoryPage() {
                           <span>
                             {entry.previousMmr} → {entry.newMmr}
                           </span>
-                          <p>
-                            Le KDA et les objets apparaîtront lorsque le watcher
-                            ou Riot fournira ces données.
-                          </p>
+                          <div className="history-detail-performance">
+                            <small>KDA</small>
+                            <strong>
+                              {hasKda
+                                ? `${entry.kills} / ${entry.deaths} / ${entry.assists}`
+                                : "— / — / —"}
+                            </strong>
+                            <div aria-label="Objets achetés en jeu">
+                              {Array.from({ length: 7 }, (_, index) => {
+                                const itemId = itemIds[index];
+                                return itemId ? (
+                                  <Image
+                                    key={`${itemId}-${index}`}
+                                    src={itemIconUrl(itemId)}
+                                    unoptimized
+                                    alt={`Objet ${itemId}`}
+                                    width={30}
+                                    height={30}
+                                  />
+                                ) : (
+                                  <i
+                                    key={`empty-${index}`}
+                                    aria-hidden="true"
+                                  />
+                                );
+                              })}
+                            </div>
+                          </div>
+                          {!hasKda && !itemIds.length && (
+                            <p>
+                              Données de partie indisponibles pour cet ancien
+                              match.
+                            </p>
+                          )}
                         </aside>
                       </div>
                     )}

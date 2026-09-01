@@ -21,6 +21,10 @@ function historyEntry(matchId: string): HistoryEntry {
     team: "BLUE",
     role: "MID",
     championName: "Draven",
+    kills: 7,
+    deaths: 2,
+    assists: 5,
+    itemIds: [3006, 3031, 6672],
     playedAt: "2026-08-28T12:00:00Z",
     previousMmr: 1500,
     mmrDelta: 42,
@@ -181,6 +185,11 @@ describe("historique fiable", () => {
     expect(
       screen.getByRole("img", { name: "Carte : Abîme hurlant" }),
     ).toHaveAttribute("src", expect.stringContaining("aram-active.png"));
+    expect(screen.getByText("7 / 2 / 5")).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: "Objet 3031" })).toHaveAttribute(
+      "src",
+      expect.stringContaining("/item/3031.png"),
+    );
   });
 
   it("utilise les icônes de rôle dans le détail du match", async () => {

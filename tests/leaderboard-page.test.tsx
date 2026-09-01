@@ -158,8 +158,10 @@ describe("données du classement", () => {
   it("sépare les données 1v1 et 5v5 et inscrit le mode dans l’historique URL", () => {
     renderLeaderboard(backend());
 
+    expect(screen.getByText("MMR ACTUEL")).toBeInTheDocument();
     fireEvent.click(screen.getByRole("tab", { name: "5V5 TRUESKILL" }));
     expect(window.location.search).toBe("?mode=5v5");
+    expect(screen.getByText("MMR ACTUEL")).toBeInTheDocument();
     expect(screen.getByText("#12")).toBeInTheDocument();
     expect(screen.getByText("3 — 2")).toBeInTheDocument();
     expect(

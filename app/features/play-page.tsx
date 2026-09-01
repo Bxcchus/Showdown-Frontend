@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  type FormEvent,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { type FormEvent, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Button, Card, EmptyState } from "../components/ui";
 import { useBackend, type ApiRole } from "../lib/backend";
@@ -194,6 +189,12 @@ export function Play({ go }: { go: (page: Page) => void }) {
     mode === "1V1"
       ? (backend.duelStatistics?.games ?? 0)
       : (backend.statistics?.games ?? 0);
+  const region = backend.party?.region ?? backend.profile?.region ?? "EUW";
+  const readyMembers = members?.filter((member) => member.ready).length ?? 0;
+  const watcher = watcherPresentation(
+    backend.watcherOnline,
+    backend.watcherJob,
+  );
   const recentResults = backend.recentHistory
     .filter((match) =>
       mode === "1V1"
@@ -201,12 +202,6 @@ export function Play({ go }: { go: (page: Page) => void }) {
         : match.mode === "FIVE_V_FIVE",
     )
     .slice(0, 5);
-  const region = backend.party?.region ?? backend.profile?.region ?? "EUW";
-  const readyMembers = members?.filter((member) => member.ready).length ?? 0;
-  const watcher = watcherPresentation(
-    backend.watcherOnline,
-    backend.watcherJob,
-  );
   return (
     <Localized>
       <div className="page play-page">
@@ -475,7 +470,7 @@ export function Play({ go }: { go: (page: Page) => void }) {
             )}
             <div className="play-recent-form">
               <header>
-                <small>FORME RÉCENTE</small>
+                <small>DERNIERS RÉSULTATS</small>
                 <b>
                   {recentResults.length
                     ? `${recentResults.filter((match) => match.outcome === "VICTORY").length} ${language === "en" ? "W" : "V"} — ${recentResults.filter((match) => match.outcome === "DEFEAT").length} ${language === "en" ? "L" : "D"}`
@@ -524,11 +519,7 @@ export function Play({ go }: { go: (page: Page) => void }) {
                   {mode === "1V1" ? "1V1 GLICKO-2" : "5V5 TRUESKILL"}
                 </small>
                 <strong>{selectedRank}</strong>
-                <b>
-                  {mode === "1V1"
-                    ? selectedMmrLabel
-                    : fiveRank.detail}
-                </b>
+                <b>{mode === "1V1" ? selectedMmrLabel : fiveRank.detail}</b>
               </span>
             </div>
           </Card>
