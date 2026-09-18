@@ -30,7 +30,7 @@ jobs:
             -e GIT_CONFIG_VALUE_0=/repo \
             zricethezav/gitleaks:v8.30.0@sha256:691af3c7c5a48b16f187ce3446d5f194838f91238f27270ed36eef6359a574d9 \
             git /repo --config=/repo/.gitleaks.toml --redact --exit-code=1
-      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: "24"
           cache: npm
