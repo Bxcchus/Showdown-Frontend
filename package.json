@@ -31,7 +31,7 @@
     "@vitejs/plugin-rsc": "^0.5.34",
     "eslint": "9.39.4",
     "eslint-config-next": "16.2.6",
-    "jsdom": "^27.0.1",
+    "jsdom": "^30.0.1",
     "prettier": "^3.9.6",
     "react-server-dom-webpack": "^19.2.8",
     "tailwindcss": "4.2.1",
